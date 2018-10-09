@@ -21,6 +21,8 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
     private static final String TAG = "_transactions";
     private static final D.DebugTag TRANSACTIONS = new D.DebugTag("delayed_transaction", true, true, 1); //NON-NLS
     private static final D.DebugTag TRANSACTIONS_VERBOSE = new D.DebugTag("delayed_transaction_extra", false, false, 1); //NON-NLS
+    private boolean mAllowTransactions = false;
+    private final Queue<DelayedTransaction> mDelayedTransactions = new ArrayDeque<>();
 
     public FragmentTransactions() {
         setRetainInstance(true);
@@ -38,8 +40,43 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    private boolean mAllowTransactions = false;
-    private final Queue<DelayedTransaction> mDelayedTransactions = new ArrayDeque<>();
+    public static void activityStarted(AppCompatActivity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            D.log(TRANSACTIONS, "no need to check for started state"); //NON-NLS
+            return;
+        }
+        FragmentTransactions fragment = getFragment(activity);
+        if (fragment != null) {
+            fragment.mAllowTransactions = true;
+            D.log(TRANSACTIONS, "activity has started - allowing further transactions"); //NON-NLS
+            fragment.executeTransaction();
+        } else {
+            D.error(TRANSACTIONS, "activity has started, but unable to find the transaction fragment"); //NON-NLS
+        }
+    }
+
+    public static void activityResumed(AppCompatActivity activity) {
+        FragmentTransactions fragment = getFragment(activity);
+        if (fragment != null && !fragment.mAllowTransactions) {
+            fragment.mAllowTransactions = true;
+            D.log(TRANSACTIONS, "activity has resumed - allowing further transactions"); //NON-NLS
+            fragment.executeTransaction();
+        } else if (fragment != null) {
+            D.log(TRANSACTIONS, "no need to check resumption - transactions already allowed");
+        } else {
+            D.error(TRANSACTIONS, "activity has resumed, but unable to find the transaction fragment"); //NON-NLS
+        }
+    }
+
+    public static void activitySaved(AppCompatActivity activity) {
+        FragmentTransactions fragment = getFragment(activity);
+        if (fragment != null) {
+            fragment.mAllowTransactions = false;
+            D.log(TRANSACTIONS, "activity has been saved - stopping further transactions"); //NON-NLS
+        } else {
+            D.error(TRANSACTIONS, "activity has been saved, but unable to find the transaction fragment"); //NON-NLS
+        }
+    }
 
     public static void activityPaused(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -66,36 +103,6 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
             D.log(TRANSACTIONS, "activity has stopped - stopping further transactions"); //NON-NLS
         } else {
             D.error(TRANSACTIONS, "activity has stopped, but unable to find the transaction fragment"); //NON-NLS
-        }
-    }
-
-    public static void activityStarted(AppCompatActivity activity) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            D.log(TRANSACTIONS, "no need to check for started state"); //NON-NLS
-            return;
-        }
-        FragmentTransactions fragment = getFragment(activity);
-        if (fragment != null) {
-            fragment.mAllowTransactions = true;
-            D.log(TRANSACTIONS, "activity has started - allowing further transactions"); //NON-NLS
-            fragment.executeTransaction();
-        } else {
-            D.error(TRANSACTIONS, "activity has started, but unable to find the transaction fragment"); //NON-NLS
-        }
-    }
-
-    public static void activityResumed(AppCompatActivity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            D.log(TRANSACTIONS, "no need to check for resumed state"); //NON-NLS
-            return;
-        }
-        FragmentTransactions fragment = getFragment(activity);
-        if (fragment != null) {
-            fragment.mAllowTransactions = true;
-            D.log(TRANSACTIONS, "activity has resumed - allowing further transactions"); //NON-NLS
-            fragment.executeTransaction();
-        } else {
-            D.error(TRANSACTIONS, "activity has resumed, but unable to find the transaction fragment"); //NON-NLS
         }
     }
 

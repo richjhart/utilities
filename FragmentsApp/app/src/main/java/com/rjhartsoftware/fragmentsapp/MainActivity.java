@@ -1,8 +1,10 @@
 package com.rjhartsoftware.fragmentsapp;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.View;
 
 import com.rjhartsoftware.fragments.FragmentTransactions;
 import com.rjhartsoftware.logcatdebug.D;
@@ -15,18 +17,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FragmentTransactions.activityCreated(this);
         setContentView(R.layout.activity_main);
+
+        findViewById(R.id.button_pause).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // trigger an event that will pause it
+                Intent popup_screen = new Intent(MainActivity.this, PopupActivity.class);
+                startActivity(popup_screen);
+
+                // then run the transaction after a delay
+                new Handler().postDelayed(mDelayedTransaction, 2000);
+            }
+        });
+
+        findViewById(R.id.button_stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // trigger an event that will stop it
+                Intent full_screen = new Intent(MainActivity.this, FullActivity.class);
+                startActivity(full_screen);
+
+                // then run the transaction after a delay
+                new Handler().postDelayed(mDelayedTransaction, 2000);
+            }
+        });
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        FragmentTransactions.activityResumed(this);
     }
 
     @Override
     protected void onStart() {
-        FragmentTransactions.activityStarted(this);
         super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        FragmentTransactions.activityResumed(this);
-        super.onResume();
+        FragmentTransactions.activityStarted(this);
     }
 
     @Override
@@ -39,30 +65,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         FragmentTransactions.activityStopped(this);
         super.onStop();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                FragmentTransactions
-                        .beginTransaction(MainActivity.this)
-                        .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
-                        .dontDuplicateInView()
-                        .addToBackStack(null)
-                        .runOnceAttached(new Runnable() {
-                            @Override
-                            public void run() {
-                                D.log(D.GENERAL, "Fragment Attached");
-                            }
-                        })
-                        .runOnceComplete(new Runnable() {
-                            @Override
-                            public void run() {
-                                D.log(D.GENERAL, "Transaction Complete");
-                            }
-                        })
-                        .commit();
-            }
-        }, 5000);
     }
 
     @Override
@@ -71,5 +73,33 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        FragmentTransactions.activitySaved(this);
+        super.onSaveInstanceState(outState);
+    }
 
+    private final Runnable mDelayedTransaction = new Runnable() {
+        @Override
+        public void run() {
+            FragmentTransactions
+                    .beginTransaction(MainActivity.this)
+                    .replace(R.id.fragment_container, new MainFragment(), MainFragment.TAG)
+                    .dontDuplicateInView()
+                    .addToBackStack(null)
+                    .runOnceAttached(new Runnable() {
+                        @Override
+                        public void run() {
+                            D.log(D.GENERAL, "Fragment Attached");
+                        }
+                    })
+                    .runOnceComplete(new Runnable() {
+                        @Override
+                        public void run() {
+                            D.log(D.GENERAL, "Transaction Complete");
+                        }
+                    })
+                    .commit();
+        }
+    };
 }
