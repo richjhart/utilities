@@ -1,14 +1,6 @@
 package com.rjhartsoftware.fragments;
 
-import androidx.lifecycle.LifecycleObserver;
 import android.os.Build;
-import androidx.annotation.AnimRes;
-import androidx.annotation.AnimatorRes;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.rjhartsoftware.logcatdebug.D;
@@ -16,6 +8,15 @@ import com.rjhartsoftware.logcatdebug.D;
 import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Queue;
+
+import androidx.annotation.AnimRes;
+import androidx.annotation.AnimatorRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleObserver;
 
 public class FragmentTransactions extends Fragment implements LifecycleObserver {
     private static final String TAG = "_transactions";
@@ -202,6 +203,15 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
                             proceed = false;
                         }
                         break;
+                    case DelayedTransaction.ACTION_CLEAR:
+                        D.log(TRANSACTIONS, "executing delayed removal from " + transaction.mId);
+                        Fragment fragmentToRemove = manager.findFragmentById(transaction.mId);
+                        if (fragmentToRemove != null) {
+                            new_transaction.remove(fragmentToRemove);
+                        } else {
+                            proceed = false;
+                        }
+                        break;
                     default:
                         proceed = false;
                         allow_callback = false;
@@ -289,6 +299,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         private static final int ACTION_REPLACE_1 = 3;
         private static final int ACTION_POP = 4;
         private static final int ACTION_REMOVE = 5;
+        private static final int ACTION_CLEAR = 6;
         private final WeakReference<AppCompatActivity> mActivity;
         private int mAction = ACTION_NONE;
         private int mId = -1;
@@ -319,6 +330,12 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
             mId = id;
             mFragment = fragment;
             mTag = tag;
+            return this;
+        }
+
+        public DelayedTransaction clear(int id) {
+            mAction = ACTION_CLEAR;
+            mId = id;
             return this;
         }
 

@@ -41,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(mDelayedTransaction, 2000);
             }
         });
+
+        findViewById(R.id.button_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransactions
+                        .beginTransaction(MainActivity.this)
+                        .clear(R.id.fragment_container)
+                        .commit();
+            }
+        });
     }
 
     @Override
