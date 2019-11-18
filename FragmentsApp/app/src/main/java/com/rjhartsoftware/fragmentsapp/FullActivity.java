@@ -1,9 +1,7 @@
 package com.rjhartsoftware.fragmentsapp;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 
 public class FullActivity extends AppCompatActivity {
 

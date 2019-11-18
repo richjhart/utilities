@@ -4,11 +4,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.rjhartsoftware.fragmentsapp"
-        minSdkVersion 14
+        minSdkVersion 9
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -25,10 +24,9 @@ android {
 dependencies {
     implementation project(":fragments")
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.github.richjhart:logcatdebug:1.1'
-    implementation 'com.github.richjhart:popup:1.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.github.richjhart:logcatdebug:1.2v9'
+    implementation 'com.android.support:design:25.4.0'
 }

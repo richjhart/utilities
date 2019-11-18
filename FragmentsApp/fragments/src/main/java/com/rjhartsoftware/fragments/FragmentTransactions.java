@@ -1,6 +1,14 @@
 package com.rjhartsoftware.fragments;
 
+import android.arch.lifecycle.LifecycleObserver;
 import android.os.Build;
+import android.support.annotation.AnimRes;
+import android.support.annotation.AnimatorRes;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.rjhartsoftware.logcatdebug.D;
@@ -9,16 +17,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import androidx.annotation.AnimRes;
-import androidx.annotation.AnimatorRes;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleObserver;
-
-public class FragmentTransactions extends Fragment implements LifecycleObserver {
+public class FragmentTransactions extends Fragment {
     private static final String TAG = "_transactions";
     private static final D.DebugTag TRANSACTIONS = new D.DebugTag("delayed_transaction", true, true, 1); //NON-NLS
     private static final D.DebugTag TRANSACTIONS_VERBOSE = new D.DebugTag("delayed_transaction_extra", false, false, 1); //NON-NLS
@@ -374,6 +373,8 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
                     }
                 } else if (mAction == ACTION_REMOVE && !TextUtils.isEmpty(mTag)) {
                     D.log(TRANSACTIONS, "queuing fragment removal for now or later of " + mTag); //NON-NLS
+                } else if (mAction == ACTION_CLEAR && mId != 0) {
+                    D.log(TRANSACTIONS, "queuing fragment removal for now or later oin " + mId); //NON-NLS
                 } else {
                     D.error(TRANSACTIONS, "queued transaction doesn't make sense"); //NON-NLS
                 }
