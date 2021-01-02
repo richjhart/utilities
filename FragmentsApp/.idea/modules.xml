@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FragmentsApp.iml" filepath="$PROJECT_DIR$/FragmentsApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fragments/fragments.iml" filepath="$PROJECT_DIR$/fragments/fragments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/FragmentsApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/FragmentsApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fragments/FragmentsApp.fragments.iml" filepath="$PROJECT_DIR$/.idea/modules/fragments/FragmentsApp.fragments.iml" />
     </modules>
   </component>
 </project>

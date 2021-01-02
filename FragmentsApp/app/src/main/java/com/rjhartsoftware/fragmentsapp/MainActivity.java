@@ -51,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
             }
         });
+
+        findViewById(R.id.button_popup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransactions.beginTransaction(MainActivity.this)
+                        .add(new PopupFragment(), PopupFragment.TAG)
+                        .commit();
+            }
+        });
     }
 
     @Override
