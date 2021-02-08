@@ -29,7 +29,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         setRetainInstance(true);
     }
 
-    public static void activityCreated(AppCompatActivity activity) {
+    static void activityCreated(AppCompatActivity activity) {
         FragmentTransactions fragment = getFragment(activity);
         if (fragment == null) {
             activity.getSupportFragmentManager().beginTransaction()
@@ -41,7 +41,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    public static void activityStarted(AppCompatActivity activity) {
+    static void activityStarted(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             D.log(TRANSACTIONS, "no need to check for started state"); //NON-NLS
             return;
@@ -56,7 +56,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    public static void activityResumed(AppCompatActivity activity) {
+    static void activityResumed(AppCompatActivity activity) {
         FragmentTransactions fragment = getFragment(activity);
         if (fragment != null && !fragment.mAllowTransactions) {
             fragment.mAllowTransactions = true;
@@ -69,7 +69,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    public static void activitySaved(AppCompatActivity activity) {
+    static void activitySaved(AppCompatActivity activity) {
         FragmentTransactions fragment = getFragment(activity);
         if (fragment != null) {
             fragment.mAllowTransactions = false;
@@ -79,7 +79,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    public static void activityPaused(AppCompatActivity activity) {
+    static void activityPaused(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             D.log(TRANSACTIONS, "no need to check for paused state"); //NON-NLS
             return;
@@ -93,7 +93,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    public static void activityStopped(AppCompatActivity activity) {
+    static void activityStopped(AppCompatActivity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             D.log(TRANSACTIONS, "no need to check for stopped state"); //NON-NLS
             return;
@@ -107,7 +107,7 @@ public class FragmentTransactions extends Fragment implements LifecycleObserver 
         }
     }
 
-    public static void activityDestroyed(@SuppressWarnings("unused") AppCompatActivity activity) {
+    static void activityDestroyed(@SuppressWarnings("unused") AppCompatActivity activity) {
         D.log(TRANSACTIONS, "activity has been destroyed"); //NON-NLS
     }
 

@@ -7,15 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.rjhartsoftware.fragments.FragmentTransactions;
+import com.rjhartsoftware.fragments.TransactionsActivity;
 import com.rjhartsoftware.logcatdebug.D;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends TransactionsActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         D.init(BuildConfig.VERSION_NAME, BuildConfig.DEBUG);
         super.onCreate(savedInstanceState);
-        FragmentTransactions.activityCreated(this);
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.button_pause).setOnClickListener(new View.OnClickListener() {
@@ -60,42 +60,6 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
             }
         });
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        FragmentTransactions.activityResumed(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FragmentTransactions.activityStarted(this);
-    }
-
-    @Override
-    protected void onPause() {
-        FragmentTransactions.activityPaused(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        FragmentTransactions.activityStopped(this);
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        FragmentTransactions.activityDestroyed(this);
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        FragmentTransactions.activitySaved(this);
-        super.onSaveInstanceState(outState);
     }
 
     private final Runnable mDelayedTransaction = new Runnable() {
