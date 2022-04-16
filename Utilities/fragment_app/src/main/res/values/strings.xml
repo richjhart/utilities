@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fragments App</string>
+
+    <string name="title_activity_full">FullActivity</string>
+    <string name="title_activity_popup">PopupActivity</string>
+
+    <bool name="enable_debug_mode">true</bool>
+</resources>

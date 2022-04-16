@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Utilities.iml" filepath="$PROJECT_DIR$/.idea/modules/Utilities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fragment_app/Utilities.fragment_app.iml" filepath="$PROJECT_DIR$/.idea/modules/fragment_app/Utilities.fragment_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/Utilities.lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/Utilities.lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/logcat_app/Utilities.logcat_app.iml" filepath="$PROJECT_DIR$/.idea/modules/logcat_app/Utilities.logcat_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/popup_app/Utilities.popup_app.iml" filepath="$PROJECT_DIR$/.idea/modules/popup_app/Utilities.popup_app.iml" />
+    </modules>
+  </component>
+</project>

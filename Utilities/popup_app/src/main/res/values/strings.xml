@@ -1,0 +1,82 @@
+<resources>
+
+    <bool name="enable_debug_mode">true</bool>
+
+    <string name="app_name">Popup App</string>
+    <string name="raw_html">
+        <![CDATA[The terms and conditions below apply to anyone who signs up as a beta tester of the <b>The app</b>, developed by The Company Limited (“we” or “The Company”) ( . By clicking “accept” you are accepting the terms below.
+<p>THIS AGREEMENT is made by and between The Company , and you (“<b>you</b>” or the “<b>Beta Tester</b>”).
+<p><b>BACKGROUND</b>
+<p><ul>
+    <li>The Company is developing The , a running app designed to generate routes of a desired distance and navigate users along the way (together with any modifications, enhancements, improvements, updates and additions thereto, derivative works, documentation and related material, the “The App”).</li>
+    <li>The Company wishes to have the The App tested and to gather feedback on how the The App could be improved and service users better prior to its general release.</li>
+    <li>Beta Tester wishes to serve as a beta tester for the The App</li>
+</ul>
+<p><b>AGREED TERMS</b>
+<p><ol>
+    <li><b>LICENCE</b>
+        <ol indent="false">
+            <p><li>The Company hereby grants the Beta Tester a personal, non-transferable, non-exclusive licence to use the beta test version of the The App   until otherwise terminated in accordance with these terms (the “<b>Test Period</b>”), solely for the purposes of beta testing The App.</li>
+            <p><li>The Company reserves the right to:
+                <ol type="a">
+                    <li>modify or terminate the The App or your access to the The App or the participation in the beta testing programme for any reason, without notice, at any time, and without liability to you; and</li>
+                    <li>update these terms and conditions without prior notice. You acknowledge and agree that we may notify you of updated terms by posting them on our website, and that your use of the The App after the effective date of the updated terms constitutes your agreement to those updated terms.</li>
+                </ol>
+            </li>
+        </ol>
+    </li>
+    <p><li><b>BETA TESTING AND BETA TESTER’S OBLIGATIONS</b>
+        <p><ol indent="false">
+            <li>In consideration for receiving access to the The App for testing, Beta Tester agrees to serve as a beta tester for the The App and will provide feedback to The Company of all issues and possible improvements and suggestions that come to the Beta Tester’s attention in the course of beta testing, and hereby assigns to The Company all right, title and interest to such improvements and suggestions and all property rights therein including without limitation all patent, copyright, trade secret, mask work, trademark, moral right or other intellectual property rights.</li>
+            <p><li>Upon completion of the Test Period, or on reasonable request of The Company throughout the Test Period, the Beta Tester agrees to provide material, statistics, or other information that is not deemed confidential to Beta Tester for use in press releases, customer testimonials, and as a reference in marketing and sales initiatives by The Company. Beta Tester will provide a quote to The Company that The Company may at its sole direction use in a press release.</li>
+            <p><li>Beta Tester understands and agrees that the The App is the sole property of The Company and includes The Company confidential information. Beta Tester agrees to treat the The App as confidential and will not:
+                <p><ol type="a">
+                    <li>demonstrate, copy, sell or market the The App to any third party; or</li>
+                    <li>publish or otherwise disclose any confidential information of The Company or any information relating to performance or quality of the The App to any third party; or</li>
+                    <li>modify, reuse, disassemble, decompile, reverse engineer or otherwise translate the The App or any part of it.</li>
+                </ol>
+            </li>
+            <p><li>The Company owns the The App and all related documentation. The Beta Tester acknowledges that the provision of access to the The App and any associated documentation shall not confer on the Beta Tester any intellectual property or other rights in relation to the The App other than its right to use under clause 1.1.</li>
+        </ol>
+    </li>
+    <p><li><b>WARRANTY AND LIABILITY</b>
+        <p><ol indent="false">
+            <li>No representations, conditions, warranties or other terms of any kind are given in respect of the The App or associated documentation, and all statutory warranties and conditions are excluded to the fullest extent possible.</li>
+            <p><li>Save for death and personal injury caused by The Company\'s negligence, The Company shall have no liability of any kind in any circumstances whatever to the Beta Tester in respect of the The App. In particular, The Company shall have no liability in any circumstances whatever for any data loss or corruption and the Beta Tester agrees that it has sole responsibility for protecting its data during evaluation of the The App.</li>
+        </ol>
+    </li>
+    <p><li><b>CONFIDENTIAL INFORMATION</b>
+        <ol indent="false">
+            <p><li>For the purposes of this clause, “<b>Confidential Information</b>” means all information (however recorded or preserved) disclosed by or on behalf of one party to the other party in connection with this agreement which is marked as being confidential, which the receiving party knows or reasonably ought to know is confidential, or which is of its nature confidential,</li>
+            <p><li>This clause will not apply to any Confidential Information that:
+                <p><ol type="a">
+                    <li>is or becomes publicly known other than through any act or omission of the receiving party;</li>
+                    <li>was already in the other party\'s lawful possession before disclosure by the disclosing party;</li>
+                    <li>is lawfully disclosed to the receiving party by a third party without restriction on disclosure; or</li>
+                    <li>is required to be disclosed by law, by any court of competent jurisdiction or by any regulatory or administrative body.</li>
+                </ol>
+            </li>
+            <p><li>Each party shall hold the other\'s Confidential Information in confidence and, unless required by law, not make the other\'s Confidential Information available to any third party, or use the other\'s Confidential Information for any purpose other than the exercise of its rights and performance of its obligations under this agreement.</li>
+            <p><li>Each party shall take all reasonable steps to ensure that the other\'s Confidential Information to which it has access is not disclosed or distributed by its employees or agents in violation of the terms of this agreement.</li>
+            <p><li>This clause shall survive termination of this agreement, however arising.</li>
+        </ol>
+    </li>
+    <p><li><b>PRIVACY</b>
+    <p><tab>Under data protection legislation, we are required to provide you with certain information about who we are, how we process your personal data and for what purposes and your rights in relation to your personal data and how to exercise them. This information is provided in https://someplace.com/privacy-policy and it is important that you read that information.
+    <p><tab>Please be aware that internet transmissions are never completely private or secure and that any message or information you send using the App or any Service may be read or intercepted by others, even if there is a special notice that a particular transmission is encrypted.</li>
+    </li>
+    <p><li>Other
+        <p><ol indent="false">
+            <li>Nothing in this agreement is intended to, or shall be deemed to, establish any partnership or joint venture between any of the parties, constitute any party the agent of another party, or authorise any party to make or enter into any commitments for or on behalf of any other party.</li>
+            <p><li>The Company’s failure to exercise, or delay in exercising, any right or remedy provided under this Agreement or by law shall not constitute a waiver of such, or preclude any further exercise of that or any other right or remedy.</li>
+            <p><li>If any provision or part-provision of this agreement is found to be invalid, illegal or unenforceable, that provision or part-provision shall, to the extent required, be deemed not to form part of the agreement, and the validity and enforceability of the other provisions and part-provisions of the agreement shall not be affected.</li>
+            <p><li>A person who is not a party to this agreement shall have no rights under the Contracts (Rights of Third Parties) Act 1999 to enforce any term of it.</li>
+            <p><li>This agreement constitutes the entire agreement between the parties and supersedes any previous arrangement, understanding or agreement between them relating to the subject-matter of this agreement. Each party acknowledges that, in entering into this agreement, it does not rely on any statement, representation, assurance, undertaking or warranty, whether negligently or innocently made of any person (whether a party to this agreement or not), other than as expressly set out in this agreement. Nothing in this clause 4.5 shall limit or exclude any liability for fraud.</li>
+            <p><li>This agreement and any dispute or claim arising out of or in connection with it or its subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the law of England.</li>
+            <p><li>Each party irrevocably agrees that the courts of England shall have exclusive jurisdiction to settle any dispute or claim arising out of or in connection with this agreement or its subject matter or formation (including non-contractual disputes or claims).</li>
+        </ol>
+    </li>
+</ol>
+]]>
+</string>
+</resources>
