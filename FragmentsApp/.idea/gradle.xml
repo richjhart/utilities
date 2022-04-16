@@ -11,8 +11,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/fragments" />
+            <option value="$PROJECT_DIR$/fragment_app" />
+            <option value="$PROJECT_DIR$/lib" />
+            <option value="$PROJECT_DIR$/logcat_app" />
+            <option value="$PROJECT_DIR$/popup_app" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

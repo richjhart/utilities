@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Libraries</string>
+
+    <bool name="enable_debug_mode">false</bool>
+    <bool name="enable_beta_mode">false</bool>
+
+</resources>

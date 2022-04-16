@@ -1,1 +1,1 @@
-include ':app', ':fragments'
+include ':fragment_app', ':popup_app', ':logcat_app', ':lib'

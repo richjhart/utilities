@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Libraries/fragments/FragmentsApp/fragments/src/main/res/layout-v16/fragment_dialog_message.xml" value="0.3020833333333333" />
+        <entry key="..\:/Libraries/fragments/FragmentsApp/fragments/src/main/res/layout/fragment_dialog_message.xml" value="0.3020833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="EntryPointsManager">
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="org.greenrobot.eventbus.Subscribe" />
+    </list>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
