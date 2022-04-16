@@ -33,8 +33,6 @@
   <component name="ChangeListManager">
     <list default="true" id="78654aad-ac33-4718-a48c-eb35b32493a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lib/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/main/java/com/rjhartsoftware/utilities/D.kt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/com/rjhartsoftware/utilities/D.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -31,6 +31,13 @@ object D {
     }
 
     @JvmStatic
+    fun enterDebug() {
+        if (isBeta()) {
+            sDebug = true;
+        }
+    }
+
+    @JvmStatic
     private var sDebug: Boolean? = null
 
     @JvmStatic
