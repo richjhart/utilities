@@ -33,7 +33,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '2.0.0'
+                version = '2.0.1'
             }
         }
     }
@@ -41,7 +41,7 @@ afterEvaluate {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     api 'org.greenrobot:eventbus:3.2.0'
