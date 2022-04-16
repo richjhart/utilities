@@ -34,7 +34,7 @@ object D {
     private var sDebug: Boolean? = null
 
     @JvmStatic
-    private fun isDebug(): Boolean {
+    fun isDebug(): Boolean {
         if (sDebug != null) {
             return sDebug as Boolean
         }
