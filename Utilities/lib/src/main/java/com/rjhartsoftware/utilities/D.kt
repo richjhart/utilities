@@ -33,7 +33,7 @@ object D {
     @JvmStatic
     fun enterDebug() {
         if (isBeta()) {
-            sDebug = true;
+            sDebug = true
         }
     }
 
