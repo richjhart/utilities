@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 31
+        targetSdkVersion 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -43,8 +43,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.appcompat:appcompat:1.4.1'
-    api 'com.google.android.material:material:1.5.0'
+    api 'com.google.android.material:material:1.6.0'
     api 'org.greenrobot:eventbus:3.2.0'
+    api 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
