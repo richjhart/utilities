@@ -1,41 +1,50 @@
 package com.rjhartsoftware.utilities.fragments
 
 import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 
-open class TransactionsActivity : AppCompatActivity() {
+open class RjhsActivityTransactions : AppCompatActivity() {
+
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FragmentTransactions.activityCreated(this)
+        RjhsFragmentTransactions.activityCreated(this)
     }
 
+    @CallSuper
     override fun onPostResume() {
         super.onPostResume()
-        FragmentTransactions.activityResumed(this)
+        RjhsFragmentTransactions.activityResumed(this)
     }
 
+    @CallSuper
     override fun onStart() {
         super.onStart()
-        FragmentTransactions.activityStarted(this)
+        RjhsFragmentTransactions.activityStarted(this)
     }
 
+    @CallSuper
     override fun onPause() {
-        FragmentTransactions.activityPaused(this)
+        RjhsFragmentTransactions.activityPaused(this)
         super.onPause()
     }
 
+    @CallSuper
     override fun onStop() {
-        FragmentTransactions.activityStopped(this)
+        RjhsFragmentTransactions.activityStopped(this)
         super.onStop()
     }
 
+    @CallSuper
     override fun onDestroy() {
-        FragmentTransactions.activityDestroyed(this)
+        RjhsFragmentTransactions.activityDestroyed(this)
         super.onDestroy()
     }
 
+    @CallSuper
     override fun onSaveInstanceState(outState: Bundle) {
-        FragmentTransactions.activitySaved(this)
+        RjhsFragmentTransactions.activitySaved(this)
         super.onSaveInstanceState(outState)
     }
 }

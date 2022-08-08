@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
@@ -23,12 +22,28 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
-import com.rjhartsoftware.utilities.fragments.FragmentTransactions
+import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions
 import com.rjhartsoftware.utilities.R
-import com.rjhartsoftware.utilities.popup.FromHtml.fromHtml
+import com.rjhartsoftware.utilities.fromHtml
 import org.greenrobot.eventbus.EventBus
 
-class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
+class PopupCheckboxChanged internal constructor(
+    val checkbox: Boolean,
+    val request: String,
+    val b: Bundle
+)
+
+class PopupResult(val which: Int, val request: String, val b: Bundle) {
+    fun checkboxResult(): Boolean {
+        return b.getBoolean(RjhsFragmentMessage.ARG_CHECKBOX_RESULT, false)
+    }
+
+    fun inputResult(): String {
+        return b.getString(RjhsFragmentMessage.ARG_INPUT_RESULT, "")
+    }
+}
+
+class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
     CompoundButton.OnCheckedChangeListener, TextWatcher {
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -49,14 +64,14 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             requireActivity(), requireArguments().getInt(ARG_STYLE)
         )
         val inflater = requireActivity().layoutInflater
-        val dialogInterface = inflater.inflate(R.layout.fragment_dialog_message, null)
-        val title = dialogInterface.findViewById<TextView>(R.id.message_title)
+        val dialogInterface = inflater.inflate(R.layout.rjhs_fragment_dialog_message, null)
+        val title = dialogInterface.findViewById<TextView>(R.id.rjhs_popup_title)
         var titleText = requireArguments().getCharSequence(ARG_TITLE, "")
         if (titleText is String) {
-            titleText = Html.fromHtml(titleText)
+            titleText = fromHtml(titleText)
         }
         title.text = titleText
-        val message = dialogInterface.findViewById<TextView>(R.id.message_message)
+        val message = dialogInterface.findViewById<TextView>(R.id.rjhs_popup_message)
         var msgText = requireArguments().getCharSequence(ARG_MESSAGE, "")
         if (msgText is String) {
             msgText = fromHtml(msgText)
@@ -66,7 +81,7 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
         if (m !is LinkMovementMethod) {
             message.movementMethod = LinkMovementMethod.getInstance()
         }
-        val checkbox = dialogInterface.findViewById<CheckBox>(R.id.message_checkbox)
+        val checkbox = dialogInterface.findViewById<CheckBox>(R.id.rjhs_popup_checkbox)
         if (requireArguments().getCharSequence(ARG_CHECKBOX) != null) {
             checkbox.text = requireArguments().getCharSequence(ARG_CHECKBOX)
             if (requireArguments().getBoolean(ARG_CHECKBOX_RESULT, false)) {
@@ -76,8 +91,8 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
         } else {
             checkbox.visibility = View.GONE
         }
-        val edit = dialogInterface.findViewById<EditText>(R.id.message_input)
-        val editLayout = dialogInterface.findViewById<View>(R.id.message_input_hint)
+        val edit = dialogInterface.findViewById<EditText>(R.id.rjhs_popup_input)
+        val editLayout = dialogInterface.findViewById<View>(R.id.rjhs_popup_input_hint)
         if (requireArguments().getString(ARG_INPUT) != null) {
             if (editLayout is TextInputLayout) {
                 editLayout.hint = requireArguments().getString(ARG_INPUT)
@@ -117,7 +132,7 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
                 }
             }
             val sv =
-                (dialogInt as AlertDialog).findViewById<NestedScrollView>(R.id.message_message_scroll)
+                (dialogInt as AlertDialog).findViewById<NestedScrollView>(R.id.rjhs_popup_scroll)
             sv!!.tag = false
             if (requireArguments().getBoolean(ARG_NEUTRAL_BUTTON_STAY_OPEN)) {
                 val neutral = dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
@@ -336,7 +351,7 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
                 ss.process(mArguments, context)
             }
             mStrings.clear()
-            val frag = FragmentMessage()
+            val frag = RjhsFragmentMessage()
             frag.arguments = mArguments
             frag.isCancelable = mArguments.getBoolean(ARG_CANCEL)
             return frag
@@ -349,7 +364,7 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             if (activity == null) {
                 return
             }
-            FragmentTransactions.beginTransaction(activity)
+            RjhsFragmentTransactions.beginTransaction(activity)
                 .add(getFragment(activity), tag)
                 .dontDuplicateTag()
                 .commit()
@@ -364,7 +379,7 @@ class FragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             //            mArguments.putString(ARG_RESULT_CLASS, callback.getCanonicalName());
             mArguments.putString(ARG_REQUEST_TAG, rId)
             //            mArguments.putString(ARG_CHECKBOX_CHANGED_CLASS, PopupCheckboxChanged.class.getCanonicalName());
-            mArguments.putInt(ARG_STYLE, R.style.AlertDialogTheme)
+            mArguments.putInt(ARG_STYLE, R.style.RjhsAlertDialogTheme)
         }
     }
 

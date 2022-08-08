@@ -4,5 +4,5 @@
     <string name="title_activity_full">FullActivity</string>
     <string name="title_activity_popup">PopupActivity</string>
 
-    <bool name="enable_debug_mode">true</bool>
+    <bool name="rjhs_enable_debug_mode">true</bool>
 </resources>

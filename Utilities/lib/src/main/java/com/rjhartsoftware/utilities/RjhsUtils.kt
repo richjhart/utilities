@@ -1,10 +1,13 @@
 package com.rjhartsoftware.utilities
 
+import android.os.Build
+import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import androidx.core.text.HtmlCompat
 import java.util.*
 
-class Truss {
+class RjhsTruss {
     private val builder: SpannableStringBuilder
     private val stack: Deque<Span>
 
@@ -18,27 +21,27 @@ class Truss {
         stack = ArrayDeque()
     }
 
-    private constructor(truss: Truss) {
+    private constructor(truss: RjhsTruss) {
         builder = SpannableStringBuilder(truss.builder)
         stack = ArrayDeque(truss.stack)
     }
 
-    fun append(string: String?): Truss {
+    fun append(string: String?): RjhsTruss {
         builder.append(string)
         return this
     }
 
-    fun append(charSequence: CharSequence?): Truss {
+    fun append(charSequence: CharSequence?): RjhsTruss {
         builder.append(charSequence)
         return this
     }
 
-    fun append(c: Char): Truss {
+    fun append(c: Char): RjhsTruss {
         builder.append(c)
         return this
     }
 
-    fun append(number: Int): Truss {
+    fun append(number: Int): RjhsTruss {
         builder.append(number.toString())
         return this
     }
@@ -46,7 +49,7 @@ class Truss {
     /**
      * Starts `span` at the current position in the builder.
      */
-    fun pushSpan(span: Any?): Truss {
+    fun pushSpan(span: Any?): RjhsTruss {
         stack.addLast(Span(builder.length, span))
         return this
     }
@@ -54,7 +57,7 @@ class Truss {
     /**
      * End the most recently pushed span at the current position in the builder.
      */
-    fun popSpan(): Truss {
+    fun popSpan(): RjhsTruss {
         val span = stack.removeLast()
         builder.setSpan(span.span, span.start, builder.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         return this
@@ -64,7 +67,7 @@ class Truss {
      * Create the final [CharSequence], popping any remaining spans.
      */
     fun build(): CharSequence {
-        val t = Truss(this)
+        val t = RjhsTruss(this)
         while (!t.stack.isEmpty()) {
             t.popSpan()
         }
@@ -73,3 +76,13 @@ class Truss {
 
     private class Span constructor(val start: Int, val span: Any?)
 }
+
+fun fromHtml(html: String): Spanned =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
+    } else {
+        @Suppress("DEPRECATION")
+        Html.fromHtml(html)
+    }
+
+class RjhsUtils

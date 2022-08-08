@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Debug</string>
 
-    <bool name="enable_debug_mode">true</bool>
+    <bool name="rjhs_enable_debug_mode">true</bool>
 </resources>

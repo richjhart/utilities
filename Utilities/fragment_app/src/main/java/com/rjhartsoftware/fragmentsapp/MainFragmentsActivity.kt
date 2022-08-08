@@ -6,41 +6,41 @@ import android.os.Handler
 import android.view.View
 import com.rjhartsoftware.utilities.D.GENERAL
 import com.rjhartsoftware.utilities.D.log
-import com.rjhartsoftware.utilities.fragments.FragmentTransactions.Companion.beginTransaction
-import com.rjhartsoftware.utilities.fragments.TransactionsActivity
+import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions.Companion.beginTransaction
+import com.rjhartsoftware.utilities.fragments.RjhsActivityTransactions
 
-class MainActivity : TransactionsActivity() {
+class MainFragmentsActivity : RjhsActivityTransactions() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewById<View>(R.id.button_pause).setOnClickListener { // trigger an event that will pause it
-            val popupScreen = Intent(this@MainActivity, PopupActivity::class.java)
+            val popupScreen = Intent(this@MainFragmentsActivity, PopupActivity::class.java)
             startActivity(popupScreen)
 
             // then run the transaction after a delay
             Handler().postDelayed(mDelayedTransaction, 2000)
         }
         findViewById<View>(R.id.button_stop).setOnClickListener { // trigger an event that will stop it
-            val fullScreen = Intent(this@MainActivity, FullActivity::class.java)
+            val fullScreen = Intent(this@MainFragmentsActivity, FullActivity::class.java)
             startActivity(fullScreen)
 
             // then run the transaction after a delay
             Handler().postDelayed(mDelayedTransaction, 2000)
         }
         findViewById<View>(R.id.button_clear).setOnClickListener {
-            beginTransaction(this@MainActivity)
+            beginTransaction(this@MainFragmentsActivity)
                 .clear(R.id.fragment_container)
                 .commit()
         }
         findViewById<View>(R.id.button_popup).setOnClickListener {
-            beginTransaction(this@MainActivity)
+            beginTransaction(this@MainFragmentsActivity)
                 .add(PopupFragment(), PopupFragment.TAG)
                 .commit()
         }
     }
 
     private val mDelayedTransaction = Runnable {
-        beginTransaction(this@MainActivity)
+        beginTransaction(this@MainFragmentsActivity)
             .replace(R.id.fragment_container, MainFragment(), MainFragment.TAG)
             .dontDuplicateInView()
             .addToBackStack(null)

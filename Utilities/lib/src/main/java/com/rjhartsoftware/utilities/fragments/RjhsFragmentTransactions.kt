@@ -15,7 +15,7 @@ import com.rjhartsoftware.utilities.D.log
 import java.lang.ref.WeakReference
 import java.util.*
 
-class FragmentTransactions : Fragment(), LifecycleObserver {
+class RjhsFragmentTransactions : Fragment(), LifecycleObserver {
     private var mAllowTransactions = false
     private val mDelayedTransactions: Queue<DelayedTransaction> = ArrayDeque()
     private var mExecutingTransactions = false
@@ -70,7 +70,7 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
                     DelayedTransaction.ACTION_ADD_1 -> {
                         log(
                             TRANSACTIONS,
-                            "executing delayed fragment addition (view) for " + transaction.mFragment!!.javaClass.simpleName
+                            "executing delayed fragment addition (view) for %s", transaction.mFragment?.javaClass?.simpleName
                         ) //NON-NLS
                         if (checkViewDuplicate(transaction, manager) || checkTagDuplicate(
                                 transaction,
@@ -89,7 +89,7 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
                     DelayedTransaction.ACTION_REPLACE_1 -> {
                         log(
                             TRANSACTIONS,
-                            "executing delayed fragment replacement for " + transaction.mFragment!!.javaClass.simpleName
+                            "executing delayed fragment replacement for %s", transaction.mFragment?.javaClass?.simpleName
                         ) //NON-NLS
                         if (checkViewDuplicate(transaction, manager) || checkTagDuplicate(
                                 transaction,
@@ -108,7 +108,7 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
                     DelayedTransaction.ACTION_ADD_2 -> {
                         log(
                             TRANSACTIONS,
-                            "executing delayed fragment addition (no view) for " + transaction.mFragment!!.javaClass.simpleName
+                            "executing delayed fragment addition (no view) for %s", transaction.mFragment?.javaClass?.simpleName
                         ) //NON-NLS
                         if (checkTagDuplicate(transaction, manager)) {
                             proceed = false
@@ -203,7 +203,7 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
             ) //NON-NLS
             return true
         }
-        if (fragment.javaClass == transaction.mFragment!!.javaClass) {
+        if (fragment.javaClass == transaction.mFragment?.javaClass) {
             log(
                 TRANSACTIONS,
                 "Not performing transaction because the correct fragment type is already there"
@@ -307,6 +307,8 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
                         TRANSACTIONS,
                         "queuing fragment removal for now or later of $mTag"
                     ) //NON-NLS
+                } else if (mAction == ACTION_CLEAR) {
+                    log(TRANSACTIONS, "queuing removal of all fragments from $mId")
                 } else {
                     error(TRANSACTIONS, "queued transaction doesn't make sense") //NON-NLS
                 }
@@ -396,7 +398,7 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
             val fragment = getFragment(activity)
             if (fragment == null) {
                 activity.supportFragmentManager.beginTransaction()
-                    .add(FragmentTransactions(), TAG)
+                    .add(RjhsFragmentTransactions(), TAG)
                     .commitNow()
                 log(TRANSACTIONS, "attached transaction fragment to activity") //NON-NLS
             } else {
@@ -492,9 +494,9 @@ class FragmentTransactions : Fragment(), LifecycleObserver {
             log(TRANSACTIONS, "activity has been destroyed") //NON-NLS
         }
 
-        private fun getFragment(activity: AppCompatActivity?): FragmentTransactions? {
+        private fun getFragment(activity: AppCompatActivity?): RjhsFragmentTransactions? {
             return if (activity != null) {
-                activity.supportFragmentManager.findFragmentByTag(TAG) as FragmentTransactions?
+                activity.supportFragmentManager.findFragmentByTag(TAG) as RjhsFragmentTransactions?
             } else null
         }
 

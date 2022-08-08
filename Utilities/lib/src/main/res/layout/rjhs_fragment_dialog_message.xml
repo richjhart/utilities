@@ -9,8 +9,8 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/message_title"
-        style="@style/PopupTextStyle"
+        android:id="@+id/rjhs_popup_title"
+        style="@style/RjhsPopupTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -19,9 +19,9 @@
         tools:ignore="SelectableText" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/message_message_scroll"
+        android:id="@+id/rjhs_popup_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:scrollbars="vertical">
 
@@ -31,8 +31,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/message_message"
-                style="@style/PopupTextStyle"
+                android:id="@+id/rjhs_popup_message"
+                style="@style/RjhsPopupTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -43,7 +43,7 @@
                 tools:ignore="SelectableText" />
 
             <FrameLayout
-                android:id="@+id/message_input_hint"
+                android:id="@+id/rjhs_popup_input_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
@@ -51,14 +51,14 @@
                 android:importantForAutofill="no">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/message_input"
+                    android:id="@+id/rjhs_popup_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textNoSuggestions" />
             </FrameLayout>
 
             <CheckBox
-                android:id="@+id/message_checkbox"
+                android:id="@+id/rjhs_popup_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -67,7 +67,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <ScrollView
-        android:id="@+id/buttonPanel"
+        android:id="@+id/rjhs_popup_buttonBar"
         style="?attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

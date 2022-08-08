@@ -1,6 +1,6 @@
 <resources>
 
-    <bool name="enable_debug_mode">true</bool>
+    <bool name="rjhs_enable_debug_mode">true</bool>
 
     <string name="app_name">Popup App</string>
     <string name="raw_html">
