@@ -1,0 +1,27 @@
+<resources>
+    <string name="general_ok_1">OK</string>
+    <string name="general_cancel_1">Annulla</string>
+    <string name="general_cancelling_1">Annullamento…</string>
+    <string name="general_help_1">Aiuto</string>
+    <string name="general_settings_1">impostazioni</string>
+    <string name="general_language_1">Italiano</string>
+    <string name="loading_ui_wait_1">Attendere prego…</string>
+    <string name="open_link_failed_1">Nessuna applicazione può gestire questa richiesta. Installa un browser web.</string>
+    <!-- region Pro -->
+    <string name="settings_title_ads_1">Annunci &amp; Pro</string>
+    <string name="settings_title_pro_1">Aggiornamento alla versione Pro</string>
+    <string name="settings_title_gdpr_1">Personalizzazione dell\'annuncio</string>
+    <!-- endregion -->
+    <string name="settings_summary_pro_off_no_price">Tocca per acquistare o per aggiornare se hai già acquistato.</string>
+    <string name="settings_summary_pro_off">Tocca per acquistare (%s) o per aggiornare se hai già acquistato.</string>
+    <string name="settings_summary_pro_on">Già acquistato</string>
+    <string name="settings_summary_gdpr_non_personalised">Mostrando pubblicità non personalizzati. Tocca per cambiare</string>
+    <string name="settings_summary_gdpr_personalised">Mostrando pubblicità personalizzati. Tocca per cambiare</string>
+    <string name="settings_summary_gdpr_unknown">Tocca per selezionare pubblicità personalizzati o non personalizzati</string>
+    <string name="settings_theme_title_1">Tema</string>
+    <string name="settings_theme_entry_light_1">Tenue</string>
+    <string name="settings_theme_entry_dark_1">Scuro</string>
+    <string name="settings_theme_entry_battery_1">Risparmio energetico</string>
+    <string name="settings_theme_entry_system_1">Predefinite di sistema</string>
+    <string name="settings_support_title">Aiuta a supportare lo sviluppo</string>
+</resources>

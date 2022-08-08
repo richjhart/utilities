@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/google_data_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:flipInterval="0"
+    tools:context=".ActivityGoogleData">
+
+    <LinearLayout
+        android:id="@+id/google_data_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/raised_background"
+        android:elevation="4dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="4dp"
+        tools:ignore="UnusedAttribute">
+
+        <TextView
+            android:id="@+id/google_text_data_main_message"
+            style="@style/TextNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textSize="16sp"
+            tools:text="Hello, World" />
+
+        <Button
+            android:id="@+id/google_button_data_main_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/general_ok_1"
+            android:theme="@style/ThemeOverlay.StandardButton" />
+
+        <Button
+            android:id="@+id/google_button_data_main_manage"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/consent_main_button_manage"
+            android:theme="@style/ThemeOverlay.TransparentButton" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/google_data_manage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:background="@drawable/raised_background"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="4dp"
+        tools:ignore="UnusedAttribute">
+
+        <ImageButton
+            android:layout_margin="8dp"
+            android:id="@+id/google_button_data_manage_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="?attr/homeAsUpIndicator"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+        <View
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/google_text_data_manage_message"
+            style="@style/TextNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:textSize="16sp"
+            tools:text="Hello, World" />
+
+        <View
+            style="@style/HorizontalBar"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/google_switch_data_manage_analytics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/settings_title_analytics"
+            android:textSize="16sp" />
+
+        <FrameLayout
+            android:id="@+id/google_switch_data_manage_analytics_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/google_switch_data_manage_analytics_summary_off"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_summary_analytics_off"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/google_switch_data_manage_analytics_summary_on"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_summary_analytics_on"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <View
+            android:id="@+id/google_divider_data_manage_ads"
+            android:visibility="gone"
+            style="@style/HorizontalBar"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/google_switch_data_manage_ads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/settings_title_personalised"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/google_switch_data_manage_ads_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/google_switch_data_manage_ads_summary_off"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_summary_personalised_off"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/google_switch_data_manage_ads_summary_on"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_summary_personalised_on"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/google_button_data_manage_purchase"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.TransparentButton"
+            android:visibility="gone" />
+
+        <View
+            style="@style/HorizontalBar"
+            />
+
+        <Button
+            android:id="@+id/google_button_data_manage_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/consent_manage_button_save"
+            android:theme="@style/ThemeOverlay.StandardButton" />
+
+    </LinearLayout>
+</ViewFlipper>

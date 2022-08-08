@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:layout="@layout/pref_category"
+        android:title="View Options">
+        <ListPreference
+            android:defaultValue="@string/settings_theme_default"
+            android:dialogTitle="@string/settings_theme_title_1"
+            android:entries="@array/settings_theme_entries_text"
+            android:entryValues="@array/settings_theme_values"
+            android:key="@string/settings_theme_key"
+            android:layout="@layout/pref_layout"
+            android:summary="%s"
+            android:title="@string/settings_theme_title_1" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="@string/settings_key_google"
+        android:layout="@layout/pref_category"
+        android:title="@string/settings_title_ads_1">
+        <Preference
+            android:enabled="false"
+            android:key="@string/sku_remove_ads"
+            android:layout="@layout/pref_layout"
+            android:title="@string/settings_title_pro_1" />
+        <com.takisoft.preferencex.SwitchPreferenceCompat
+            android:key="@string/settings_key_personalised"
+            android:layout="@layout/pref_layout"
+            />
+        <com.takisoft.preferencex.SwitchPreferenceCompat
+            android:key="@string/settings_key_analytics"
+            android:layout="@layout/pref_layout"
+            />
+        <Preference
+            android:key="@string/settings_key_support"
+            android:layout="@layout/pref_layout" />
+        <Preference
+            android:key="@string/settings_key_cookie"
+            android:layout="@layout/pref_layout"/>
+        <Preference
+            android:key="@string/settings_key_privacy"
+            android:layout="@layout/pref_layout" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="settings_theme_key" translatable="false">settings_theme_key</string>
+    <string name="settings_theme_default" translatable="false">light</string>
+    <string-array name="settings_theme_values" tools:ignore="InconsistentArrays">
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+    <string-array name="settings_theme_entries_text" tools:ignore="InconsistentArrays">
+        <item>@string/settings_theme_entry_light_1</item>
+        <item>@string/settings_theme_entry_dark_1</item>
+    </string-array>
+
+    <string name="settings_key_google" translatable="false">settings_google</string>
+    <string name="settings_key_support" translatable="false">settings_support</string>
+    <string name="settings_key_cookie" translatable="false">settings_cookie</string>
+    <string name="settings_key_privacy" translatable="false">settings_privacy</string>
+
+    <bool name="google_auto_setup">false</bool>
+    <string name="settings_key_analytics" translatable="false">_g_c_an</string>
+    <string name="settings_key_personalised" translatable="false">_g_c_ads</string>
+    <string name="settings_key_consent" translatable="false">_g_c_s</string>
+
+    <id name="google_ad_view" />
+
+    <string name="empty" translatable="false" />
+
+    <string name="ad_mob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="ad_mob_ad_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="billing_public_key" translatable="false">SET \'billing_public_key\' in resources</string>
+
+    <string name="sku_remove_ads" translatable="false" />
+
+    <string name="app_name" />
+
+    <string name="ads_publisher_id" translatable="false">pub-4750446129557325</string>
+
+    <string name="cookie_policy" translatable="false">https://www.rjhartsoftware.co.uk/cookie-policy</string>
+    <string name="privacy_policy" translatable="false">https://www.rjhartsoftware.co.uk/privacy-policy</string>
+    <string name="third_party_libraries" translatable="false" />
+
+    <integer name="copyright_start" />
+    <integer name="copyright_latest" />
+
+    <bool name="rjhs_enable_debug_mode">false</bool>
+    <bool name="rjhs_enable_beta_mode">false</bool>
+
+</resources>

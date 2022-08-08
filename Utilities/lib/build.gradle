@@ -10,6 +10,7 @@ android {
         targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
 
     }
 
@@ -20,6 +21,13 @@ android {
         }
     }
 
+}
+
+task copyEnResource {
+    copy {
+        from ('src/main/res/values/strings.xml')
+        into ('src/main/res/values-en/')
+    }
 }
 
 afterEvaluate {
@@ -41,6 +49,9 @@ afterEvaluate {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.appcompat:appcompat:1.4.2'
     api 'com.google.android.material:material:1.6.1'
@@ -48,6 +59,24 @@ dependencies {
     api 'androidx.constraintlayout:constraintlayout:2.1.4'
     api "androidx.core:core-ktx:1.8.0"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api 'com.google.code.gson:gson:2.8.9'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.2.1'
+
+    implementation 'com.android.billingclient:billing:5.0.0'
+    implementation 'com.google.firebase:firebase-core:21.1.0'
+    implementation 'com.google.firebase:firebase-firestore:24.2.1'
+    api 'com.google.android.gms:play-services-ads:21.1.0'
+    implementation 'com.google.android.gms:play-services-base:18.1.0'
+    implementation 'com.google.firebase:firebase-config:21.1.1'
+    implementation 'com.google.firebase:firebase-analytics:21.1.0'
+    api 'com.google.firebase:firebase-crashlytics:18.2.12'
+    implementation 'androidx.browser:browser:1.4.0'
+
+    api 'androidx.preference:preference-ktx:1.2.0'
+    api 'com.takisoft.preferencex:preferencex:1.1.0'
+
 }
 repositories {
     mavenCentral()

@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.LifecycleObserver
-import com.rjhartsoftware.utilities.D
-import com.rjhartsoftware.utilities.D.error
-import com.rjhartsoftware.utilities.D.log
+import com.rjhartsoftware.utilities.utils.D
+import com.rjhartsoftware.utilities.utils.D.error
+import com.rjhartsoftware.utilities.utils.D.log
 import java.lang.ref.WeakReference
 import java.util.*
 
