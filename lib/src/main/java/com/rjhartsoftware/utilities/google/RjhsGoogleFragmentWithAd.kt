@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdView
 import com.rjhartsoftware.utilities.R
+import com.rjhartsoftware.utilities.utils.D
 
 open class RjhsGoogleFragmentWithAd : RjhsGoogleFragmentBase() {
 
@@ -17,8 +18,14 @@ open class RjhsGoogleFragmentWithAd : RjhsGoogleFragmentBase() {
                 if (act is RjhsGoogleActivityBase) {
                     act.registerAdView(adView)
                     adViewRegistered = true
+                } else {
+                    D.error(ADS, "activity is wrong class: %s", act::class.java.name)
                 }
+            } ?: run {
+                D.error(ADS, "Activity is null (this should never happen)")
             }
+        } ?: run {
+            D.error(ADS, "AdView is not found in the view")
         }
     }
 

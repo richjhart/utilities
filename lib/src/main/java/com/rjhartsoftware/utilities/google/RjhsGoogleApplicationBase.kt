@@ -292,6 +292,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             if (getString(R.string.settings_theme_key) == key) {
                 updateTheme()
             }
+            // TODO This is wrong - we will still allow basic collection of crashes and analytics
             val analytics: Boolean = getBoolPref(getString(R.string.settings_key_analytics))
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(analytics)
             FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(analytics)

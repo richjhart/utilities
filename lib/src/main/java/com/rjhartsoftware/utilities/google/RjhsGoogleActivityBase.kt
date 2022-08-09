@@ -14,6 +14,7 @@ import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.cs
 import com.rjhartsoftware.utilities.fragments.RjhsActivityTransactions
 import com.rjhartsoftware.utilities.popup.RjhsFragmentMessage
+import com.rjhartsoftware.utilities.utils.D
 import com.rjhartsoftware.utilities.utils.D.log
 
 private const val ABOUT_REQUEST_ID = "_about"
@@ -124,6 +125,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
     }
 
     internal fun registerAdView(ad: AdView) {
+        log(ADS, "Adview has been registered")
         adView = ad
         updateAdVisibility()
     }
