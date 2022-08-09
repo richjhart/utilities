@@ -51,6 +51,9 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                 .isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS
         ) {
             adView?.let {
+                log(ADS, "ad_mob_app_id: %s", getString(R.string.ad_mob_app_id))
+                log(ADS, "ad_mob_ad_id: %s", getString(R.string.ad_mob_ad_id))
+                log(ADS, "AdView id: %s", it.adUnitId)
                 if (app.showAds) {
                     it.adListener = object : AdListener() {
                         override fun onAdFailedToLoad(loadAdError: LoadAdError) {

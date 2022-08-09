@@ -33,8 +33,6 @@
 
     <string name="app_name" />
 
-    <string name="ads_publisher_id" translatable="false">pub-4750446129557325</string>
-
     <string name="cookie_policy" translatable="false">https://www.rjhartsoftware.co.uk/cookie-policy</string>
     <string name="privacy_policy" translatable="false">https://www.rjhartsoftware.co.uk/privacy-policy</string>
     <string name="third_party_libraries" translatable="false" />
@@ -42,7 +40,7 @@
     <integer name="copyright_start" />
     <integer name="copyright_latest" />
 
-    <bool name="rjhs_enable_debug_mode">false</bool>
+    <bool name="rjhs_enable_debug_mode">true</bool>
     <bool name="rjhs_enable_beta_mode">false</bool>
 
 </resources>

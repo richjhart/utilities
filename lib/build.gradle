@@ -41,7 +41,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '4.0.0_alpha02'
+                version = '4.0.0_alpha03'
             }
         }
     }
