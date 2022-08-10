@@ -64,7 +64,7 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             requireActivity(), requireArguments().getInt(ARG_STYLE)
         )
         val inflater = requireActivity().layoutInflater
-        val dialogInterface = inflater.inflate(R.layout.rjhs_fragment_dialog_message, null)
+        val dialogInterface = inflater.inflate(R.layout.rjhs_internal_layout_fragment_dialog_message, null)
         val title = dialogInterface.findViewById<TextView>(R.id.rjhs_popup_title)
         var titleText = requireArguments().getCharSequence(ARG_TITLE, "")
         if (titleText is String) {

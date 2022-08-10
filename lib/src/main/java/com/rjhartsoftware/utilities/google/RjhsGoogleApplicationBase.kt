@@ -12,6 +12,7 @@ import android.os.Looper
 import android.util.Base64
 import android.view.View
 import android.widget.Button
+import androidx.annotation.CallSuper
 import androidx.annotation.IntDef
 import androidx.annotation.XmlRes
 import androidx.appcompat.app.AppCompatDelegate
@@ -267,6 +268,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         }
     }
 
+    @CallSuper
     override fun onCreate() {
         updateTheme()
         super.onCreate()
@@ -275,11 +277,11 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             app = this
             initRemoteConfig(R.xml.remote_config_defaults)
             registerReceiver(networkReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-            state.billingKey = getString(R.string.billing_public_key)
+            state.billingKey = getString(R.string.rjhs_override_billing_public_key)
             if (state.hasBillingKey) {
-                if (resources.getBoolean(R.bool.google_auto_setup)) {
-                    addPurchaseInfo(getString(R.string.sku_remove_ads))
-                    setRemovesAds(getString(R.string.sku_remove_ads))
+                if (resources.getBoolean(R.bool.rjhs_public_google_auto_setup)) {
+                    addPurchaseInfo(getString(R.string.rjhs_override_sku_remove_ads))
+                    setRemovesAds(getString(R.string.rjhs_override_sku_remove_ads))
                     start()
                 }
             }
@@ -293,8 +295,8 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             val prefs = PreferenceManager.getDefaultSharedPreferences(this)
             val theme = prefs.getString(
-                getString(R.string.settings_theme_key),
-                getString(R.string.settings_theme_default)
+                getString(R.string.rjhs_fixed_settings_theme_key),
+                getString(R.string.rjhs_internal_settings_theme_default)
             )
             if ("light" == theme) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -314,11 +316,11 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
 
     private val sharedPreferencesListener =
         OnSharedPreferenceChangeListener { _: SharedPreferences?, key: String? ->
-            if (getString(R.string.settings_theme_key) == key) {
+            if (getString(R.string.rjhs_fixed_settings_theme_key) == key) {
                 updateTheme()
             }
             // TODO This is wrong - we will still allow basic collection of crashes and analytics
-            val analytics: Boolean = getBoolPref(getString(R.string.settings_key_analytics))
+            val analytics: Boolean = getBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics))
             FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(analytics)
             FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(analytics)
         }
@@ -971,7 +973,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         state.purchaseInfo[preference.key]?.let {
             preference.isVisible = true
             preference.title = it.skuDetails!!.title
-            preference.layoutResource = R.layout.pref_layout
+            preference.layoutResource = R.layout.rjhs_layout_preference
         } ?: run {
             preference.isVisible = false
         }
@@ -1012,7 +1014,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
 
     internal val anonymousAds: Boolean
         get() {
-            return !getBoolPref(getString(R.string.settings_key_personalised))
+            return !getBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised))
         }
 }
 

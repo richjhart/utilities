@@ -27,8 +27,8 @@ object D {
 
     @JvmStatic
     internal fun init(context: Context) {
-        sDebug = context.resources.getBoolean(R.bool.rjhs_enable_debug_mode)
-        sBeta = context.resources.getBoolean(R.bool.rjhs_enable_beta_mode)
+        sDebug = context.resources.getBoolean(R.bool.rjhs_public_enable_debug_mode)
+        sBeta = context.resources.getBoolean(R.bool.rjhs_public_enable_beta_mode)
     }
 
     @JvmStatic

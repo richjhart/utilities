@@ -2,6 +2,7 @@ package com.rjhartsoftware.utilities.google
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import com.google.android.gms.ads.AdView
 import com.rjhartsoftware.utilities.R
@@ -11,9 +12,10 @@ open class RjhsGoogleFragmentWithAd : RjhsGoogleFragmentBase() {
 
     private var adViewRegistered = false
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<AdView>(R.id.google_ad_view)?.let { adView ->
+        view.findViewById<AdView>(R.id.rjhs_fixed_google_ad_view)?.let { adView ->
             activity?.let { act ->
                 if (act is RjhsGoogleActivityBase) {
                     act.registerAdView(adView)
@@ -29,6 +31,7 @@ open class RjhsGoogleFragmentWithAd : RjhsGoogleFragmentBase() {
         }
     }
 
+    @CallSuper
     override fun onResume() {
         super.onResume()
         if (adViewRegistered) {
@@ -40,6 +43,7 @@ open class RjhsGoogleFragmentWithAd : RjhsGoogleFragmentBase() {
         }
     }
 
+    @CallSuper
     override fun onPause() {
         if (adViewRegistered) {
             activity?.let { act ->
@@ -51,6 +55,7 @@ open class RjhsGoogleFragmentWithAd : RjhsGoogleFragmentBase() {
         super.onPause()
     }
 
+    @CallSuper
     override fun onDestroyView() {
         if (adViewRegistered) {
             activity?.let { act ->

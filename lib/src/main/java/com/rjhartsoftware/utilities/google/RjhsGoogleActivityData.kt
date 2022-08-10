@@ -15,23 +15,23 @@ import com.rjhartsoftware.utilities.cs
 
 const val EXTRA_ORIGINAL_INTENT: String = "_intent"
 
-class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener,
+internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener,
     RjhsGooglePurchaseStatusChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = applicationContext as RjhsGoogleApplicationBase
-        setContentView(R.layout.activity_google_data)
+        setContentView(R.layout.rjhs_internal_layout_activity_data)
 
         findViewById<Button>(R.id.google_button_data_main_manage).setOnClickListener {
             findViewById<ViewFlipper>(R.id.google_data_container).showNext()
         }
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_analytics).setOnCheckedChangeListener { _, isChecked ->
-            app.setBoolPref(getString(R.string.settings_key_analytics), isChecked)
+            app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), isChecked)
             syncSummaries()
         }
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_ads).setOnCheckedChangeListener { _, isChecked ->
-            app.setBoolPref(getString(R.string.settings_key_personalised), isChecked)
+            app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised), isChecked)
             syncSummaries()
         }
         syncSummaries()
@@ -40,8 +40,8 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
             it.text =
                 cs(
                     R.string.consent_main_message,
-                    getString(R.string.cookie_policy),
-                    getString(R.string.privacy_policy)
+                    getString(R.string.rjhs_internal_cookie_policy),
+                    getString(R.string.rjhs_override_privacy_policy)
                 )
             if (it.movementMethod !is LinkMovementMethod) {
                 it.movementMethod = LinkMovementMethod.getInstance()
@@ -52,8 +52,8 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
             it.text =
                 cs(
                     R.string.consent_manage_message,
-                    getString(R.string.cookie_policy),
-                    getString(R.string.privacy_policy)
+                    getString(R.string.rjhs_internal_cookie_policy),
+                    getString(R.string.rjhs_override_privacy_policy)
                 )
             if (it.movementMethod !is LinkMovementMethod) {
                 it.movementMethod = LinkMovementMethod.getInstance()
@@ -61,8 +61,8 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
         }
 
         findViewById<View>(R.id.google_button_data_main_ok).setOnClickListener {
-            app.setBoolPref(getString(R.string.settings_key_analytics), true)
-            app.setBoolPref(getString(R.string.settings_key_analytics), true)
+            app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), true)
+            app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), true)
             openOriginalIntent()
         }
         findViewById<View>(R.id.google_button_data_manage_save).setOnClickListener {
@@ -88,7 +88,7 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
     }
 
     private fun syncSummaries() {
-        if (app.getBoolPref(getString(R.string.settings_key_analytics))) {
+        if (app.getBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics))) {
             findViewById<View>(R.id.google_switch_data_manage_analytics_summary_off).visibility =
                 View.INVISIBLE
             findViewById<View>(R.id.google_switch_data_manage_analytics_summary_on).visibility =
@@ -99,7 +99,7 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
             findViewById<View>(R.id.google_switch_data_manage_analytics_summary_on).visibility =
                 View.INVISIBLE
         }
-        if (app.getBoolPref(getString(R.string.settings_key_personalised))) {
+        if (app.getBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised))) {
             findViewById<View>(R.id.google_switch_data_manage_ads_summary_off).visibility =
                 View.INVISIBLE
             findViewById<View>(R.id.google_switch_data_manage_ads_summary_on).visibility =
@@ -113,7 +113,7 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
     }
 
     private fun openOriginalIntent() {
-        app.setBoolPref(getString(R.string.settings_key_consent), true)
+        app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_consent), true)
         startActivity(intent.getParcelableExtra(EXTRA_ORIGINAL_INTENT))
         finish()
     }
@@ -138,9 +138,9 @@ class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.OnSharedPr
     private lateinit var app: RjhsGoogleApplicationBase
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_analytics).isChecked =
-            app.getBoolPref(getString(R.string.settings_key_analytics))
+            app.getBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics))
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_ads).isChecked =
-            app.getBoolPref(getString(R.string.settings_key_personalised))
+            app.getBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised))
         syncSummaries()
     }
 

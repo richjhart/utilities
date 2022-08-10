@@ -3,6 +3,7 @@ package com.rjhartsoftware.utilities.google
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.CallSuper
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -14,7 +15,6 @@ import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.cs
 import com.rjhartsoftware.utilities.fragments.RjhsActivityTransactions
 import com.rjhartsoftware.utilities.popup.RjhsFragmentMessage
-import com.rjhartsoftware.utilities.utils.D
 import com.rjhartsoftware.utilities.utils.D.log
 
 private const val ABOUT_REQUEST_ID = "_about"
@@ -27,6 +27,7 @@ private enum class AdRequestState {
 
 open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
 
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = applicationContext as RjhsGoogleApplicationBase
@@ -34,6 +35,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
         checkConsent()
     }
 
+    @CallSuper
     override fun onDestroy() {
         app.unregisterPurchaseChangeListener(purchaseStatusChangeListener)
         super.onDestroy()
@@ -51,8 +53,8 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                 .isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS
         ) {
             adView?.let {
-                log(ADS, "ad_mob_app_id: %s", getString(R.string.ad_mob_app_id))
-                log(ADS, "ad_mob_ad_id: %s", getString(R.string.ad_mob_ad_id))
+                log(ADS, "ad_mob_app_id: %s", getString(R.string.rjhs_override_ad_mob_app_id))
+                log(ADS, "ad_mob_ad_id: %s", getString(R.string.rjhs_override_ad_mob_ad_id))
                 log(ADS, "AdView id: %s", it.adUnitId)
                 if (app.showAds) {
                     it.adListener = object : AdListener() {
@@ -120,9 +122,10 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
         }
     }
 
+    @CallSuper
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
-        findViewById<AdView>(R.id.google_ad_view)?.let {
+        findViewById<AdView>(R.id.rjhs_fixed_google_ad_view)?.let {
             adView = it
         }
     }
@@ -139,21 +142,23 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
         adView = null
     }
 
-    fun resumeAd() {
+    internal fun resumeAd() {
         if (isOld) return
         updateAdVisibility()
     }
 
-    fun pauseAd() {
+    internal fun pauseAd() {
         if (isOld) return
         adView?.pause()
     }
 
+    @CallSuper
     override fun onResume() {
         super.onResume()
         resumeAd()
     }
 
+    @CallSuper
     override fun onPause() {
         pauseAd()
         super.onPause()
@@ -161,14 +166,14 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
 
     fun clearConsent() {
         if (isOld) return
-        app.setBoolPref(getString(R.string.settings_key_consent), false)
+        app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_consent), false)
         checkConsent()
     }
 
     private fun checkConsent() {
         if (isOld) return
         log(EU_CONSENT, "Checking consent status")
-        if (!app.getBoolPref(getString(R.string.settings_key_consent))) {
+        if (!app.getBoolPref(getString(R.string.rjhs_fixed_settings_key_consent))) {
             log(EU_CONSENT, "Consent has not been granted")
             val openThis = Intent(this, this::class.java)
             startActivity(
@@ -187,11 +192,11 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                 cs(
                     R.string.about_message,
                     versionName,
-                    getString(R.string.app_name),
+                    getString(R.string.rjhs_override_str_app_name),
                     versionCode,
-                    getString(R.string.third_party_libraries),
-                    resources.getInteger(R.integer.copyright_start),
-                    resources.getInteger(R.integer.copyright_latest)
+                    getString(R.string.rjhs_override_third_party_libraries),
+                    resources.getInteger(R.integer.rjhs_override_copyright_start),
+                    resources.getInteger(R.integer.rjhs_override_copyright_latest)
                 )
             )
             .inactivePositiveButton(R.string.general_ok_1)
