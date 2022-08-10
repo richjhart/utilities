@@ -53,12 +53,14 @@ lateinit var app: RjhsGoogleApplicationBase
 const val PURCHASE_ENABLED = 0
 const val PURCHASE_DISABLED = 1
 const val PURCHASE_NOT_YET_KNOWN = 2
+const val PURCHASE_PENDING = 3
 
 // Flags
 private const val PURCHASE_FLAG_BENEFIT_OF_DOUBT = 1
 private const val PURCHASE_FLAG_CARE_ABOUT_WAITING = 1 shl 1
+private const val PURCHASE_FLAG_CARE_ABOUT_PENDING = 1 shl 2
 
-@IntDef(value = [PURCHASE_ENABLED, PURCHASE_DISABLED, PURCHASE_NOT_YET_KNOWN])
+@IntDef(value = [PURCHASE_ENABLED, PURCHASE_DISABLED, PURCHASE_NOT_YET_KNOWN, PURCHASE_PENDING])
 @kotlin.annotation.Retention
 annotation class PurchaseStatusFull
 
@@ -66,7 +68,10 @@ annotation class PurchaseStatusFull
 @kotlin.annotation.Retention
 annotation class PurchaseStatus
 
-@IntDef(flag = true, value = [PURCHASE_FLAG_BENEFIT_OF_DOUBT, PURCHASE_FLAG_CARE_ABOUT_WAITING])
+@IntDef(
+    flag = true,
+    value = [PURCHASE_FLAG_BENEFIT_OF_DOUBT, PURCHASE_FLAG_CARE_ABOUT_WAITING, PURCHASE_FLAG_CARE_ABOUT_PENDING]
+)
 @kotlin.annotation.Retention
 private annotation class PurchaseRequestFlags
 
@@ -237,8 +242,28 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                 info.status = status
                 setIntPref(SETTINGS_KEY_PURCHASE + key.hashCode(), status.ordinal)
                 purchasesStatusChanged()
-                // TODO trigger update (purchase status changed, ads status changed)
+                if (status == InternalPurchaseStatus.Pending) {
+                    maybeStartDelayedQuery(0)
+                }
             }
+        }
+    }
+
+    private fun maybeStartDelayedQuery(callCount: Int) {
+        if (state.purchaseInfo
+                .filter { it.value.status == InternalPurchaseStatus.Pending }
+                .isNotEmpty()) {
+            handler.postDelayed(
+                {
+                    queryPurchases()
+                    maybeStartDelayedQuery(callCount + 1)
+                },
+                when (callCount) {
+                    0 -> 1 * 60000
+                    1 -> 5 * 60000
+                    2 -> 10 * 60000
+                    else -> 60 * 60000
+                })
         }
     }
 
@@ -354,7 +379,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         }
     }
 
-    fun registerPurchaseChangeListener(listener: RjhsGooglePurchaseStatusChangeListener, handler: Handler) {
+    fun registerPurchaseChangeListener(
+        listener: RjhsGooglePurchaseStatusChangeListener,
+        handler: Handler
+    ) {
         if (state.purchaseChangeListeners.any { it.listener == listener }) return
         state.purchaseChangeListeners.add(PurchaseStatusChangeListenerHolder(listener, handler))
     }
@@ -380,10 +408,15 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         if (state.purchaseRegistered) {
             state.purchaseInfo.filter { it.value.consentPurchase }.values.firstOrNull()?.let {
                 button.visibility = View.VISIBLE
-                if (it.priceString.isNullOrBlank()) {
-                    button.setText(R.string.consent_manage_button_purchase_no_price)
-                } else {
-                    button.text = getString(R.string.consent_manage_button_purchase, it.priceString)
+                button.isEnabled = true
+                when {
+                    getPurchaseStatusPending(it.key) == PURCHASE_PENDING -> {
+                        button.setText(R.string.consent_manage_button_purchase_pending);
+                        button.isEnabled = false
+                    }
+                    it.priceString.isNullOrBlank() -> button.setText(R.string.consent_manage_button_purchase_no_price)
+                    else -> button.text =
+                        getString(R.string.consent_manage_button_purchase, it.priceString)
                 }
                 return
             }
@@ -858,6 +891,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         getPurchaseStatus(key, PURCHASE_FLAG_CARE_ABOUT_WAITING)
 
     @PurchaseStatusFull
+    fun getPurchaseStatusPending(key: String): Int =
+        getPurchaseStatus(key, PURCHASE_FLAG_CARE_ABOUT_PENDING)
+
+    @PurchaseStatusFull
     private fun getPurchaseStatus(key: String, @PurchaseRequestFlags flags: Int): Int {
         if (isOld) return PURCHASE_ENABLED
         if (!state.purchaseRegistered) return PURCHASE_DISABLED
@@ -878,9 +915,16 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                 InternalPurchaseStatus.NoneRegistered -> {
                     allOff = false
                 }
-                InternalPurchaseStatus.Off,
+                InternalPurchaseStatus.Off -> {
+                    // Do Nothing
+                }
                 InternalPurchaseStatus.Pending -> {
-                    // Do nothing
+                    if (flags and PURCHASE_FLAG_CARE_ABOUT_PENDING != 0) {
+                        return PURCHASE_PENDING
+                    }
+                    if (flags and PURCHASE_FLAG_BENEFIT_OF_DOUBT != 0) {
+                        return PURCHASE_ENABLED
+                    }
                 }
             }
             it.otherKeys.forEach { otherKey ->
@@ -896,9 +940,13 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                         InternalPurchaseStatus.NoneRegistered -> {
                             allOff = false
                         }
-                        InternalPurchaseStatus.Off,
-                        InternalPurchaseStatus.Pending -> {
+                        InternalPurchaseStatus.Off -> {
                             // Do nothing
+                        }
+                        InternalPurchaseStatus.Pending -> {
+                            if (flags and PURCHASE_FLAG_BENEFIT_OF_DOUBT != 0) {
+                                return PURCHASE_ENABLED
+                            }
                         }
                     }
                 }
@@ -935,6 +983,9 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             if (getPurchaseStatusNormal(preference.key) == PURCHASE_ENABLED) {
                 preference.isEnabled = false
                 preference.setSummary(R.string.settings_summary_pro_on)
+            } else if (getPurchaseStatusPending(preference.key) == PURCHASE_PENDING) {
+                preference.isEnabled = false
+                preference.setSummary(R.string.consent_manage_button_purchase_pending)
             } else {
                 preference.isEnabled = true
                 if (it.priceString.isNullOrBlank()) {

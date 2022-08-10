@@ -41,7 +41,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '4.0.0_alpha03'
+                version = '4.0.0_alpha04'
             }
         }
     }
@@ -66,7 +66,7 @@ dependencies {
 
     implementation 'com.android.billingclient:billing:5.0.0'
     implementation 'com.google.firebase:firebase-core:21.1.0'
-    implementation 'com.google.firebase:firebase-firestore:24.2.1'
+    implementation 'com.google.firebase:firebase-firestore:24.2.2'
     api 'com.google.android.gms:play-services-ads:21.1.0'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
     implementation 'com.google.firebase:firebase-config:21.1.1'

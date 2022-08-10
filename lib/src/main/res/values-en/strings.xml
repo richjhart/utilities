@@ -35,6 +35,7 @@
     <string name="consent_manage_button_save">Save Settings</string>
     <string name="consent_manage_button_purchase">Upgrade to remove all ads (%s)</string>
     <string name="consent_manage_button_purchase_no_price">Upgrade to remove ads</string>
+    <string name="consent_manage_button_purchase_pending">Waiting for confirmation of purchase</string>
     <!-- endregion -->
     <!-- region About -->
     <string name="general_about">About</string>
