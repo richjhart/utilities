@@ -132,10 +132,12 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
         const val TAG = "_frag_settings"
     }
 
+    @CallSuper
     override fun purchaseStatusChanged() {
         updatePurchasePrefs()
     }
 
+    @CallSuper
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         updatePurchasePrefs()
     }
