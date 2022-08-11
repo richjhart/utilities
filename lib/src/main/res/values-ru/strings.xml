@@ -3,6 +3,7 @@
     <string name="rjhs_str_cancel">Отмена</string>
     <string name="rjhs_str_cancelling">Отмена…</string>
     <string name="rjhs_str_help">Справка</string>
+    <string name="rjhs_str_help_english">Справка (на английском языке)</string>
     <string name="rjhs_str_settings">Настройки</string>
     <string name="rjhs_str_language">Pусский</string>
     <string name="rjhs_internal_str_msg_no_browser">Ни одно приложение не может обработать этот запрос. Пожалуйста, установите веб-браузер.</string>

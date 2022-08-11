@@ -3,6 +3,7 @@
     <string name="rjhs_str_cancel">Cancelar</string>
     <string name="rjhs_str_cancelling">Cancelando…</string>
     <string name="rjhs_str_help">Ayuda</string>
+    <string name="rjhs_str_help_english">Ayuda (en inglés)</string>
     <string name="rjhs_str_settings">Ajustes</string>
     <string name="rjhs_str_language">Español</string>
     <string name="rjhs_internal_str_msg_no_browser">Ninguna aplicación puede manejar esta solicitud. Por favor, instala un navegador web.</string>

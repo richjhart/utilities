@@ -3,6 +3,7 @@
     <string name="rjhs_str_cancel">Anuluj</string>
     <string name="rjhs_str_cancelling">Anulowanie…</string>
     <string name="rjhs_str_help">Pomoc</string>
+    <string name="rjhs_str_help_english">Pomoc (w języku angielskim)</string>
     <string name="rjhs_str_settings">Ustawienia</string>
     <string name="rjhs_str_language">Polski</string>
     <string name="rjhs_internal_str_msg_no_browser">Na telefonie nie jest zainstalowana odpowiednia aplikacja. Zainstaluj przeglądarkę internetową.</string>

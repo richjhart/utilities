@@ -3,6 +3,7 @@
     <string name="rjhs_str_cancel">Annulla</string>
     <string name="rjhs_str_cancelling">Annullamento…</string>
     <string name="rjhs_str_help">Aiuto</string>
+    <string name="rjhs_str_help_english">Aiuto (in inglese)</string>
     <string name="rjhs_str_settings">impostazioni</string>
     <string name="rjhs_str_language">Italiano</string>
     <string name="rjhs_internal_str_msg_no_browser">Nessuna applicazione può gestire questa richiesta. Installa un browser web.</string>
