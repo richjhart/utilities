@@ -1,9 +1,11 @@
 <resources>
-    <string name="general_cancelling_1">Cancelling…</string>
-    <!-- region Pro -->
-    <string name="settings_title_gdpr_1">Ad personalisation</string>
+    <string name="rjhs_str_cancelling">Cancelling…</string>
+    <!-- region Data -->
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Showing non-personalised ads. Tap to change</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_on">Showing personalised ads. Tap to change</string>
     <!-- endregion -->
-    <string name="settings_summary_gdpr_non_personalised">Showing non-personalised ads. Tap to change</string>
-    <string name="settings_summary_gdpr_personalised">Showing personalised ads. Tap to change</string>
-    <string name="settings_summary_gdpr_unknown">Tap to select personalised or non-personalised ads</string>
+    <!-- region Consent Screen -->
+    <!-- endregion -->
+    <!-- region About -->
+    <!-- endregion -->
 </resources>

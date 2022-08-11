@@ -187,10 +187,10 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
 
     fun showAbout(versionName: String, versionCode: Int) {
         RjhsFragmentMessage.Builder(ABOUT_REQUEST_ID)
-            .title(R.string.general_about)
+            .title(R.string.rjhs_str_about)
             .message(
                 cs(
-                    R.string.about_message,
+                    R.string.rjhs_internal_str_msg_about,
                     versionName,
                     getString(R.string.rjhs_override_str_app_name),
                     versionCode,
@@ -199,7 +199,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                     resources.getInteger(R.integer.rjhs_override_copyright_latest)
                 )
             )
-            .inactivePositiveButton(R.string.general_ok_1)
+            .inactivePositiveButton(R.string.rjhs_str_ok)
             .show(this)
     }
 

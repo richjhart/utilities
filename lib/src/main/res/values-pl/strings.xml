@@ -1,27 +1,28 @@
 <resources>
-    <string name="general_ok_1">OK</string>
-    <string name="general_cancel_1">Anuluj</string>
-    <string name="general_cancelling_1">Anulowanie…</string>
-    <string name="general_help_1">Pomoc</string>
-    <string name="general_settings_1">Ustawienia</string>
-    <string name="general_language_1">Polski</string>
-    <string name="loading_ui_wait_1">Proszę czekać…</string>
-    <string name="open_link_failed_1">Na telefonie nie jest zainstalowana odpowiednia aplikacja. Zainstaluj przeglądarkę internetową.</string>
-    <!-- region Pro -->
-    <string name="settings_title_ads_1">Reklamy i wersja Pro</string>
-    <string name="settings_title_pro_1">Kup wersję Pro</string>
-    <string name="settings_title_gdpr_1">Personalizacja reklam</string>
+    <string name="rjhs_str_ok">OK</string>
+    <string name="rjhs_str_cancel">Anuluj</string>
+    <string name="rjhs_str_cancelling">Anulowanie…</string>
+    <string name="rjhs_str_help">Pomoc</string>
+    <string name="rjhs_str_settings">Ustawienia</string>
+    <string name="rjhs_str_language">Polski</string>
+    <string name="rjhs_internal_str_msg_no_browser">Na telefonie nie jest zainstalowana odpowiednia aplikacja. Zainstaluj przeglądarkę internetową.</string>
+    <!-- region Data -->
+    <string name="rjhs_internal_str_settings_title_ads">Reklamy i wersja Pro</string>
+    <string name="rjhs_str_upgrade">Kup wersję Pro</string>
+    <string name="rjhs_internal_str_settings_purchase_summary_off_no_price">Dotknij, aby kupić lub odśwież, jeśli już kupiłeś.</string>
+    <string name="rjhs_internal_str_settings_purchase_summary_off">Dotknij, aby kupić (%s) lub odśwież, jeśli już kupiłeś.</string>
+    <string name="rjhs_internal_str_settings_purchase_summary_on">Już zakupiono</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Wyświetlanie reklam niespersonalizowanych. Dotknij, aby zmienić</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_on">Wyświetlanie reklam spersonalizowanych. Dotknij, aby zmienić</string>
+    <string name="rjhs_internal_str_settings_support_title">Pomóż wesprzeć rozwój</string>
     <!-- endregion -->
-    <string name="settings_summary_pro_off_no_price">Dotknij, aby kupić lub odśwież, jeśli już kupiłeś.</string>
-    <string name="settings_summary_pro_off">Dotknij, aby kupić (%s) lub odśwież, jeśli już kupiłeś.</string>
-    <string name="settings_summary_pro_on">Już zakupiono</string>
-    <string name="settings_summary_gdpr_non_personalised">Wyświetlanie reklam niespersonalizowanych. Dotknij, aby zmienić</string>
-    <string name="settings_summary_gdpr_personalised">Wyświetlanie reklam spersonalizowanych. Dotknij, aby zmienić</string>
-    <string name="settings_summary_gdpr_unknown">Dotknij, aby wybrać reklamy spersonalizowane lub niespersonalizowane</string>
-    <string name="settings_theme_title_1">Motyw</string>
-    <string name="settings_theme_entry_light_1">Jasny</string>
-    <string name="settings_theme_entry_dark_1">Ciemny</string>
-    <string name="settings_theme_entry_battery_1">Oszczędzanie baterii</string>
-    <string name="settings_theme_entry_system_1">Domyślny systemowy</string>
-    <string name="settings_support_title">Pomóż wesprzeć rozwój</string>
+    <string name="rjhs_internal_str_settings_theme_title">Motyw</string>
+    <string name="rjhs_internal_str_settings_theme_entry_light">Jasny</string>
+    <string name="rjhs_internal_str_settings_theme_entry_dark">Ciemny</string>
+    <string name="rjhs_internal_str_settings_theme_entry_battery">Oszczędzanie baterii</string>
+    <string name="rjhs_internal_str_settings_theme_entry_system">Domyślny systemowy</string>
+    <!-- region Consent Screen -->
+    <!-- endregion -->
+    <!-- region About -->
+    <!-- endregion -->
 </resources>

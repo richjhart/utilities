@@ -33,7 +33,7 @@
             android:id="@+id/google_button_data_main_ok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/general_ok_1"
+            android:text="@string/rjhs_str_ok"
             android:theme="@style/RjhsThemeOverlay.StandardButton" />
 
         <Button
@@ -41,7 +41,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/consent_main_button_manage"
+            android:text="@string/rjhs_internal_str_consent_main_button_manage"
             android:theme="@style/RjhsThemeOverlay.TransparentButton" />
 
     </LinearLayout>
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:layout_marginTop="4dp"
-            android:text="@string/settings_title_analytics"
+            android:text="@string/rjhs_internal_str_settings_analytics_title"
             android:textSize="16sp" />
 
         <FrameLayout
@@ -105,7 +105,7 @@
                 style="@style/RjhsTextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_summary_analytics_off"
+                android:text="@string/rjhs_internal_str_settings_anaytics_summary_off"
                 android:visibility="invisible" />
 
             <TextView
@@ -113,7 +113,7 @@
                 style="@style/RjhsTextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_summary_analytics_on"
+                android:text="@string/rjhs_internal_str_settings_analytics_summary_on"
                 android:visibility="invisible" />
         </FrameLayout>
 
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:layout_marginTop="4dp"
-            android:text="@string/settings_title_personalised"
+            android:text="@string/rjhs_internal_str_settings_personalised_title"
             android:textSize="16sp"
             android:visibility="gone" />
 
@@ -146,7 +146,7 @@
                 style="@style/RjhsTextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_summary_personalised_off"
+                android:text="@string/rjhs_internal_str_settings_personalised_summary_off"
                 android:visibility="invisible" />
 
             <TextView
@@ -154,7 +154,7 @@
                 style="@style/RjhsTextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_summary_personalised_on"
+                android:text="@string/rjhs_internal_str_settings_personalised_summary_on"
                 android:visibility="invisible" />
         </FrameLayout>
 
@@ -174,7 +174,7 @@
             android:id="@+id/google_button_data_manage_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/consent_manage_button_save"
+            android:text="@string/rjhs_internal_str_consent_manage_save"
             android:theme="@style/RjhsThemeOverlay.StandardButton" />
 
     </LinearLayout>

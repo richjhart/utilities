@@ -413,12 +413,12 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                 button.isEnabled = true
                 when {
                     getPurchaseStatusPending(it.key) == PURCHASE_PENDING -> {
-                        button.setText(R.string.consent_manage_button_purchase_pending);
+                        button.setText(R.string.rjhs_internal_str_consent_manage_purchase_pending);
                         button.isEnabled = false
                     }
-                    it.priceString.isNullOrBlank() -> button.setText(R.string.consent_manage_button_purchase_no_price)
+                    it.priceString.isNullOrBlank() -> button.setText(R.string.rjhs_internal_str_consent_manage_purchase_no_price)
                     else -> button.text =
-                        getString(R.string.consent_manage_button_purchase, it.priceString)
+                        getString(R.string.rjhs_internal_str_consent_manage_purchase_price, it.priceString)
                 }
                 return
             }
@@ -984,17 +984,17 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             preference.isVisible = true
             if (getPurchaseStatusNormal(preference.key) == PURCHASE_ENABLED) {
                 preference.isEnabled = false
-                preference.setSummary(R.string.settings_summary_pro_on)
+                preference.setSummary(R.string.rjhs_internal_str_settings_purchase_summary_on)
             } else if (getPurchaseStatusPending(preference.key) == PURCHASE_PENDING) {
                 preference.isEnabled = false
-                preference.setSummary(R.string.consent_manage_button_purchase_pending)
+                preference.setSummary(R.string.rjhs_internal_str_consent_manage_purchase_pending)
             } else {
                 preference.isEnabled = true
                 if (it.priceString.isNullOrBlank()) {
-                    preference.setSummary(R.string.settings_summary_pro_off_no_price)
+                    preference.setSummary(R.string.rjhs_internal_str_settings_purchase_summary_off_no_price)
                 } else {
                     preference.summary =
-                        resources.getString(R.string.settings_summary_pro_off, it.priceString)
+                        resources.getString(R.string.rjhs_internal_str_settings_purchase_summary_off, it.priceString)
                 }
             }
         } ?: run {

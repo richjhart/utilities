@@ -27,12 +27,12 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                     it.isVisible = false
                 } else {
                     it.setDefaultValue(getString(R.string.rjhs_internal_settings_theme_default))
-                    it.setDialogTitle(R.string.settings_theme_title_1)
+                    it.setDialogTitle(R.string.rjhs_internal_str_settings_theme_title)
                     it.setEntries(R.array.rjhs_internal_settings_theme_entries_text)
                     it.setEntryValues(R.array.rjhs_internal_settings_theme_values)
                     it.layoutResource = R.layout.rjhs_layout_preference
                     it.summary = "%s"
-                    it.setTitle(R.string.settings_theme_title_1)
+                    it.setTitle(R.string.rjhs_internal_str_settings_theme_title)
                 }
             }
 
@@ -40,7 +40,7 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 resources.getString(R.string.rjhs_fixed_settings_key_google)
             )?.let { category ->
                 category.layoutResource = R.layout.rjhs_layout_preference_category
-                category.setTitle(R.string.settings_title_ads_1)
+                category.setTitle(R.string.rjhs_internal_str_settings_title_ads)
 
                 category.forEach { preference ->
                     if (app.isPurchaseRegistered(preference.key)) {
@@ -55,22 +55,22 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
 
             findPreference<SwitchPreferenceCompat>(resources.getString(R.string.rjhs_fixed_settings_key_personalised))?.let {
                 it.layoutResource = R.layout.rjhs_layout_preference
-                it.setTitle(R.string.settings_title_personalised)
-                it.setSummaryOff(R.string.settings_summary_personalised_off)
-                it.setSummaryOn(R.string.settings_summary_personalised_on)
+                it.setTitle(R.string.rjhs_internal_str_settings_personalised_title)
+                it.setSummaryOff(R.string.rjhs_internal_str_settings_personalised_summary_off)
+                it.setSummaryOn(R.string.rjhs_internal_str_settings_personalised_summary_on)
             }
 
             findPreference<SwitchPreferenceCompat>(resources.getString(R.string.rjhs_fixed_settings_key_analytics))?.let {
                 it.layoutResource = R.layout.rjhs_layout_preference
-                it.setTitle(R.string.settings_title_analytics)
-                it.setSummaryOff(R.string.settings_summary_analytics_off)
-                it.setSummaryOn(R.string.settings_summary_analytics_on)
+                it.setTitle(R.string.rjhs_internal_str_settings_analytics_title)
+                it.setSummaryOff(R.string.rjhs_internal_str_settings_anaytics_summary_off)
+                it.setSummaryOn(R.string.rjhs_internal_str_settings_analytics_summary_on)
             }
 
             updatePurchasePrefs()
 
             findPreference<Preference>(resources.getString(R.string.rjhs_fixed_settings_key_cookie))?.let {
-                it.setTitle(R.string.settings_title_cookie)
+                it.setTitle(R.string.rjhs_internal_str_settings_support_cookie)
                 it.layoutResource = R.layout.rjhs_layout_preference
                 it.setOnPreferenceClickListener {
                     openUrl(activity as AppCompatActivity?, getString(R.string.rjhs_internal_cookie_policy))
@@ -78,7 +78,7 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 }
             }
             findPreference<Preference>(resources.getString(R.string.rjhs_fixed_settings_key_privacy))?.let {
-                it.setTitle(R.string.settings_title_privacy)
+                it.setTitle(R.string.rjhs_internal_str_settings_support_privacy)
                 it.layoutResource = R.layout.rjhs_layout_preference
                 it.setOnPreferenceClickListener {
                     openUrl(activity as AppCompatActivity?, getString(R.string.rjhs_override_privacy_policy))
@@ -86,7 +86,7 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 }
             }
             findPreference<Preference>(resources.getString(R.string.rjhs_fixed_settings_key_support))?.let {
-                it.setTitle(R.string.settings_title_support)
+                it.setTitle(R.string.rjhs_internal_str_settings_support_title)
                 it.layoutResource = R.layout.rjhs_layout_preference
                 it.setOnPreferenceClickListener {
                     openUrl(activity as AppCompatActivity?, URL_SUPPORT)

@@ -124,8 +124,8 @@ fun openUrl(context: AppCompatActivity?, url: String?) {
         }
     }
     RjhsFragmentMessage.Builder()
-        .message(R.string.open_link_failed_1)
-        .inactivePositiveButton(R.string.general_ok_1)
+        .message(R.string.rjhs_internal_str_msg_no_browser)
+        .inactivePositiveButton(R.string.rjhs_str_ok)
         .show(context)
 }
 

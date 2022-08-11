@@ -1,27 +1,28 @@
 <resources>
-    <string name="general_ok_1">Aceptar</string>
-    <string name="general_cancel_1">Cancelar</string>
-    <string name="general_cancelling_1">Cancelando…</string>
-    <string name="general_help_1">Ayuda</string>
-    <string name="general_settings_1">Ajustes</string>
-    <string name="general_language_1">Español</string>
-    <string name="loading_ui_wait_1">Espera por favor…</string>
-    <string name="open_link_failed_1">Ninguna aplicación puede manejar esta solicitud. Por favor, instala un navegador web.</string>
-    <!-- region Pro -->
-    <string name="settings_title_ads_1">Anuncios y Pro</string>
-    <string name="settings_title_pro_1">Actualizar a Pro</string>
-    <string name="settings_title_gdpr_1">Personalización de anuncios</string>
+    <string name="rjhs_str_ok">Aceptar</string>
+    <string name="rjhs_str_cancel">Cancelar</string>
+    <string name="rjhs_str_cancelling">Cancelando…</string>
+    <string name="rjhs_str_help">Ayuda</string>
+    <string name="rjhs_str_settings">Ajustes</string>
+    <string name="rjhs_str_language">Español</string>
+    <string name="rjhs_internal_str_msg_no_browser">Ninguna aplicación puede manejar esta solicitud. Por favor, instala un navegador web.</string>
+    <!-- region Data -->
+    <string name="rjhs_internal_str_settings_title_ads">Anuncios y Pro</string>
+    <string name="rjhs_str_upgrade">Actualizar a Pro</string>
+    <string name="rjhs_internal_str_settings_purchase_summary_off_no_price">Toca para comprar o para actualizar si ya lo has comprado.</string>
+    <string name="rjhs_internal_str_settings_purchase_summary_off">Toca para comprar (%s) o para actualizar si ya lo has comprado.</string>
+    <string name="rjhs_internal_str_settings_purchase_summary_on">Ya comprado</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Mostrar anuncios no personalizados. Toca para cambiar</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_on">Mostrar anuncios personalizados. Toca para cambiar</string>
+    <string name="rjhs_internal_str_settings_support_title">Ayuda al desarrollo de soporte</string>
     <!-- endregion -->
-    <string name="settings_summary_pro_off_no_price">Toca para comprar o para actualizar si ya lo has comprado.</string>
-    <string name="settings_summary_pro_off">Toca para comprar (%s) o para actualizar si ya lo has comprado.</string>
-    <string name="settings_summary_pro_on">Ya comprado</string>
-    <string name="settings_summary_gdpr_non_personalised">Mostrar anuncios no personalizados. Toca para cambiar</string>
-    <string name="settings_summary_gdpr_personalised">Mostrar anuncios personalizados. Toca para cambiar</string>
-    <string name="settings_summary_gdpr_unknown">Toca para seleccionar anuncios personalizados o no personalizados</string>
-    <string name="settings_theme_title_1">Tema</string>
-    <string name="settings_theme_entry_light_1">Claro</string>
-    <string name="settings_theme_entry_dark_1">Oscuro</string>
-    <string name="settings_theme_entry_battery_1">Ahorro de batería</string>
-    <string name="settings_theme_entry_system_1">Predeterminado del sistema</string>
-    <string name="settings_support_title">Ayuda al desarrollo de soporte</string>
+    <string name="rjhs_internal_str_settings_theme_title">Tema</string>
+    <string name="rjhs_internal_str_settings_theme_entry_light">Claro</string>
+    <string name="rjhs_internal_str_settings_theme_entry_dark">Oscuro</string>
+    <string name="rjhs_internal_str_settings_theme_entry_battery">Ahorro de batería</string>
+    <string name="rjhs_internal_str_settings_theme_entry_system">Predeterminado del sistema</string>
+    <!-- region Consent Screen -->
+    <!-- endregion -->
+    <!-- region About -->
+    <!-- endregion -->
 </resources>

@@ -21,8 +21,8 @@
         <item>dark</item>
     </string-array>
     <string-array name="rjhs_internal_settings_theme_entries_text" tools:ignore="InconsistentArrays">
-        <item>@string/settings_theme_entry_light_1</item>
-        <item>@string/settings_theme_entry_dark_1</item>
+        <item>@string/rjhs_internal_str_settings_theme_entry_light</item>
+        <item>@string/rjhs_internal_str_settings_theme_entry_dark</item>
     </string-array>
 
     <string name="rjhs_fixed_settings_key_google" translatable="false">settings_google</string>

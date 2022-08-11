@@ -39,7 +39,7 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
         findViewById<TextView>(R.id.google_text_data_main_message).let {
             it.text =
                 cs(
-                    R.string.consent_main_message,
+                    R.string.rjhs_internal_str_consent_main_message,
                     getString(R.string.rjhs_internal_cookie_policy),
                     getString(R.string.rjhs_override_privacy_policy)
                 )
@@ -51,7 +51,7 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
         findViewById<TextView>(R.id.google_text_data_manage_message).let {
             it.text =
                 cs(
-                    R.string.consent_manage_message,
+                    R.string.rjhs_internal_str_consent_manage_message,
                     getString(R.string.rjhs_internal_cookie_policy),
                     getString(R.string.rjhs_override_privacy_policy)
                 )
