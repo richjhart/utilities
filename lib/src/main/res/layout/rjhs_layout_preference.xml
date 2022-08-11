@@ -22,7 +22,7 @@
             android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextSettingsTitle"
+            style="@style/RjhsTextSettingsTitle"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@android:id/title"
-            style="@style/TextSettingsDetails"
+            style="@style/RjhsTextSettingsDetails"
             android:maxLines="4"
             android:tag="settings_text_main"
             android:textSize="14sp" />

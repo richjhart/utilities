@@ -1,7 +1,6 @@
 package com.rjhartsoftware.utilities
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -106,7 +105,7 @@ fun openUrl(context: AppCompatActivity?, url: String?) {
     }
     try {
         val builder = CustomTabsIntent.Builder()
-        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        builder.setToolbarColor(ContextCompat.getColor(context, R.color.rjhs_color_primary))
         val customTabsIntent = builder.build()
         customTabsIntent.launchUrl(context, Uri.parse(url))
         return

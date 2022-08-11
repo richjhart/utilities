@@ -3,21 +3,21 @@
 
     <style name="RjhsAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert" />
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="RjhsAppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/rjhs_color_primary</item>
+        <item name="colorPrimaryDark">@color/rjhs_color_primary_dark</item>
+        <item name="colorAccent">@color/rjhs_color_accent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/colorAccent</item>
-        <item name="actionModeBackground">@color/colorAccent</item>
+        <item name="android:actionModeBackground">@color/rjhs_color_accent</item>
+        <item name="actionModeBackground">@color/rjhs_color_accent</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="RjhsAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
-    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="android:background">@color/main_background</item>
+    <style name="RjhsCustomAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:background">@color/rjhs_color_main_background</item>
     </style>
 
 </resources>
