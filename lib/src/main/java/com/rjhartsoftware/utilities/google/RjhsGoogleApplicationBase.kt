@@ -7,6 +7,7 @@ import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.net.ConnectivityManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
@@ -21,14 +22,17 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import com.android.billingclient.api.*
 import com.google.android.gms.ads.MobileAds
+import com.google.common.collect.ImmutableMap
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.utils.D
 import com.rjhartsoftware.utilities.utils.D.error
 import com.rjhartsoftware.utilities.utils.D.log
+import com.rjhartsoftware.utilities.utils.D.warn
 import java.security.KeyFactory
 import java.security.NoSuchAlgorithmException
 import java.security.PublicKey
@@ -42,6 +46,7 @@ val EU_CONSENT: D.DebugTag = D.DebugTag("google_consent")
 val ADS: D.DebugTag = D.DebugTag("google_ads")
 val ANALYTICS: D.DebugTag = D.DebugTag("google_analytics")
 val BILLING: D.DebugTag = D.DebugTag("google_billing")
+val FIRESTORE: D.DebugTag = D.DebugTag("google_firestore")
 private val REMOTE_CONFIG: D.DebugTag = D.DebugTag("google_remote")
 
 private const val SETTINGS_KEY_PURCHASE = "_g_ps."
@@ -154,7 +159,8 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
 
     private val networkReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            // TODO This needs to check something? Ad visibility, purchase status?
+            // check if the new internet connection allows us to query purchases
+            start()
         }
     }
 
@@ -202,7 +208,6 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     InternalPurchaseStatus.On
                 )
             }
-            // TODO need to trigger an ad update?
             return
         }
         if (state.purchaseRegistered) {
@@ -227,7 +232,6 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             )
             setPurchaseStatus(it.key, newStatus)
         }
-        // TODO trigger update
     }
 
     private fun setPurchaseStatus(key: String, status: InternalPurchaseStatus) {
@@ -253,7 +257,8 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
     private fun maybeStartDelayedQuery(callCount: Int) {
         if (state.purchaseInfo
                 .filter { it.value.status == InternalPurchaseStatus.Pending }
-                .isNotEmpty()) {
+                .isNotEmpty()
+        ) {
             handler.postDelayed(
                 {
                     queryPurchases()
@@ -264,7 +269,8 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     1 -> 5 * 60000
                     2 -> 10 * 60000
                     else -> 60 * 60000
-                })
+                }
+            )
         }
     }
 
@@ -273,6 +279,9 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         updateTheme()
         super.onCreate()
         D.init(this)
+        if (!D.isDebug()) {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+        }
         if (!processName.contains(":")) {
             app = this
             initRemoteConfig(R.xml.remote_config_defaults)
@@ -319,10 +328,6 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             if (getString(R.string.rjhs_fixed_settings_theme_key) == key) {
                 updateTheme()
             }
-            // TODO This is wrong - we will still allow basic collection of crashes and analytics
-            val analytics: Boolean = getBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics))
-            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(analytics)
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(analytics)
         }
 
     fun addPurchaseInfo(key: String, vararg otherKeys: String): RjhsGoogleApplicationBase {
@@ -355,27 +360,34 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             when (result.responseCode) {
                 BillingClient.BillingResponseCode.OK -> {
                     log(BILLING, "Purchase updated - success. Need to verify signature")
+                    reportAnalytics(BILLING_EVENT_PURCHASE_UPDATED_OK)
                     purchases?.forEach { purchase ->
                         purchase.products.forEach { key ->
                             state.purchaseInfo[key]?.let {
                                 verifyValidSignature(key, purchase)
-                                // TODO need to check purchase from consent? Shouldn't need to, as it's just back to consent screen
                             }
                         }
                     }
                 }
-                BillingClient.BillingResponseCode.USER_CANCELED,
-                BillingClient.BillingResponseCode.ERROR -> {
+                BillingClient.BillingResponseCode.USER_CANCELED -> {
                     log(BILLING, "User cancelled the purchase flow")
-                    // TODO need to check for purchase from consent?
-                    // TODO Report to firebase
+                    reportAnalytics(BILLING_EVENT_PURCHASE_UPDATED_CANCELLED)
+                }
+                BillingClient.BillingResponseCode.ERROR -> {
+                    log(BILLING, "Billing error")
+                    reportAnalytics(BILLING_EVENT_PURCHASE_UPDATED_ERROR, 0, result.debugMessage)
                 }
                 BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                     log(BILLING, "Item already owned - re-check")
+                    reportAnalytics(BILLING_EVENT_PURCHASE_UPDATED_ALREADY_OWNED)
                     queryPurchases()
                 }
                 else -> {
-                    // TODO Need to check for purchase from consent?
+                    reportAnalytics(
+                        BILLING_EVENT_PURCHASE_UPDATED_UNKNOWN_CODE,
+                        result.responseCode,
+                        result.debugMessage
+                    )
                 }
             }
         }
@@ -418,7 +430,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     }
                     it.priceString.isNullOrBlank() -> button.setText(R.string.rjhs_internal_str_consent_manage_purchase_no_price)
                     else -> button.text =
-                        getString(R.string.rjhs_internal_str_consent_manage_purchase_price, it.priceString)
+                        getString(
+                            R.string.rjhs_internal_str_consent_manage_purchase_price,
+                            it.priceString
+                        )
                 }
                 return
             }
@@ -444,14 +459,20 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                         logBillingResult(result)
                         when (result.responseCode) {
                             BillingClient.BillingResponseCode.OK -> {
+                                reportAnalytics(BILLING_EVENT_PURCHASE_STARTED_OK)
                                 log(BILLING, "Purchase flow started successfully")
                             }
                             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                                 log(BILLING, "Item already owned - checking")
+                                reportAnalytics(BILLING_EVENT_PURCHASE_STARTED_ALREADY_OWNED)
                                 queryPurchases()
                             }
                             else -> {
-                                // TODO Report to Firebase?
+                                reportAnalytics(
+                                    BILLING_EVENT_PURCHASE_STARTED_UNKNOWN_CODE,
+                                    result.responseCode,
+                                    result.debugMessage
+                                )
                             }
                         }
                     }
@@ -568,7 +589,6 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         if (isOld) return
         if (state.purchaseRegistered) {
             log(BILLING, "Requesting service request (Online action)")
-            // TODO queue runnable if connecting
             if (state.serviceConnected) {
                 runnable.run()
             } else {
@@ -590,6 +610,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                                 log(BILLING, "Billing setup worked. Continue with requested action")
                                 state.serviceConnected = true
+                                reportAnalytics(BILLING_EVENT_SETUP_OK)
                                 executeOnSuccess.run()
                             } else {
                                 log(BILLING, "Billing setup failed. Set purchase status to unknown")
@@ -601,7 +622,11 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                                             InternalPurchaseStatus.Unknown
                                         )
                                     }
-                                // TODO report to Firebase?
+                                reportAnalytics(
+                                    BILLING_EVENT_SETUP_FAILED,
+                                    billingResult.responseCode,
+                                    billingResult.debugMessage
+                                )
                             }
                         }
                     }
@@ -618,7 +643,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                                         InternalPurchaseStatus.Unknown
                                     )
                                 }
-                            // TODO report to Firebase?
+                            reportAnalytics(BILLING_EVENT_SERVICE_DISCONNECTED)
                         }
                     }
                 }
@@ -640,6 +665,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     handler.post {
                         logBillingResult(billingResult)
                         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                            reportAnalytics(BILLING_EVENT_QUERY_OK)
                             val all: MutableList<String> = ArrayList()
                             all.addAll(state.purchaseInfo.keys)
                             list.forEach {
@@ -659,7 +685,11 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                             state.purchaseInfo.forEach {
                                 it.value.status = InternalPurchaseStatus.Unknown
                             }
-                            // TODO report to Firebase?
+                            reportAnalytics(
+                                BILLING_EVENT_QUERY_UNKNOWN_CODE,
+                                billingResult.responseCode,
+                                billingResult.debugMessage
+                            )
                         }
                         purchasesStatusChanged()
                     }
@@ -695,6 +725,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK
                             && list.isNotEmpty()
                         ) {
+                            reportAnalytics(BILLING_EVENT_PRODUCTS_OK)
                             list.forEach {
                                 log(
                                     BILLING, "Price for %s: %d %s",
@@ -712,9 +743,13 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
 
                         } else if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                             log(BILLING, "No purchase types found") //NON-NLS
-                            // TODO report to firebase
+                            reportAnalytics(BILLING_EVENT_PRODUCTS_EMPTY)
                         } else {
-                            // TODO report to firebase
+                            reportAnalytics(
+                                BILLING_EVENT_PRODUCTS_UNKNOWN_CODE,
+                                billingResult.responseCode,
+                                billingResult.debugMessage
+                            )
                         }
                     }
                 }
@@ -731,13 +766,13 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         state.purchaseInfo[key]?.let {
             if (signedData.isEmpty()) {
                 log(BILLING, "Signed data is empty")
-                // TODO Report to Firebase
+                reportAnalytics(BILLING_EVENT_SIGNATURE_NO_SIGNED_DATA)
                 setPurchaseStatus(key, InternalPurchaseStatus.Off)
                 return false
             }
             if (signature.isEmpty()) {
+                reportAnalytics(BILLING_EVENT_SIGNATURE_NO_SIGNATURE)
                 log(BILLING, "Signature is empty")
-                // TODO report to Firebase
                 setPurchaseStatus(key, InternalPurchaseStatus.Off)
                 return false
             }
@@ -747,22 +782,30 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     it.token = purchase.purchaseToken
                     when (purchase.purchaseState) {
                         Purchase.PurchaseState.PURCHASED -> {
+                            reportAnalytics(BILLING_EVENT_SIGNATURE_VALID_PURCHASED)
                             setPurchaseStatus(key, InternalPurchaseStatus.On)
                             if (!purchase.isAcknowledged) {
                                 acknowledgePurchase(purchase)
                             }
                         }
-                        Purchase.PurchaseState.PENDING -> setPurchaseStatus(
-                            key,
-                            InternalPurchaseStatus.Pending
-                        )
-                        Purchase.PurchaseState.UNSPECIFIED_STATE -> setPurchaseStatus(
-                            key,
-                            InternalPurchaseStatus.Unknown
-                        )
+                        Purchase.PurchaseState.PENDING -> {
+                            reportAnalytics(BILLING_EVENT_SIGNATURE_VALID_PENDING)
+                            setPurchaseStatus(
+                                key,
+                                InternalPurchaseStatus.Pending
+                            )
+                        }
+                        Purchase.PurchaseState.UNSPECIFIED_STATE -> {
+                            reportAnalytics(BILLING_EVENT_SIGNATURE_VALID_UNSPECIFIED)
+                            setPurchaseStatus(
+                                key,
+                                InternalPurchaseStatus.Unknown
+                            )
+                        }
                     }
                     return true
                 } else {
+                    reportAnalytics(BILLING_EVENT_SIGNATURE_INVALID)
                     log(BILLING, "Signature is invalid. Assume purchase is off")
                     it.token = null
                     setPurchaseStatus(key, InternalPurchaseStatus.Off)
@@ -771,8 +814,9 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             } ?: run {
                 log(
                     BILLING,
-                    "Signature is null. This should never happen, but assume purchase is off"
+                    "Public Key is null. This should never happen, but assume purchase is off"
                 )
+                reportAnalytics(BILLING_EVENT_SIGNATURE_NO_PUBLIC_KEY)
                 it.token = null
                 setPurchaseStatus(key, InternalPurchaseStatus.Off)
                 return false
@@ -780,7 +824,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
 
         }
         log(BILLING, "No purchase info found for %s. Should never happen", key)
-        // TODO report to Firebase
+        reportAnalytics(BILLING_EVENT_SIGNATURE_NO_PURCHASE_INFO)
         return false
     }
 
@@ -796,13 +840,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     logBillingResult(billingResult)
                     when (billingResult.responseCode) {
                         BillingClient.BillingResponseCode.OK -> {
-                            // TODO Report to Firebase (maybe not, this is good)?
-                        }
-                        BillingClient.BillingResponseCode.BILLING_UNAVAILABLE, BillingClient.BillingResponseCode.ERROR, BillingClient.BillingResponseCode.DEVELOPER_ERROR, BillingClient.BillingResponseCode.SERVICE_DISCONNECTED, BillingClient.BillingResponseCode.SERVICE_TIMEOUT, BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> {
-                            // TODO Report to Firebase or crashlytics
+                            reportAnalytics(BILLING_EVENT_ACK_OK)
                         }
                         else -> {
-                            // TODO Report to Firebase or crashlytics
+                            reportAnalytics(BILLING_EVENT_ACK_UNKNOWN_CODE, billingResult.responseCode, billingResult.debugMessage)
                         }
                     }
                 }
@@ -814,7 +855,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         val signatureBytes: ByteArray = try {
             Base64.decode(signature, Base64.DEFAULT)
         } catch (e: IllegalArgumentException) {
-            // TODO Report to crashlytics
+            reportAnalytics(BILLING_EVENT_SIGNATURE_DECODING_FAILED, 0, e::class.java.name)
             log(BILLING, "Base64 decoding failed.") //NON-NLS
             return false
         }
@@ -823,13 +864,13 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             signatureAlgorithm.initVerify(publicKey)
             signatureAlgorithm.update(signedData.toByteArray())
             if (!signatureAlgorithm.verify(signatureBytes)) {
-                // TODO Report to firebase
+                reportAnalytics(BILLING_EVENT_SIGNATURE_VERIFICATION_FAILED)
                 log(BILLING, "Signature verification failed.") //NON-NLS
                 return false
             }
             return true
         } catch (e: Exception) {
-            // TODO Report to firebase (NoSuchAlgorithmException, InvalidKeyException, SignatureException)
+            reportAnalytics(BILLING_EVENT_SIGNATURE_VERIFICATION_CRASHED, 0, e::class.java.name)
         }
         return false
     }
@@ -839,10 +880,8 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             val decodedKey = Base64.decode(encodedPublicKey, Base64.DEFAULT)
             val keyFactory = KeyFactory.getInstance("RSA") //NON-NLS
             return keyFactory.generatePublic(X509EncodedKeySpec(decodedKey))
-        } catch (e: NoSuchAlgorithmException) {
-            // TODO Report to crashlytics
-        } catch (e: InvalidKeySpecException) {
-            // TODO Report to crashlytics
+        } catch (e: java.lang.Exception) {
+            reportAnalytics(BILLING_EVENT_SIGNATURE_PUBLIC_KEY_FAILED, 0, e::class.java.name)
         }
         return null
     }
@@ -866,15 +905,15 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         return Base64.decode(s, Base64.NO_WRAP)
     }
 
-    // These aren't usually needed
-    //        public static String encode(String s) {
-    //            return base64Encode(xorWithKey(s.getBytes()));
-    //        }
-    //
-    //        private static String base64Encode(byte[] bytes) {
-    //            byte[] output = Base64.encode(bytes, Base64.NO_WRAP);
-    //            return new String(output);
-    //        }
+// These aren't usually needed
+//        public static String encode(String s) {
+//            return base64Encode(xorWithKey(s.getBytes()));
+//        }
+//
+//        private static String base64Encode(byte[] bytes) {
+//            byte[] output = Base64.encode(bytes, Base64.NO_WRAP);
+//            return new String(output);
+//        }
 
     @PurchaseStatus
     fun getPurchaseStatusNormal(key: String): Int =
@@ -994,7 +1033,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                     preference.setSummary(R.string.rjhs_internal_str_settings_purchase_summary_off_no_price)
                 } else {
                     preference.summary =
-                        resources.getString(R.string.rjhs_internal_str_settings_purchase_summary_off, it.priceString)
+                        resources.getString(
+                            R.string.rjhs_internal_str_settings_purchase_summary_off,
+                            it.priceString
+                        )
                 }
             }
         } ?: run {
@@ -1016,6 +1058,136 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         get() {
             return !getBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised))
         }
+
+    fun reportAnalytics(event: AnalyticsEvent) {
+        reportAnalytics(event, 0, null)
+    }
+
+    fun reportAnalytics(event: AnalyticsEvent, subCode: Int) {
+        reportAnalytics(event, subCode, null)
+    }
+
+    fun reportAnalytics(event: AnalyticsEvent, subCode: Int, extraData: Any?) {
+        reportAnalytics(
+            AnalyticsInfo(
+                event = event,
+                subCode = subCode,
+                extraData = extraData
+            )
+        )
+    }
+
+    private fun reportAnalytics(event: AnalyticsInfo) {
+        log(ANALYTICS, "Reporting code: ${event.event.eventCode}")
+        if (event.send) {
+            FirebaseAnalytics.getInstance(this).logEvent("custom_event", event.bundle)
+        } else {
+            log(ANALYTICS, "Not sending analytics - not authorised by user")
+        }
+    }
+
+    fun store(collection: String, details: ImmutableMap<String, Any>) {
+        System.currentTimeMillis().let { now ->
+            FirebaseFirestore.getInstance()
+                .collection(collection)
+                .document("time_$now")
+                .set(details
+                    .toMutableMap().apply {
+                        put("device_model", Build.MODEL)
+                        put("device_brand", Build.BRAND)
+                        put("device_manufacturer", Build.MANUFACTURER)
+                        put("device_sdk", Build.VERSION.SDK_INT)
+                        put("event_time", System.currentTimeMillis())
+                    })
+                .addOnSuccessListener { log(FIRESTORE, "Successfully sent to Firestore") }
+                .addOnFailureListener { e -> warn(FIRESTORE, "Error writing to Firestore", e) }
+        }
+    }
+}
+
+enum class AnalyticsLevel {
+    Event,
+    Warning,
+    Error
+}
+
+enum class AnalyticsSensitivity {
+    Sensitive,
+    Normal,
+    Fine
+}
+
+data class AnalyticsEvent(
+    val eventCode: Int,
+    val sensitivity: AnalyticsSensitivity = AnalyticsSensitivity.Normal,
+    val level: AnalyticsLevel = AnalyticsLevel.Event,
+    val eventDomain: Char
+)
+
+internal data class AnalyticsInfo(
+    val event: AnalyticsEvent,
+    val subCode: Int = 0,
+    val extraData: Any? = null
+) {
+
+    internal val bundle: Bundle
+        get() {
+            return Bundle()
+                .addCode()
+                .addExtraCode()
+                .addExtraData()
+                .addDate()
+        }
+
+    private fun Bundle.addCode(): Bundle {
+        putString(
+            "code",
+            String.format(Locale.US, "%c.%c.%d", event.eventDomain, reasonCode, event.eventCode)
+        )
+        putInt("rawCode", event.eventCode)
+        return this
+    }
+
+    private fun Bundle.addExtraCode(): Bundle {
+        if (subCode != 0 && event.sensitivity == AnalyticsSensitivity.Fine || userAuthorised) {
+            putString(
+                "extraCode",
+                String.format(
+                    Locale.US,
+                    "%c.%c.%d.%d",
+                    event.eventDomain,
+                    reasonCode,
+                    event.eventCode,
+                    subCode
+                )
+            )
+        }
+        return this
+    }
+
+    private fun Bundle.addExtraData(): Bundle {
+        if (extraData != null && event.sensitivity == AnalyticsSensitivity.Fine || userAuthorised) {
+            putString("extraData", extraData.toString())
+        }
+        return this
+    }
+
+    private fun Bundle.addDate(): Bundle {
+        putLong("date", System.currentTimeMillis())
+        return this
+    }
+
+    internal val send: Boolean
+        get() = event.sensitivity == AnalyticsSensitivity.Normal || event.sensitivity == AnalyticsSensitivity.Fine || userAuthorised
+
+    private val reasonCode: Char = when (event.level) {
+        AnalyticsLevel.Event -> '-'
+        AnalyticsLevel.Warning -> 'w'
+        AnalyticsLevel.Error -> 'e'
+    }
+
+    private val userAuthorised: Boolean =
+        app.getBoolPref(app.getString(R.string.rjhs_fixed_settings_key_analytics))
 }
 
 // Before API 18, the method was incorrectly named "currentPackageName", but it still returned the process name
