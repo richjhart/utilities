@@ -4,6 +4,7 @@
     <color name="rjhs_color_primary_dark">#6a1b9a</color> <!-- Standard with Purple 700 -->
     <color name="rjhs_color_primary_disabled">#ba68c8</color> <!-- Purple 300 -->
     <color name="rjhs_color_accent">#201295</color> <!-- Analogous 900 -->
+    <color name="rjhs_color_accent_transparent">#44201295</color>
     <color name="rjhs_color_accent_dark">#000066</color> <!-- Standard with Analogous 900 -->
     <color name="rjhs_color_accent_disabled">#7750c3</color> <!-- Analogous 400 -->
     <color name="rjhs_color_tertiary">#a21f88</color> <!-- Analogous 2 500 -->
@@ -25,6 +26,8 @@
     <color name="rjhs_color_standard_button_background_enabled">@color/rjhs_color_accent</color>
     <color name="rjhs_color_standard_button_text_disabled">#88ffffff</color>
     <color name="rjhs_color_standard_button_text_enabled">#ffffff</color>
+    <color name="rjhs_color_transparent_button_text_enabled">@color/rjhs_color_accent</color>
+    <color name="rjhs_color_transparent_button_text_disabled">@color/rjhs_color_accent_transparent</color>
 
     <color name="rjhs_color_horizontal_bar">#44201295</color>
 

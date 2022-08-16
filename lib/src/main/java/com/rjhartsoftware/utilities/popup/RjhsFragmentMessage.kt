@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -18,13 +19,15 @@ import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
-import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions
 import com.rjhartsoftware.utilities.R
+import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions
 import com.rjhartsoftware.utilities.fromHtml
+import com.rjhartsoftware.utilities.google.app
 import org.greenrobot.eventbus.EventBus
 
 class PopupCheckboxChanged internal constructor(
@@ -64,7 +67,8 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             requireActivity(), requireArguments().getInt(ARG_STYLE)
         )
         val inflater = requireActivity().layoutInflater
-        val dialogInterface = inflater.inflate(R.layout.rjhs_internal_layout_fragment_dialog_message, null)
+        val dialogInterface =
+            inflater.inflate(R.layout.rjhs_internal_layout_fragment_dialog_message, null)
         val title = dialogInterface.findViewById<TextView>(R.id.rjhs_popup_title)
         var titleText = requireArguments().getCharSequence(ARG_TITLE, "")
         if (titleText is String) {
@@ -125,52 +129,67 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
         val dialog = builder.create()
         dialog.setCanceledOnTouchOutside(requireArguments().getBoolean(ARG_CANCEL_TOUCH))
         dialog.setOnShowListener { dialogInt ->
-            assert(arguments != null)
-            if (requireArguments().getBoolean(ARG_TRANSPARENT)) {
-                if ((dialogInt as AlertDialog).window != null) {
-                    dialogInt.window!!.decorView.setBackgroundResource(android.R.color.transparent)
-                }
-            }
-            val sv =
-                (dialogInt as AlertDialog).findViewById<NestedScrollView>(R.id.rjhs_popup_scroll)
-            sv!!.tag = false
-            if (requireArguments().getBoolean(ARG_NEUTRAL_BUTTON_STAY_OPEN)) {
-                val neutral = dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
-                neutral?.setOnClickListener { onClick(dialogInt, AlertDialog.BUTTON_NEUTRAL) }
-            }
-            if (requireArguments().getBoolean(ARG_MUST_VIEW_ALL)) {
-                val ok = dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
-                if (ok != null) {
-                    sv.tag = true
-                    if (requireArguments().getString(ARG_MUST_VIEW_ALL_MORE) == null) {
-                        ok.isEnabled = false
-                    } else {
-                        ok.isEnabled = true
-                        ok.text = requireArguments().getString(ARG_MUST_VIEW_ALL_MORE)
+            arguments?.let { arguments ->
+                (dialogInt as AlertDialog).let { dialogInt ->
+                    dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
+                        .setTextColor(ContextCompat.getColorStateList(app, R.color.rjhs_color_state_button_transparent_text))
+                    dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
+                        .setTextColor(ContextCompat.getColorStateList(app, R.color.rjhs_color_state_button_transparent_text))
+                    dialogInt.getButton(DialogInterface.BUTTON_NEGATIVE)
+                        .setTextColor(ContextCompat.getColorStateList(app, R.color.rjhs_color_state_button_transparent_text))
+                    if (requireArguments().getBoolean(ARG_TRANSPARENT)) {
+                        if (dialogInt.window != null) {
+                            dialogInt.window!!.decorView.setBackgroundResource(android.R.color.transparent)
+                        }
                     }
-                    if (sv.canScrollVertically(1)) {
-                        sv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                            if (!v.canScrollVertically(1)) {
+                    val sv =
+                        dialogInt.findViewById<NestedScrollView>(R.id.rjhs_popup_scroll)
+                    sv!!.tag = false
+                    if (requireArguments().getBoolean(ARG_NEUTRAL_BUTTON_STAY_OPEN)) {
+                        val neutral = dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
+                        neutral?.setOnClickListener {
+                            onClick(
+                                dialogInt,
+                                AlertDialog.BUTTON_NEUTRAL
+                            )
+                        }
+                    }
+                    if (requireArguments().getBoolean(ARG_MUST_VIEW_ALL)) {
+                        val ok = dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
+                        if (ok != null) {
+                            sv.tag = true
+                            if (requireArguments().getString(ARG_MUST_VIEW_ALL_MORE) == null) {
+                                ok.isEnabled = false
+                            } else {
+                                ok.isEnabled = true
+                                ok.text = requireArguments().getString(ARG_MUST_VIEW_ALL_MORE)
+                            }
+                            if (sv.canScrollVertically(1)) {
+                                sv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                                    if (!v.canScrollVertically(1)) {
+                                        ok.isEnabled = true
+                                        sv.tag = false
+                                        ok.text = requireArguments().getString(ARG_POSITIVE_BUTTON)
+                                    }
+                                })
+                                if (requireArguments().getString(ARG_MUST_VIEW_ALL_MORE) != null) {
+                                    ok.setOnClickListener {
+                                        if (sv.tag as Boolean) {
+                                            sv.pageScroll(View.FOCUS_DOWN)
+                                        } else {
+                                            onClick(dialogInt, AlertDialog.BUTTON_POSITIVE)
+                                            dialogInt.dismiss()
+                                        }
+                                    }
+                                }
+                            } else {
                                 ok.isEnabled = true
                                 sv.tag = false
                                 ok.text = requireArguments().getString(ARG_POSITIVE_BUTTON)
                             }
-                        })
-                        if (requireArguments().getString(ARG_MUST_VIEW_ALL_MORE) != null) {
-                            ok.setOnClickListener {
-                                if (sv.tag as Boolean) {
-                                    sv.pageScroll(View.FOCUS_DOWN)
-                                } else {
-                                    onClick(dialogInt, AlertDialog.BUTTON_POSITIVE)
-                                    dialogInt.dismiss()
-                                }
-                            }
                         }
-                    } else {
-                        ok.isEnabled = true
-                        sv.tag = false
-                        ok.text = requireArguments().getString(ARG_POSITIVE_BUTTON)
                     }
+
                 }
             }
         }

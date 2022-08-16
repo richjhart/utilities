@@ -71,7 +71,7 @@
 
     <style name="RjhsThemeOverlay.TransparentButton" parent="ThemeOverlay.AppCompat.Dark">
         <item name="colorButtonNormal">@android:color/transparent</item>
-        <item name="android:textColor">@color/rjhs_color_state_button_background</item>
+        <item name="android:textColor">@color/rjhs_color_state_button_transparent_text</item>
     </style>
 
     <style name="RjhsHorizontalBar">
