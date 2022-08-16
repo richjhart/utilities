@@ -24,14 +24,17 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
         setContentView(R.layout.rjhs_internal_layout_activity_data)
 
         findViewById<Button>(R.id.google_button_data_main_manage).setOnClickListener {
+            app.reportAnalytics(CONSENT_EVENT, 10)
             findViewById<ViewFlipper>(R.id.google_data_container).showNext()
         }
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_analytics).setOnCheckedChangeListener { _, isChecked ->
             app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), isChecked)
+            app.reportAnalytics(CONSENT_EVENT, 20 + if (isChecked) 1 else 0)
             syncSummaries()
         }
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_ads).setOnCheckedChangeListener { _, isChecked ->
             app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised), isChecked)
+            app.reportAnalytics(CONSENT_EVENT, 30 + if (isChecked) 1 else 0)
             syncSummaries()
         }
         syncSummaries()
@@ -63,13 +66,16 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
         findViewById<View>(R.id.google_button_data_main_ok).setOnClickListener {
             app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), true)
             app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), true)
+            app.reportAnalytics(CONSENT_EVENT, 0)
             openOriginalIntent()
         }
         findViewById<View>(R.id.google_button_data_manage_save).setOnClickListener {
+            app.reportAnalytics(CONSENT_EVENT, 1)
             openOriginalIntent()
         }
 
         findViewById<View>(R.id.google_button_data_manage_purchase).setOnClickListener {
+            app.reportAnalytics(CONSENT_EVENT, 2)
             app.startPurchaseFromConsent(this)
         }
 
@@ -128,14 +134,15 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
     override fun onBackPressed() {
         findViewById<ViewFlipper>(R.id.google_data_container).let {
             if (it.currentView.id == R.id.google_data_manage) {
+                app.reportAnalytics(CONSENT_EVENT, 11)
                 it.showPrevious()
                 return
             }
         }
+        app.reportAnalytics(CONSENT_EVENT, 12)
         finish()
     }
 
-    private lateinit var app: RjhsGoogleApplicationBase
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         findViewById<SwitchCompat>(R.id.google_switch_data_manage_analytics).isChecked =
             app.getBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics))

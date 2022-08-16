@@ -38,6 +38,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
     @CallSuper
     override fun onDestroy() {
         app.unregisterPurchaseChangeListener(purchaseStatusChangeListener)
+        unregisterAdView()
         super.onDestroy()
     }
 
@@ -60,6 +61,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                     it.adListener = object : AdListener() {
                         override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                             super.onAdFailedToLoad(loadAdError)
+                            app.reportAnalytics(AD_LOAD_EVENT, 1, loadAdError.code, loadAdError.message)
                             app.handler.post {
                                 adView?.let { delayedIt ->
                                     log(ADS, "Ad failed to load: %s", loadAdError.toString())
@@ -71,6 +73,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                         override fun onAdLoaded() {
                             super.onAdLoaded()
                             log(ADS, "Ad loaded")
+                            app.reportAnalytics(AD_LOAD_EVENT, 0)
                             app.handler.post {
                                 adView?.let { delayedIt ->
                                     if (requestingAds != AdRequestState.None) {
@@ -90,15 +93,19 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                         val builder = AdRequest.Builder()
                         requestingAds = AdRequestState.Personalised
                         if (app.anonymousAds) {
+                            app.reportAnalytics(AD_SETUP_EVENT, 1)
                             val extras = Bundle()
                             extras.putString("npa", "1")
                             builder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
                             requestingAds = AdRequestState.Anonymous
+                        } else {
+                            app.reportAnalytics(AD_SETUP_EVENT, 2)
                         }
                         it.loadAd(builder.build())
                     }
                     it.resume()
                 } else {
+                    app.reportAnalytics(AD_SETUP_EVENT, 3)
                     hideAds()
                 }
             }
@@ -126,29 +133,33 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         findViewById<AdView>(R.id.rjhs_fixed_google_ad_view)?.let {
-            adView = it
+            registerAdView(it)
         }
     }
 
     internal fun registerAdView(ad: AdView) {
         log(ADS, "Adview has been registered")
+        app.reportAnalytics(AD_SETUP_EVENT, 4)
         adView = ad
         updateAdVisibility()
     }
 
     internal fun unregisterAdView() {
         hideAds()
+        app.reportAnalytics(AD_SETUP_EVENT, 5)
         adView?.destroy()
         adView = null
     }
 
     internal fun resumeAd() {
         if (isOld) return
+        app.reportAnalytics(AD_SETUP_EVENT, 6)
         updateAdVisibility()
     }
 
     internal fun pauseAd() {
         if (isOld) return
+        app.reportAnalytics(AD_SETUP_EVENT, 7)
         adView?.pause()
     }
 
