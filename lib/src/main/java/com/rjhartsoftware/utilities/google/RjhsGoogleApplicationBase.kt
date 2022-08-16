@@ -50,7 +50,7 @@ private val REMOTE_CONFIG: D.DebugTag = D.DebugTag("google_remote")
 private const val SETTINGS_KEY_PURCHASE = "_g_ps."
 
 val isOld: Boolean
-    get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN
+    get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
 lateinit var app: RjhsGoogleApplicationBase
 
 // Status
@@ -1009,6 +1009,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
     }
 
     internal fun initPurchasePreference(preference: Preference) {
+        if (isOld) {
+            preference.isVisible = false
+            return
+        }
         state.purchaseInfo[preference.key]?.let {
             preference.isVisible = true
             preference.title = it.skuDetails!!.title
@@ -1019,6 +1023,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
     }
 
     fun updatePurchasePreference(preference: Preference) {
+        if (isOld) {
+            preference.isVisible = false
+            return
+        }
         state.purchaseInfo[preference.key]?.let {
             preference.isVisible = true
             if (getPurchaseStatusNormal(preference.key) == PURCHASE_ENABLED) {
@@ -1075,7 +1083,10 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
     }
 
     private fun reportAnalytics(event: AnalyticsInfo) {
-        log(ANALYTICS, "Reporting code: ${event.event.eventCodeBase}")
+        log(ANALYTICS, "Reporting code: ${event.event.eventCodeBase + event.code}")
+        if (isOld) {
+            return
+        }
         if (event.send) {
             FirebaseAnalytics.getInstance(this).logEvent("custom_event", event.bundle)
         } else {
@@ -1088,6 +1099,9 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
     }
 
     fun store(collection: String, details: Map<String, Any>) {
+        if (isOld) {
+            return
+        }
         System.currentTimeMillis().let { now ->
             FirebaseFirestore.getInstance()
                 .collection(if (D.isDebug()) "debug_" else "" + collection)
@@ -1100,8 +1114,12 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                         put("device_sdk", Build.VERSION.SDK_INT)
                         put("event_time", System.currentTimeMillis())
                     })
-                .addOnSuccessListener { log(FIRESTORE, "Successfully sent to Firestore") }
-                .addOnFailureListener { e -> warn(FIRESTORE, "Error writing to Firestore", e) }
+                .addOnSuccessListener {
+                    log(FIRESTORE, "Successfully sent to Firestore")
+                }
+                .addOnFailureListener { e ->
+                    warn(FIRESTORE, "Error writing to Firestore", e)
+                }
         }
     }
 }

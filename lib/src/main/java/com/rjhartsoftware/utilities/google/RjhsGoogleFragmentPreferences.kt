@@ -12,8 +12,6 @@ import com.rjhartsoftware.utilities.openUrl
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import com.takisoft.preferencex.SwitchPreferenceCompat
 
-internal data class PurchaseForPreferences(val key: String, val title: String)
-
 open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
     RjhsGooglePurchaseStatusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -25,6 +23,11 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
             findPreference<ListPreference>(resources.getString(R.string.rjhs_fixed_settings_theme_key))?.let {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     it.isVisible = false
+                    it.parent?.let { group ->
+                        if (group.children.count() == 1) {
+                            group.isVisible = false
+                        }
+                    }
                 } else {
                     it.setDefaultValue(getString(R.string.rjhs_internal_settings_theme_default))
                     it.setDialogTitle(R.string.rjhs_internal_str_settings_theme_title)
@@ -61,10 +64,14 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
             }
 
             findPreference<SwitchPreferenceCompat>(resources.getString(R.string.rjhs_fixed_settings_key_analytics))?.let {
-                it.layoutResource = R.layout.rjhs_layout_preference
-                it.setTitle(R.string.rjhs_internal_str_settings_analytics_title)
-                it.setSummaryOff(R.string.rjhs_internal_str_settings_anaytics_summary_off)
-                it.setSummaryOn(R.string.rjhs_internal_str_settings_analytics_summary_on)
+                if (isOld) {
+                    it.isVisible = false
+                } else {
+                    it.layoutResource = R.layout.rjhs_layout_preference
+                    it.setTitle(R.string.rjhs_internal_str_settings_analytics_title)
+                    it.setSummaryOff(R.string.rjhs_internal_str_settings_anaytics_summary_off)
+                    it.setSummaryOn(R.string.rjhs_internal_str_settings_analytics_summary_on)
+                }
             }
 
             updatePurchasePrefs()
@@ -73,7 +80,10 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 it.setTitle(R.string.rjhs_internal_str_settings_support_cookie)
                 it.layoutResource = R.layout.rjhs_layout_preference
                 it.setOnPreferenceClickListener {
-                    openUrl(activity as AppCompatActivity?, getString(R.string.rjhs_internal_cookie_policy))
+                    openUrl(
+                        activity as AppCompatActivity?,
+                        getString(R.string.rjhs_internal_cookie_policy)
+                    )
                     true
                 }
             }
@@ -81,7 +91,10 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 it.setTitle(R.string.rjhs_internal_str_settings_support_privacy)
                 it.layoutResource = R.layout.rjhs_layout_preference
                 it.setOnPreferenceClickListener {
-                    openUrl(activity as AppCompatActivity?, getString(R.string.rjhs_override_privacy_policy))
+                    openUrl(
+                        activity as AppCompatActivity?,
+                        getString(R.string.rjhs_override_privacy_policy)
+                    )
                     true
                 }
             }
