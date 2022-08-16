@@ -25,8 +25,8 @@ android {
 
 task copyEnResource {
     copy {
-        from ('src/main/res/values/strings.xml')
-        into ('src/main/res/values-en/')
+        from('src/main/res/values/strings.xml')
+        into('src/main/res/values-en/')
     }
 }
 
@@ -41,7 +41,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '4.0.0_alpha11'
+                version = '4.0.0_alpha12'
             }
         }
     }
@@ -54,28 +54,26 @@ dependencies {
 
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.appcompat:appcompat:1.5.0'
-    api 'com.google.android.material:material:1.6.1'
-    api 'org.greenrobot:eventbus:3.2.0'
     api 'androidx.constraintlayout:constraintlayout:2.1.4'
     api "androidx.core:core-ktx:1.8.0"
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    api 'com.google.code.gson:gson:2.8.9'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.2.1'
-
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    api 'androidx.preference:preference-ktx:1.2.0'
+    api 'com.google.android.material:material:1.6.1'
     implementation 'com.android.billingclient:billing:5.0.0'
-    implementation 'com.google.firebase:firebase-core:21.1.0'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     api 'com.google.android.gms:play-services-ads:21.1.0'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
+    implementation 'com.google.firebase:firebase-core:21.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.2.2'
     implementation 'com.google.firebase:firebase-config-ktx:21.1.1'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.1.0'
     api 'com.google.firebase:firebase-crashlytics:18.2.12'
-    implementation 'androidx.browser:browser:1.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 
-    api 'androidx.preference:preference-ktx:1.2.0'
+    api 'com.google.code.gson:gson:2.9.1'
+    api 'org.greenrobot:eventbus:3.2.0'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'com.takisoft.preferencex:preferencex:1.1.0'
 
 }

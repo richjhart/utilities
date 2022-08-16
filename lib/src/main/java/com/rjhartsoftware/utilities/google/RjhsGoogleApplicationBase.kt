@@ -1015,8 +1015,12 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         }
         state.purchaseInfo[preference.key]?.let {
             preference.isVisible = true
-            preference.title = it.skuDetails!!.title
             preference.layoutResource = R.layout.rjhs_layout_preference
+            it.skuDetails?.let { details ->
+                preference.title = details.title
+            } ?: run {
+                preference.isVisible = false
+            }
         } ?: run {
             preference.isVisible = false
         }

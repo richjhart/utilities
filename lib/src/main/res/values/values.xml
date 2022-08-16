@@ -9,8 +9,8 @@
     <string name="rjhs_override_billing_public_key" translatable="false">SET \'billing_public_key\' in resources</string>
     <string name="rjhs_override_sku_remove_ads" translatable="false" />
     <string name="rjhs_override_str_app_name" tools:ignore="MissingTranslation" />
-    <string name="rjhs_override_privacy_policy" translatable="false">https://www.rjhartsoftware.co.uk/privacy-policy</string>
-    <string name="rjhs_override_third_party_libraries" translatable="false" />
+    <string name="rjhs_override_privacy_policy" translatable="false">https://www.rjhartsoftware.co.uk/apps/privacy-policy</string>
+    <string name="rjhs_override_third_party_libraries" translatable="false">https://www.rjhartsoftware.co.uk/apps/libraries</string>
     <integer name="rjhs_override_copyright_start">2014</integer>
     <integer name="rjhs_override_copyright_latest">2022</integer>
 
@@ -38,7 +38,7 @@
 
     <string name="rjhs_str_empty" translatable="false" />
 
-    <string name="rjhs_internal_cookie_policy" translatable="false">https://www.rjhartsoftware.co.uk/cookie-policy</string>
+    <string name="rjhs_internal_cookie_policy" translatable="false">https://www.rjhartsoftware.co.uk/apps/cookie-policy</string>
 
 
 </resources>
