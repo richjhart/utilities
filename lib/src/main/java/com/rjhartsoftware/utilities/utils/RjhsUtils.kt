@@ -103,26 +103,31 @@ fun openUrl(context: AppCompatActivity?, url: String?) {
     if (context == null) {
         return
     }
-    try {
-        val builder = CustomTabsIntent.Builder()
-        builder.setToolbarColor(ContextCompat.getColor(context, R.color.rjhs_color_primary))
-        val customTabsIntent = builder.build()
-        customTabsIntent.launchUrl(context, Uri.parse(url))
-        return
-    } catch (e: ActivityNotFoundException) {
-        val uri = Uri.parse(url)
-        val webIntent = Intent(Intent.ACTION_VIEW, uri)
-        val packageManager = context.packageManager
-        val activities =
-            packageManager.queryIntentActivities(webIntent, PackageManager.MATCH_DEFAULT_ONLY)
-        if (activities.isNotEmpty()) {
-            try {
-                context.startActivity(webIntent)
-                return
-            } catch (ignore: ActivityNotFoundException) {
-            }
+
+    if (!app.getBoolPref(app.getString(R.string.rjhs_fixed_settings_key_external_browser))) {
+        try {
+            val builder = CustomTabsIntent.Builder()
+            builder.setToolbarColor(ContextCompat.getColor(context, R.color.rjhs_color_primary))
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(context, Uri.parse(url))
+            return
+        } catch (e: ActivityNotFoundException) {
         }
     }
+
+    val uri = Uri.parse(url)
+    val webIntent = Intent(Intent.ACTION_VIEW, uri)
+    val packageManager = context.packageManager
+    val activities =
+        packageManager.queryIntentActivities(webIntent, PackageManager.MATCH_DEFAULT_ONLY)
+    if (activities.isNotEmpty()) {
+        try {
+            context.startActivity(webIntent)
+            return
+        } catch (ignore: ActivityNotFoundException) {
+        }
+    }
+
     RjhsFragmentMessage.Builder()
         .message(R.string.rjhs_internal_str_msg_no_browser)
         .inactivePositiveButton(R.string.rjhs_str_ok)

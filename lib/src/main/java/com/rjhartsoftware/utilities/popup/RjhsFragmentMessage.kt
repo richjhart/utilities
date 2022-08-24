@@ -4,17 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.view.View
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
@@ -46,8 +42,7 @@ class PopupResult(val which: Int, val request: String, val b: Bundle) {
     }
 }
 
-class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
-    CompoundButton.OnCheckedChangeListener, TextWatcher {
+class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener, TextWatcher {
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         requireArguments().putString(ARG_INPUT_RESULT, s.toString())
@@ -91,7 +86,6 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             if (requireArguments().getBoolean(ARG_CHECKBOX_RESULT, false)) {
                 checkbox.isChecked = true
             }
-            checkbox.setOnCheckedChangeListener(this)
         } else {
             checkbox.visibility = View.GONE
         }
@@ -131,13 +125,29 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
         dialog.setOnShowListener { dialogInt ->
             arguments?.let { arguments ->
                 (dialogInt as AlertDialog).let { dialogInt ->
+
                     dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
-                        .setTextColor(ContextCompat.getColorStateList(app, R.color.rjhs_color_state_button_transparent_text))
+                        .setTextColor(
+                            ContextCompat.getColorStateList(
+                                app,
+                                R.color.rjhs_color_state_button_transparent_text
+                            )
+                        )
                     dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
-                        .setTextColor(ContextCompat.getColorStateList(app, R.color.rjhs_color_state_button_transparent_text))
+                        .setTextColor(
+                            ContextCompat.getColorStateList(
+                                app,
+                                R.color.rjhs_color_state_button_transparent_text
+                            )
+                        )
                     dialogInt.getButton(DialogInterface.BUTTON_NEGATIVE)
-                        .setTextColor(ContextCompat.getColorStateList(app, R.color.rjhs_color_state_button_transparent_text))
-                    if (requireArguments().getBoolean(ARG_TRANSPARENT)) {
+                        .setTextColor(
+                            ContextCompat.getColorStateList(
+                                app,
+                                R.color.rjhs_color_state_button_transparent_text
+                            )
+                        )
+                    if (arguments.getBoolean(ARG_TRANSPARENT)) {
                         if (dialogInt.window != null) {
                             dialogInt.window!!.decorView.setBackgroundResource(android.R.color.transparent)
                         }
@@ -145,7 +155,7 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
                     val sv =
                         dialogInt.findViewById<NestedScrollView>(R.id.rjhs_popup_scroll)
                     sv!!.tag = false
-                    if (requireArguments().getBoolean(ARG_NEUTRAL_BUTTON_STAY_OPEN)) {
+                    if (arguments.getBoolean(ARG_NEUTRAL_BUTTON_STAY_OPEN)) {
                         val neutral = dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
                         neutral?.setOnClickListener {
                             onClick(
@@ -154,46 +164,89 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
                             )
                         }
                     }
-                    if (requireArguments().getBoolean(ARG_MUST_VIEW_ALL)) {
-                        val ok = dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
+
+                    val ok = dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
+
+                    checkbox.setOnCheckedChangeListener {
+                            _: CompoundButton, isChecked: Boolean ->
+                        arguments.putBoolean(ARG_CHECKBOX_RESULT, isChecked)
+                        EventBus.getDefault().post(
+                            PopupCheckboxChanged(
+                                isChecked,
+                                arguments.getString(ARG_REQUEST_TAG)!!,
+                                arguments
+                            )
+                        )
+                        checkRequiredState(ok)
+                    }
+
+                    if (arguments.getBoolean(ARG_MUST_VIEW_ALL)) {
                         if (ok != null) {
-                            sv.tag = true
-                            if (requireArguments().getString(ARG_MUST_VIEW_ALL_MORE) == null) {
-                                ok.isEnabled = false
-                            } else {
-                                ok.isEnabled = true
-                                ok.text = requireArguments().getString(ARG_MUST_VIEW_ALL_MORE)
-                            }
+                            arguments.putBoolean(ARG_SEEN_ALL, false)
                             if (sv.canScrollVertically(1)) {
-                                sv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                                    if (!v.canScrollVertically(1)) {
-                                        ok.isEnabled = true
-                                        sv.tag = false
-                                        ok.text = requireArguments().getString(ARG_POSITIVE_BUTTON)
+                                sv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
+                                    if (!sv.canScrollVertically(1)) {
+                                        arguments.putBoolean(ARG_SEEN_ALL, true)
                                     }
+                                    checkRequiredState(ok)
                                 })
-                                if (requireArguments().getString(ARG_MUST_VIEW_ALL_MORE) != null) {
+                                if (arguments.getString(ARG_MUST_VIEW_ALL_MORE) != null) {
                                     ok.setOnClickListener {
-                                        if (sv.tag as Boolean) {
+                                        if (!requireArguments().getBoolean(ARG_SEEN_ALL)) {
                                             sv.pageScroll(View.FOCUS_DOWN)
                                         } else {
                                             onClick(dialogInt, AlertDialog.BUTTON_POSITIVE)
                                             dialogInt.dismiss()
                                         }
+                                        checkRequiredState(ok)
                                     }
                                 }
                             } else {
-                                ok.isEnabled = true
-                                sv.tag = false
-                                ok.text = requireArguments().getString(ARG_POSITIVE_BUTTON)
+                                arguments.putBoolean(ARG_SEEN_ALL, true)
                             }
                         }
                     }
+
+                    checkRequiredState(ok)
 
                 }
             }
         }
         return dialog
+    }
+
+    private fun checkRequiredState(ok: Button) {
+        arguments?.let { arguments ->
+
+            val checkSatisfied = !arguments.getBoolean(ARG_MUST_CHECK)
+                    || arguments.getBoolean(ARG_CHECKBOX_RESULT)
+
+            if (arguments.getString(ARG_MUST_VIEW_ALL_MORE) != null) {
+                // We know there is a "more" string (which means we need to view all)
+                if (!arguments.getBoolean(ARG_SEEN_ALL)) {
+                    // The button should still stay "more"
+                    ok.isEnabled = true
+                    ok.text = arguments.getString(ARG_MUST_VIEW_ALL_MORE)
+                } else {
+                    // We have seen all now - the button should say OK
+                    ok.isEnabled = checkSatisfied
+                    ok.text = arguments.getString(ARG_POSITIVE_BUTTON)
+                }
+            } else if (arguments.getBoolean(ARG_MUST_VIEW_ALL)) {
+                // There is no "more" text, but there could be scrolling
+                ok.text = arguments.getString(ARG_POSITIVE_BUTTON)
+                if (!arguments.getBoolean(ARG_SEEN_ALL)) {
+                    ok.isEnabled = false
+                } else {
+                    ok.isEnabled = checkSatisfied
+                }
+            } else if (arguments.getBoolean(ARG_MUST_CHECK)) {
+                ok.isEnabled = checkSatisfied
+            } else {
+                ok.isEnabled = true
+            }
+
+        }
     }
 
     private class SavedString(
@@ -359,7 +412,14 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
             return this
         }
 
-        fun checkBox(message: CharSequence?, checked: Boolean): Builder {
+        fun mustAccept(message: CharSequence?): Builder {
+            mArguments.putBoolean(ARG_MUST_CHECK, true)
+            mArguments.putBoolean(ARG_CHECKBOX_RESULT, false)
+            mArguments.putCharSequence(ARG_CHECKBOX, message)
+            return this
+        }
+
+        fun checkBox(message: CharSequence?, checked: Boolean = false): Builder {
             mArguments.putBoolean(ARG_CHECKBOX_RESULT, checked)
             mArguments.putCharSequence(ARG_CHECKBOX, message)
             return this
@@ -440,18 +500,6 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
         onClick(dialog, DialogInterface.BUTTON_NEGATIVE)
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-        assert(arguments != null)
-        requireArguments().putBoolean(ARG_CHECKBOX_RESULT, isChecked)
-        EventBus.getDefault().post(
-            PopupCheckboxChanged(
-                isChecked,
-                requireArguments().getString(ARG_REQUEST_TAG)!!,
-                requireArguments()
-            )
-        )
-    }
-
     companion object {
         private const val TAG = "_frag_message."
 
@@ -475,9 +523,11 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener,
         const val ARG_CHECKBOX_RESULT = "checkbox_result"
         private const val ARG_STYLE = "style"
         private const val ARG_TRANSPARENT = "transparent"
+        private const val ARG_MUST_CHECK = "checkbox_required"
         private const val ARG_MUST_VIEW_ALL = "must_view_all"
         private const val ARG_MUST_VIEW_ALL_MORE = "must_view_all_more"
         private const val ARG_NEUTRAL_BUTTON_STAY_OPEN = "neutral_stay_open"
+        private const val ARG_SEEN_ALL = "seen_all"
         private var sAutoRequestId = 0
     }
 }

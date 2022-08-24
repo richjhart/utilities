@@ -1,19 +1,40 @@
 package com.rjhartsoftware.utilities.google
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.*
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.openUrl
+import com.rjhartsoftware.utilities.popup.PopupResult
+import com.rjhartsoftware.utilities.popup.RjhsFragmentMessage
+import com.rjhartsoftware.utilities.utils.D
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import com.takisoft.preferencex.SwitchPreferenceCompat
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import kotlin.system.exitProcess
 
 open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
     RjhsGooglePurchaseStatusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
+
+    val SETTINGS = D.DebugTag("settings")
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
 
     @CallSuper
     override fun onCreatePreferencesFix(bundle: Bundle?, s: String?) {
@@ -74,6 +95,13 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 }
             }
 
+            findPreference<SwitchPreferenceCompat>(resources.getString(R.string.rjhs_fixed_settings_key_external_browser))?.let {
+                it.layoutResource = R.layout.rjhs_layout_preference
+                it.setTitle("___External Browser")
+                it.setSummaryOff("___Use browser within app where possible")
+                it.setSummaryOn("___Always use default external browser")
+            }
+
             updatePurchasePrefs()
 
             findPreference<Preference>(resources.getString(R.string.rjhs_fixed_settings_key_cookie))?.let {
@@ -107,9 +135,44 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 }
             }
 
+            findPreference<Preference>(resources.getString(R.string.rjhs_fixed_settings_key_reset))?.let {
+                it.setTitle("___Reset")
+                it.layoutResource = R.layout.rjhs_layout_preference
+                it.setOnPreferenceClickListener {
+                    RjhsFragmentMessage.Builder("___reset")
+                        .title("___Reset App")
+                        .message("___Reset App? This cannot be undone")
+                        .inactiveNegativeButton(R.string.rjhs_str_cancel)
+                        .positiveButton("___Reset")
+                        .mustViewAll("___more")
+                        .mustAccept("___I understand this cannot be undone")
+                        .show(activity as AppCompatActivity)
+                    true
+                }
+            }
+
             app.registerPurchaseChangeListener(this, app.handler)
             PreferenceManager.getDefaultSharedPreferences(app)
                 .registerOnSharedPreferenceChangeListener(this)
+        }
+    }
+
+    @Subscribe
+    fun onPopupResult(result: PopupResult) {
+        if (result.request == "___reset" && result.which == AlertDialog.BUTTON_POSITIVE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                (app.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()
+            } else {
+                context?.filesDir?.let { data ->
+                    data.deleteRecursively()
+                    data.parentFile?.listFiles()?.forEach { child ->
+                        if (child.isDirectory) {
+                            child.deleteRecursively()
+                        }
+                    }
+                }
+                exitProcess(0)
+            }
         }
     }
 

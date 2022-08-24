@@ -29,10 +29,12 @@
     <string name="rjhs_fixed_settings_key_support" translatable="false">settings_support</string>
     <string name="rjhs_fixed_settings_key_cookie" translatable="false">settings_cookie</string>
     <string name="rjhs_fixed_settings_key_privacy" translatable="false">settings_privacy</string>
+    <string name="rjhs_fixed_settings_key_reset" translatable="false">settings_reset</string>
 
     <string name="rjhs_fixed_settings_key_analytics" translatable="false">_g_c_an</string>
     <string name="rjhs_fixed_settings_key_personalised" translatable="false">_g_c_ads</string>
     <string name="rjhs_fixed_settings_key_consent" translatable="false">_g_c_s</string>
+    <string name="rjhs_fixed_settings_key_external_browser" translatable="false">_g_c_browser</string>
 
     <id name="rjhs_fixed_google_ad_view" />
 
