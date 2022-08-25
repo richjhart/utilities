@@ -5,6 +5,7 @@
     <string name="rjhs_str_help">Help</string>
     <string name="rjhs_str_help_english">Help (In English)</string>
     <string name="rjhs_str_settings">Settings</string>
+    <string name="rjhs_str_more">More</string>
     <string name="rjhs_str_language">English</string>
     <string name="rjhs_internal_str_msg_no_browser">No application can handle this request. Please install a web browser.</string>
     <!-- region Data -->
@@ -22,6 +23,14 @@
     <string name="rjhs_internal_str_settings_support_title">Help Support Development</string>
     <string name="rjhs_internal_str_settings_support_cookie">Tap here to see our Cookie policy</string>
     <string name="rjhs_internal_str_settings_support_privacy">Tap here to see our Privacy policy</string>
+    <string name="rjhs_internal_str_settings_browser_title">Opening links</string>
+    <string name="rjhs_internal_str_settings_browser_off">Open links within the app where possible</string>
+    <string name="rjhs_internal_str_settings_browser_on">Always open links in the default browser</string>
+    <string name="rjhs_internal_str_settings_reset_title">Clear all data</string>
+    <string name="rjhs_internal_str_settings_reset_popup_title">Clear all app data?</string>
+    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>This cannot be undone&lt;/b>&lt;br />&lt;br />This will clear all app data, including any preferences, and log out of any accounts. It will also stop the app, meaning you will need to open it again if you still want to use it.</string>
+    <string name="rjhs_internal_str_settings_reset_popup_ok">Reset</string>
+    <string name="rjhs_internal_str_settings_reset_popup_confirm">I understand that this is a destructive action that cannot be undone</string>
     <!-- endregion -->
     <string name="rjhs_internal_str_settings_theme_title">Theme</string>
     <string name="rjhs_internal_str_settings_theme_entry_light">Light</string>

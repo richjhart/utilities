@@ -1,6 +1,7 @@
 package com.rjhartsoftware.utilities
 
 import android.content.ActivityNotFoundException
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -9,16 +10,22 @@ import android.os.Looper
 import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
+import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.rpc.Help
 import com.rjhartsoftware.utilities.google.app
 import com.rjhartsoftware.utilities.popup.RjhsFragmentMessage
 import com.rjhartsoftware.utilities.utils.BackgroundActivityOnMainThreadException
 import com.rjhartsoftware.utilities.utils.D
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
 import java.util.*
 
 class RjhsTruss {
@@ -99,6 +106,36 @@ fun fromHtml(html: String): Spanned =
         Html.fromHtml(html)
     }
 
+fun getActivity(v: View): AppCompatActivity {
+    var c = v.context
+    while (c is ContextWrapper) {
+        if (c is AppCompatActivity) {
+            return c
+        }
+        c = c.baseContext
+    }
+    throw RuntimeException("Unable to find activity")
+}
+
+fun prepareLinks(tv: TextView) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (tv.movementMethod !is BetterLinkMovementMethod) {
+            Linkify.addLinks(tv, Linkify.WEB_URLS)
+            val mm = BetterLinkMovementMethod.newInstance()
+            mm.setOnLinkClickListener { textView, url ->
+                openUrl(getActivity(textView), url)
+                true
+            }
+            tv.movementMethod = mm
+        }
+    } else {
+        if (tv.movementMethod !is LinkMovementMethod) {
+            Linkify.addLinks(tv, Linkify.WEB_URLS)
+            tv.movementMethod = LinkMovementMethod.getInstance()
+        }
+    }
+}
+
 fun openUrl(context: AppCompatActivity?, url: String?) {
     if (context == null) {
         return
@@ -172,4 +209,5 @@ fun cs(@StringRes id: Int, vararg formatArgs: Any?): CharSequence {
     val html: String = app.getString(id, *formatArgs)
     return fromHtml(html)
 }
+
 class RjhsUtils

@@ -21,6 +21,8 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import kotlin.system.exitProcess
 
+private const val MESSAGE_RESET = "_reset"
+
 open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
     RjhsGooglePurchaseStatusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -97,9 +99,9 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
 
             findPreference<SwitchPreferenceCompat>(resources.getString(R.string.rjhs_fixed_settings_key_external_browser))?.let {
                 it.layoutResource = R.layout.rjhs_layout_preference
-                it.setTitle("___External Browser")
-                it.setSummaryOff("___Use browser within app where possible")
-                it.setSummaryOn("___Always use default external browser")
+                it.setTitle(R.string.rjhs_internal_str_settings_browser_title)
+                it.setSummaryOff(R.string.rjhs_internal_str_settings_browser_off)
+                it.setSummaryOn(R.string.rjhs_internal_str_settings_browser_on)
             }
 
             updatePurchasePrefs()
@@ -136,16 +138,16 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
             }
 
             findPreference<Preference>(resources.getString(R.string.rjhs_fixed_settings_key_reset))?.let {
-                it.setTitle("___Reset")
+                it.setTitle(R.string.rjhs_internal_str_settings_reset_title)
                 it.layoutResource = R.layout.rjhs_layout_preference
                 it.setOnPreferenceClickListener {
-                    RjhsFragmentMessage.Builder("___reset")
-                        .title("___Reset App")
-                        .message("___Reset App? This cannot be undone")
+                    RjhsFragmentMessage.Builder(MESSAGE_RESET)
+                        .title(R.string.rjhs_internal_str_settings_reset_popup_title)
+                        .message(R.string.rjhs_internal_str_settings_reset_popup_message)
                         .inactiveNegativeButton(R.string.rjhs_str_cancel)
-                        .positiveButton("___Reset")
-                        .mustViewAll("___more")
-                        .mustAccept("___I understand this cannot be undone")
+                        .positiveButton(R.string.rjhs_internal_str_settings_reset_popup_ok)
+                        .mustViewAll(getString(R.string.rjhs_str_more))
+                        .mustAccept(getString(R.string.rjhs_internal_str_settings_reset_popup_confirm))
                         .show(activity as AppCompatActivity)
                     true
                 }
@@ -159,7 +161,7 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
 
     @Subscribe
     fun onPopupResult(result: PopupResult) {
-        if (result.request == "___reset" && result.which == AlertDialog.BUTTON_POSITIVE) {
+        if (result.request == MESSAGE_RESET && result.which == AlertDialog.BUTTON_POSITIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 (app.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()
             } else {

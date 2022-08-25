@@ -24,6 +24,7 @@ import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions
 import com.rjhartsoftware.utilities.fromHtml
 import com.rjhartsoftware.utilities.google.app
+import com.rjhartsoftware.utilities.prepareLinks
 import org.greenrobot.eventbus.EventBus
 
 class PopupCheckboxChanged internal constructor(
@@ -76,10 +77,7 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener, T
             msgText = fromHtml(msgText)
         }
         message.text = msgText
-        val m = message.movementMethod
-        if (m !is LinkMovementMethod) {
-            message.movementMethod = LinkMovementMethod.getInstance()
-        }
+        prepareLinks(message)
         val checkbox = dialogInterface.findViewById<CheckBox>(R.id.rjhs_popup_checkbox)
         if (requireArguments().getCharSequence(ARG_CHECKBOX) != null) {
             checkbox.text = requireArguments().getCharSequence(ARG_CHECKBOX)

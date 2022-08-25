@@ -10,8 +10,11 @@ import android.widget.ViewFlipper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.preference.PreferenceManager
+import com.google.rpc.Help
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.cs
+import com.rjhartsoftware.utilities.prepareLinks
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
 
 const val EXTRA_ORIGINAL_INTENT: String = "_intent"
 
@@ -46,9 +49,7 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
                     getString(R.string.rjhs_internal_cookie_policy),
                     getString(R.string.rjhs_override_privacy_policy)
                 )
-            if (it.movementMethod !is LinkMovementMethod) {
-                it.movementMethod = LinkMovementMethod.getInstance()
-            }
+            prepareLinks(it)
         }
 
         findViewById<TextView>(R.id.google_text_data_manage_message).let {
@@ -58,14 +59,12 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
                     getString(R.string.rjhs_internal_cookie_policy),
                     getString(R.string.rjhs_override_privacy_policy)
                 )
-            if (it.movementMethod !is LinkMovementMethod) {
-                it.movementMethod = LinkMovementMethod.getInstance()
-            }
+            prepareLinks(it)
         }
 
         findViewById<View>(R.id.google_button_data_main_ok).setOnClickListener {
             app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), true)
-            app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_analytics), true)
+            app.setBoolPref(getString(R.string.rjhs_fixed_settings_key_personalised), true)
             app.reportAnalytics(CONSENT_EVENT, 0)
             openOriginalIntent()
         }
