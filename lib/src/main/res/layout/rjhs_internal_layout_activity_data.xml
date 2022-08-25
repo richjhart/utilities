@@ -118,8 +118,6 @@
         </FrameLayout>
 
         <View
-            android:id="@+id/google_divider_data_manage_ads"
-            android:visibility="gone"
             style="@style/RjhsHorizontalBar"
             />
 
@@ -157,6 +155,15 @@
                 android:text="@string/rjhs_internal_str_settings_personalised_summary_on"
                 android:visibility="invisible" />
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/google_text_data_manage_purchased"
+            style="@style/RjhsTextNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="@string/rjhs_internal_str_consent_manage_purchased"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/google_button_data_manage_purchase"

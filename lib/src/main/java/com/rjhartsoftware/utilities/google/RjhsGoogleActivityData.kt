@@ -152,16 +152,16 @@ internal class RjhsGoogleActivityData : AppCompatActivity(), SharedPreferences.O
 
     override fun purchaseStatusChanged() {
         if (app.showAds) {
-            findViewById<View>(R.id.google_divider_data_manage_ads).visibility = View.VISIBLE
             findViewById<View>(R.id.google_switch_data_manage_ads).visibility = View.VISIBLE
             findViewById<View>(R.id.google_switch_data_manage_ads_summary).visibility = View.VISIBLE
+            findViewById<View>(R.id.google_text_data_manage_purchased).visibility = View.GONE
             app.checkIfConsentPurchaseRegistered(findViewById(R.id.google_button_data_manage_purchase))
             syncSummaries()
         } else {
-            findViewById<View>(R.id.google_divider_data_manage_ads).visibility = View.GONE
             findViewById<View>(R.id.google_switch_data_manage_ads).visibility = View.GONE
             findViewById<View>(R.id.google_switch_data_manage_ads_summary).visibility = View.GONE
             findViewById<View>(R.id.google_button_data_manage_purchase).visibility = View.GONE
+            findViewById<View>(R.id.google_text_data_manage_purchased).visibility = View.VISIBLE
         }
     }
 }
