@@ -160,7 +160,8 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
     }
 
     @Subscribe
-    fun onPopupResult(result: PopupResult) {
+    @CallSuper
+    open fun onPopupResult(result: PopupResult) {
         if (result.request == MESSAGE_RESET && result.which == AlertDialog.BUTTON_POSITIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 (app.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).clearApplicationUserData()
