@@ -22,7 +22,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import com.android.billingclient.api.*
 import com.google.android.gms.ads.MobileAds
-import com.google.common.collect.ImmutableMap
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
@@ -295,6 +294,32 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
             sharedPreferencesListener.onSharedPreferenceChanged(null, null)
             PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(sharedPreferencesListener)
+        }
+    }
+
+    enum class NightMode {
+        Auto,
+        Night,
+        Day
+    }
+
+    internal fun whichNightMode(): NightMode {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+            val theme = prefs.getString(
+                getString(R.string.rjhs_fixed_settings_theme_key),
+                getString(R.string.rjhs_internal_settings_theme_default)
+            )
+            return when (theme) {
+                "light" -> NightMode.Day
+                "dark" -> NightMode.Night
+                else -> {
+                    // On less than Q, this may not always be correct, but it'll be pretty close
+                    NightMode.Auto
+                }
+            }
+        } else {
+            return NightMode.Day
         }
     }
 
@@ -843,7 +868,12 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
                             reportAnalytics(BILLING_EVENT_ACK, 0)
                         }
                         else -> {
-                            reportAnalytics(BILLING_EVENT_ACK, 1, billingResult.responseCode, billingResult.debugMessage)
+                            reportAnalytics(
+                                BILLING_EVENT_ACK,
+                                1,
+                                billingResult.responseCode,
+                                billingResult.debugMessage
+                            )
                         }
                     }
                 }
@@ -1075,7 +1105,12 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         reportAnalytics(event, code, 0, null)
     }
 
-    fun reportAnalytics(event: AnalyticsEvent, code: Int, subCode: Int = 0, extraData: Any? = null) {
+    fun reportAnalytics(
+        event: AnalyticsEvent,
+        code: Int,
+        subCode: Int = 0,
+        extraData: Any? = null
+    ) {
         reportAnalytics(
             AnalyticsInfo(
                 event = event,
@@ -1182,7 +1217,14 @@ internal data class AnalyticsInfo(
     private fun Bundle.addCode(): Bundle {
         putString(
             "code",
-            String.format(Locale.US, "$debugFlag%c.%c.%c.%d", event.eventDomain, reasonCode, sensitivityCode, event.eventCodeBase + code)
+            String.format(
+                Locale.US,
+                "$debugFlag%c.%c.%c.%d",
+                event.eventDomain,
+                reasonCode,
+                sensitivityCode,
+                event.eventCodeBase + code
+            )
         )
         putInt("rawCode", event.eventCodeBase)
         return this

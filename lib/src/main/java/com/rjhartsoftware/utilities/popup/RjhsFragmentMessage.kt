@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.*
 import androidx.annotation.StringRes
@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions
 import com.rjhartsoftware.utilities.fromHtml
+import com.rjhartsoftware.utilities.google.RjhsGoogleApplicationBase
 import com.rjhartsoftware.utilities.google.app
 import com.rjhartsoftware.utilities.prepareLinks
 import org.greenrobot.eventbus.EventBus
@@ -123,28 +124,34 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener, T
         dialog.setOnShowListener { dialogInt ->
             arguments?.let { arguments ->
                 (dialogInt as AlertDialog).let { dialogInt ->
+                    val colors: ColorStateList? =
+                        when (app.whichNightMode()) {
+                            RjhsGoogleApplicationBase.NightMode.Day -> {
+                                ContextCompat.getColorStateList(
+                                    app,
+                                    R.color.rjhs_color_state_button_transparent_text_day
+                                )
+                            }
+                            RjhsGoogleApplicationBase.NightMode.Auto -> {
+                                ContextCompat.getColorStateList(
+                                    app,
+                                    R.color.rjhs_color_state_button_transparent_text
+                                )
+                            }
+                            RjhsGoogleApplicationBase.NightMode.Night -> {
+                                ContextCompat.getColorStateList(
+                                    app,
+                                    R.color.rjhs_color_state_button_transparent_text_night
+                                )
 
+                            }
+                        }
                     dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
-                        .setTextColor(
-                            ContextCompat.getColorStateList(
-                                app,
-                                R.color.rjhs_color_state_button_transparent_text
-                            )
-                        )
+                        .setTextColor(colors)
                     dialogInt.getButton(DialogInterface.BUTTON_NEUTRAL)
-                        .setTextColor(
-                            ContextCompat.getColorStateList(
-                                app,
-                                R.color.rjhs_color_state_button_transparent_text
-                            )
-                        )
+                        .setTextColor(colors)
                     dialogInt.getButton(DialogInterface.BUTTON_NEGATIVE)
-                        .setTextColor(
-                            ContextCompat.getColorStateList(
-                                app,
-                                R.color.rjhs_color_state_button_transparent_text
-                            )
-                        )
+                        .setTextColor(colors)
                     if (arguments.getBoolean(ARG_TRANSPARENT)) {
                         if (dialogInt.window != null) {
                             dialogInt.window!!.decorView.setBackgroundResource(android.R.color.transparent)
@@ -165,8 +172,7 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener, T
 
                     val ok = dialogInt.getButton(DialogInterface.BUTTON_POSITIVE)
 
-                    checkbox.setOnCheckedChangeListener {
-                            _: CompoundButton, isChecked: Boolean ->
+                    checkbox.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
                         arguments.putBoolean(ARG_CHECKBOX_RESULT, isChecked)
                         EventBus.getDefault().post(
                             PopupCheckboxChanged(

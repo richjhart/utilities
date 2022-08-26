@@ -40,9 +40,31 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
 
     @CallSuper
     override fun onCreatePreferencesFix(bundle: Bundle?, s: String?) {
-        setPreferencesFromResource(R.xml.preferences, s)
-        context?.let {
-
+        context?.let { context ->
+            PreferenceManager.getDefaultSharedPreferences(context).let { prefs ->
+                prefs.edit().apply {
+                    if (!prefs.contains(getString(R.string.rjhs_fixed_settings_key_analytics))) {
+                        putBoolean(getString(R.string.rjhs_fixed_settings_key_analytics), false)
+                    }
+                    if (!prefs.contains(getString(R.string.rjhs_fixed_settings_key_personalised))) {
+                        putBoolean(getString(R.string.rjhs_fixed_settings_key_personalised), false)
+                    }
+                    if (!prefs.contains(getString(R.string.rjhs_fixed_settings_key_external_browser))) {
+                        putBoolean(
+                            getString(R.string.rjhs_fixed_settings_key_external_browser),
+                            false
+                        )
+                    }
+                    if (!prefs.contains(getString(R.string.rjhs_fixed_settings_theme_key))) {
+                        putString(
+                            getString(R.string.rjhs_fixed_settings_theme_key),
+                            getString(R.string.rjhs_internal_settings_theme_default)
+                        )
+                    }
+                    apply()
+                }
+            }
+            setPreferencesFromResource(R.xml.preferences, s)
             findPreference<ListPreference>(resources.getString(R.string.rjhs_fixed_settings_theme_key))?.let {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     it.isVisible = false

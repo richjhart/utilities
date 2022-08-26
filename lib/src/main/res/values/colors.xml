@@ -29,6 +29,11 @@
     <color name="rjhs_color_transparent_button_text_enabled">@color/rjhs_color_accent</color>
     <color name="rjhs_color_transparent_button_text_disabled">@color/rjhs_color_accent_transparent</color>
 
+    <color name="rjhs_color_transparent_button_text_enabled_day">#201295</color>
+    <color name="rjhs_color_transparent_button_text_disabled_day">#44201295</color>
+    <color name="rjhs_color_transparent_button_text_enabled_night">#2196f3</color>
+    <color name="rjhs_color_transparent_button_text_disabled_night">#442196f3</color>
+
     <color name="rjhs_color_horizontal_bar">#44201295</color>
 
     <color name="colorPrimary">@color/rjhs_color_primary</color>
