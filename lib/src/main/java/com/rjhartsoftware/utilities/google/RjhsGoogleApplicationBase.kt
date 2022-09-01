@@ -1143,7 +1143,7 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         }
         System.currentTimeMillis().let { now ->
             FirebaseFirestore.getInstance()
-                .collection(if (D.isDebug()) "debug_" else "" + collection)
+                .collection((if (D.isDebug()) "debug_" else "") + collection)
                 .document("time_$now")
                 .set(details
                     .toMutableMap().apply {
