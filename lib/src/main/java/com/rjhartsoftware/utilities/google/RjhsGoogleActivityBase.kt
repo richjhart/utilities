@@ -14,10 +14,13 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.cs
 import com.rjhartsoftware.utilities.fragments.RjhsActivityTransactions
+import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions.Companion.beginTransaction
 import com.rjhartsoftware.utilities.popup.RjhsFragmentMessage
+import com.rjhartsoftware.utilities.popup.RjhsFragmentTranslation
 import com.rjhartsoftware.utilities.utils.D.log
 
 private const val ABOUT_REQUEST_ID = "_about"
+private const val TRANSLATION_REQUEST_ID = "_translation"
 
 private enum class AdRequestState {
     None,
@@ -212,6 +215,12 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
             )
             .inactivePositiveButton(R.string.rjhs_str_ok)
             .show(this)
+    }
+
+    fun showTranslation() {
+        beginTransaction(this)
+            .add(RjhsFragmentTranslation(), RjhsFragmentTranslation.TAG)
+            .commit()
     }
 
 }

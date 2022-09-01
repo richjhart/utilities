@@ -1,11 +1,15 @@
 <resources>
     <string name="rjhs_str_cancelling">Cancelling…</string>
     <!-- region Data -->
-    <string name="rjhs_internal_str_settings_personalised_summary_off">Showing non-personalised ads. Tap to change</string>
-    <string name="rjhs_internal_str_settings_personalised_summary_on">Showing personalised ads. Tap to change</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Showing non-personalised ads. This will not reduce the amount of ads shown compared to personalised ads.</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_on">Showing personalised ads. This requires transmitting a device identifier to our Third Party ad provider.</string>
     <!-- endregion -->
     <!-- region Consent Screen -->
+    <string name="rjhs_internal_str_consent_main_message">&lt;big>Your data privacy is important.&lt;/big>&lt;br />&lt;br />In order to support development and improve our apps, we use ads and cookies.&lt;br />&lt;br />You can see our &lt;a href="%1$s">Cookie Policy&lt;/a> and &lt;a href="%2$s">Privacy Policy&lt;/a> for more details on what information is collected and how it\'s used.&lt;br />&lt;br />Select \'OK\' to allow cookies and personalised ads or \'Manage Changes\' to adjust settings.</string>
+    <string name="rjhs_internal_str_consent_manage_message">To improve our services we use cookies and similar technologies.&lt;br />&lt;br />In order to provide basic functionality, we need to store and transmit a minimum amount of data.&lt;br />&lt;br />But you can control whether additional analytics are collected, and you can choose whether to show personalised ads, or ads which will be less relevant to you. Alternatively, you can upgrade to remove all ads.&lt;br />&lt;br />You can view our &lt;a href="%1$s">Cookie Policy&lt;/a> and &lt;a href="%2$s">Privacy Policy&lt;/a> for more details.</string>
     <!-- endregion -->
     <!-- region About -->
+    <!-- endregion -->
+    <!-- region Translation -->
     <!-- endregion -->
 </resources>

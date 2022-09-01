@@ -15,22 +15,22 @@
     <string name="rjhs_internal_str_settings_purchase_summary_off">Tap to purchase (%s), or to refresh if you\'ve purchased already.</string>
     <string name="rjhs_internal_str_settings_purchase_summary_on">Already purchased</string>
     <string name="rjhs_internal_str_settings_analytics_title">Analytics</string>
-    <string name="rjhs_internal_str_settings_anaytics_summary_off">Only record minimal analytics</string>
-    <string name="rjhs_internal_str_settings_analytics_summary_on">Allow additional analytics to be recorded. This data is still anonymous</string>
+    <string name="rjhs_internal_str_settings_anaytics_summary_off">Only record minimal analytics. These are anonymous.</string>
+    <string name="rjhs_internal_str_settings_analytics_summary_on">Allow additional analytics to be recorded. These are intended to be anonymous (see the Cookie Policy).</string>
     <string name="rjhs_internal_str_settings_personalised_title">Ads</string>
-    <string name="rjhs_internal_str_settings_personalised_summary_off">Showing non-personalized ads. This will not reduce the amount of ads shown.</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Showing non-personalized ads. This will not reduce the amount of ads shown compared to personalized ads.</string>
     <string name="rjhs_internal_str_settings_personalised_summary_on">Showing personalized ads. This requires transmitting a device identifier to our Third Party ad provider.</string>
     <string name="rjhs_internal_str_settings_support_title">Help Support Development</string>
     <string name="rjhs_internal_str_settings_support_cookie">Tap here to see our Cookie policy</string>
     <string name="rjhs_internal_str_settings_support_privacy">Tap here to see our Privacy policy</string>
     <string name="rjhs_internal_str_settings_browser_title">Opening links</string>
     <string name="rjhs_internal_str_settings_browser_off">Open links within the app where possible</string>
-    <string name="rjhs_internal_str_settings_browser_on">Always open links in the default browser</string>
-    <string name="rjhs_internal_str_settings_reset_title">Clear all data</string>
-    <string name="rjhs_internal_str_settings_reset_popup_title">Clear all app data?</string>
-    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>This cannot be undone&lt;/b>&lt;br />&lt;br />This will clear all app data, including any preferences, and log out of any accounts. It will also stop the app, meaning you will need to open it again if you still want to use it.</string>
+    <string name="rjhs_internal_str_settings_browser_on">Always open links externally in the default browser</string>
+    <string name="rjhs_internal_str_settings_reset_title">Clear all data for this app</string>
+    <string name="rjhs_internal_str_settings_reset_popup_title">Clear all data for this app?</string>
+    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>This cannot be undone.&lt;/b>&lt;br />&lt;br />This will clear all preferences for this app, and any other data associated with this app (if applicable). It will also log this app out of any accounts (if applicable). It will not affect any other apps or accounts on the device. It will also close the app, if you still want to use it you will need to open it and set it up again.</string>
     <string name="rjhs_internal_str_settings_reset_popup_ok">Reset</string>
-    <string name="rjhs_internal_str_settings_reset_popup_confirm">I understand that this is a destructive action that cannot be undone</string>
+    <string name="rjhs_internal_str_settings_reset_popup_confirm">I understand that this will clear data for this app and cannot be undone.</string>
     <!-- endregion -->
     <string name="rjhs_internal_str_settings_theme_title">Theme</string>
     <string name="rjhs_internal_str_settings_theme_entry_light">Light</string>
@@ -38,9 +38,9 @@
     <string name="rjhs_internal_str_settings_theme_entry_battery">Battery Saver</string>
     <string name="rjhs_internal_str_settings_theme_entry_system">System default</string>
     <!-- region Consent Screen -->
-    <string name="rjhs_internal_str_consent_main_message">&lt;big>Your data privacy is important.&lt;/big>&lt;br />&lt;br />In order to support development and improve our apps, we use ads and cookies.&lt;br />&lt;br />You can see our &lt;a href="%1$s">Cookie Policy&lt;/a> and &lt;a href="%2$s">Privacy Policy&lt;/a> for more details on what information is collected and how it\'s used.&lt;br />&lt;br />Select \'OK\' to allow cookies and personalised ads or \'Manage Changes\' to adjust settings.</string>
+    <string name="rjhs_internal_str_consent_main_message">&lt;big>Your data privacy is important.&lt;/big>&lt;br />&lt;br />In order to support development and improve our apps, we use ads and cookies.&lt;br />&lt;br />You can see our &lt;a href="%1$s">Cookie Policy&lt;/a> and &lt;a href="%2$s">Privacy Policy&lt;/a> for more details on what information is collected and how it\'s used.&lt;br />&lt;br />Select \'OK\' to allow cookies and personalized ads or \'Manage Changes\' to adjust settings.</string>
     <string name="rjhs_internal_str_consent_main_button_manage">Manage Settings</string>
-    <string name="rjhs_internal_str_consent_manage_message">To improve our services we use cookies and similar technologies.&lt;br />&lt;br />In order to provide basic functionality, we need to store and transmit a minimum amount of data.&lt;br />&lt;br />But you can control whether additional analytics are collected, and you can choose whether to show personalised ads, or ads which will be less relevant to you. Alternatively, you can upgrade to remove all ads.&lt;br />&lt;br />You can view our &lt;a href="%1$s">Cookie Policy&lt;/a> and &lt;a href="%2$s">Privacy Policy&lt;/a> for more details.</string>
+    <string name="rjhs_internal_str_consent_manage_message">To improve our services we use cookies and similar technologies.&lt;br />&lt;br />In order to provide basic functionality, we need to store and transmit a minimum amount of data.&lt;br />&lt;br />But you can control whether additional analytics are collected, and you can choose whether to show personalized ads, or ads which will be less relevant to you. Alternatively, you can upgrade to remove all ads.&lt;br />&lt;br />You can view our &lt;a href="%1$s">Cookie Policy&lt;/a> and &lt;a href="%2$s">Privacy Policy&lt;/a> for more details.</string>
     <string name="rjhs_internal_str_consent_manage_save">Save Settings</string>
     <string name="rjhs_internal_str_consent_manage_purchase_price">Upgrade to remove all ads (%s)</string>
     <string name="rjhs_internal_str_consent_manage_purchase_no_price">Upgrade to remove all ads</string>
@@ -50,5 +50,13 @@
     <!-- region About -->
     <string name="rjhs_str_about">About</string>
     <string name="rjhs_internal_str_msg_about">Version %1$s (%3$d)&lt;br />&lt;br />Copyright \u00A9 %5$d–%6$d R J Hart Software Limited.&lt;br />&lt;br />See &lt;a>%4$s&lt;/a> for libraries used by %2$s</string>
+    <!-- endregion -->
+    <!-- region Translation -->
+    <string name="rjhs_str_translation_menu">Help Improve Translation…</string>
+    <string name="rjhs_internal_str_translation_offer_help_title">Offer help with translation</string>
+    <string name="rjhs_internal_str_translation_offer_help_message">Let us know if you would like to improve the translation in your language, or help translate the app into your language.&lt;br />&lt;br />By submitting your email address, you agree to us saving your email address securely and contacting you directly using that email address. This will not sign you up to any regular mailing lists, and we will not pass your email address on to any Third Party.</string>
+    <string name="rjhs_internal_str_translation_offer_help_input_email">Email address</string>
+    <string name="rjhs_internal_str_translation_offer_help_input_language">Enter Language</string>
+    <string name="rjhs_internal_str_translation_offer_help_ok">Send</string>
     <!-- endregion -->
 </resources>
