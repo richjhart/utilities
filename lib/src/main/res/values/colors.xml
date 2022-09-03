@@ -16,6 +16,7 @@
     <color name="rjhs_color_main_background">#FFFFFF</color>
 
     <color name="rjhs_color_text_default">#000000</color>
+    <color name="rjhs_color_text_night">#ffffff</color>
     <color name="rjhs_color_text_disabled">#88000000</color>
 
     <color name="rjhs_color_shadow_old">#cccccc</color>
