@@ -12,18 +12,18 @@
         android:id="@+id/google_data_main_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_margin="16dp"
+        android:background="@drawable/rjhs_drawable_raised_background"
+        android:elevation="4dp"
+        android:fillViewport="true"
+        android:padding="4dp">
 
         <LinearLayout
             android:id="@+id/google_data_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/rjhs_drawable_raised_background"
-            android:elevation="4dp"
             android:gravity="bottom"
             android:orientation="vertical"
-            android:padding="4dp"
             tools:ignore="UnusedAttribute">
 
             <TextView
@@ -84,8 +84,8 @@
                 android:id="@+id/google_data_manage_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                android:gravity="bottom"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/google_text_data_manage_message"
