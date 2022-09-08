@@ -5,17 +5,32 @@
     <string name="rjhs_str_help">Справка</string>
     <string name="rjhs_str_help_english">Справка (на английском языке)</string>
     <string name="rjhs_str_settings">Настройки</string>
+    <string name="rjhs_str_more">Более</string>
     <string name="rjhs_str_language">Pусский</string>
     <string name="rjhs_internal_str_msg_no_browser">Ни одно приложение не может обработать этот запрос. Пожалуйста, установите веб-браузер.</string>
     <!-- region Data -->
-    <string name="rjhs_internal_str_settings_title_ads">Реклама и ПРО</string>
+    <string name="rjhs_internal_str_settings_title_ads">Реклама, данные и покупки</string>
     <string name="rjhs_str_upgrade">Перейти на ПРО</string>
     <string name="rjhs_internal_str_settings_purchase_summary_off_no_price">Нажмите, чтобы купить, или, чтобы обновить, если вы уже купили.</string>
     <string name="rjhs_internal_str_settings_purchase_summary_off">Нажмите, чтобы купить (%s) или обновить, если вы уже купили.</string>
     <string name="rjhs_internal_str_settings_purchase_summary_on">Уже куплено</string>
-    <string name="rjhs_internal_str_settings_personalised_summary_off">Показ неперсонализированной рекламы. Нажмите, чтобы изменить</string>
-    <string name="rjhs_internal_str_settings_personalised_summary_on">Показ персонализированной рекламы. Нажмите, чтобы изменить</string>
-    <string name="rjhs_internal_str_settings_support_title">Помощь Поддержка Развития</string>
+    <string name="rjhs_internal_str_settings_analytics_title">Аналитика</string>
+    <string name="rjhs_internal_str_settings_anaytics_summary_off">Записывайте только минимальную аналитику. Это анонимно.</string>
+    <string name="rjhs_internal_str_settings_analytics_summary_on">Разрешить запись дополнительной аналитики. Они предназначены для анонимности (см. Политику использования файлов cookie).</string>
+    <string name="rjhs_internal_str_settings_personalised_title">Объявления</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Показ неперсонализированной рекламы. Это не уменьшит количество отображаемой рекламы по сравнению с персонализированной рекламой.</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_on">Показ персонализированной рекламы. Для этого требуется передать идентификатор устройства нашему стороннему поставщику рекламы.</string>
+    <string name="rjhs_internal_str_settings_support_title">Помогите поддержать развитие</string>
+    <string name="rjhs_internal_str_settings_support_cookie">Нажмите здесь, чтобы ознакомиться с нашей политикой в отношении файлов cookie</string>
+    <string name="rjhs_internal_str_settings_support_privacy">Нажмите здесь, чтобы ознакомиться с нашей Политикой конфиденциальности</string>
+    <string name="rjhs_internal_str_settings_browser_title">Открытие ссылок</string>
+    <string name="rjhs_internal_str_settings_browser_off">Открывайте ссылки в приложении, где это возможно</string>
+    <string name="rjhs_internal_str_settings_browser_on">Всегда открывать внешние ссылки в браузере по умолчанию</string>
+    <string name="rjhs_internal_str_settings_reset_title">Удалить все данные для этого приложения</string>
+    <string name="rjhs_internal_str_settings_reset_popup_title">Удалить все данные для этого приложения?</string>
+    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>Это не может быть отменено.&lt;b>&lt;br />&lt;br />Это приведет к удалению всех настроек для этого приложения и любых других данных, связанных с этим приложением (если применимо). Это также выведет это приложение из любых учетных записей (если применимо). Это не повлияет на другие приложения или учетные записи на устройстве. Это также закроет приложение. Если вы все еще хотите его использовать, вам нужно будет открыть его и снова настроить.</string>
+    <string name="rjhs_internal_str_settings_reset_popup_ok">Перезагрузить</string>
+    <string name="rjhs_internal_str_settings_reset_popup_confirm">Я понимаю, что это приведет к удалению данных для этого приложения и не может быть отменено.</string>
     <!-- endregion -->
     <string name="rjhs_internal_str_settings_theme_title">Тема</string>
     <string name="rjhs_internal_str_settings_theme_entry_light">Светлая</string>
@@ -23,7 +38,25 @@
     <string name="rjhs_internal_str_settings_theme_entry_battery">Режим энергосбережения</string>
     <string name="rjhs_internal_str_settings_theme_entry_system">По yмолчанию</string>
     <!-- region Consent Screen -->
+    <string name="rjhs_internal_str_consent_main_message">&lt;big>Конфиденциальность ваших данных важна.&lt;/big>&lt;br />&lt;br />Для поддержки разработки и улучшения наших приложений мы используем рекламу и файлы cookie.&lt;br />&lt;br />Вы можете ознакомиться с нашей &lt;a href="%1$s">Политикой использования файлов cookie&lt;/a> и &lt;a href="%2$s">Политикой конфиденциальности&lt;/a> для получения более подробной информации о том, какая информация собирается и как она используется.&lt;br />&lt;br />Выберите «ОК», чтобы разрешить файлы cookie и персонализированную рекламу, или «Управление изменениями», чтобы настроить параметры.</string>
+    <string name="rjhs_internal_str_consent_main_button_manage">Управление настройками</string>
+    <string name="rjhs_internal_str_consent_manage_message">Для улучшения наших услуг мы используем файлы cookie и аналогичные технологии.&lt;br />&lt;br />Чтобы обеспечить базовую функциональность, нам необходимо хранить и передавать минимальный объем данных.&lt;br />&lt;br />Но вы можете контролировать, будет ли собираться дополнительная аналитика, и вы можете выбрать, показывать ли персонализированную рекламу или рекламу, которая будет менее актуальной для вас. Кроме того, вы можете обновить, чтобы удалить всю рекламу.&lt;br />&lt;br />Вы можете ознакомиться с нашей &lt;a href="%1$s">Политикой в отношении файлов cookie&lt;/a> и &lt;a href="%2$s">Политикой конфиденциальности&lt;/a> для получения более подробной информации.</string>
+    <string name="rjhs_internal_str_consent_manage_save">Сохранить настройки</string>
+    <string name="rjhs_internal_str_consent_manage_purchase_price">Обновите, чтобы удалить все объявления (%s)</string>
+    <string name="rjhs_internal_str_consent_manage_purchase_no_price">Обновите, чтобы удалить всю рекламу</string>
+    <string name="rjhs_internal_str_consent_manage_purchase_pending">Ожидание подтверждения покупки</string>
+    <string name="rjhs_internal_str_consent_manage_purchased">Вы уже приобрели обновление, поэтому реклама показываться не будет.</string>
     <!-- endregion -->
     <!-- region About -->
+    <string name="rjhs_str_about">О</string>
+    <string name="rjhs_internal_str_msg_about">Версия %1$s (%3$d).&lt;br />&lt;br />Авторские права \u00A9 %5$d–%6$d гг. RJ Hart Software Limited. &lt;br />&lt;br />См. &lt;a>https://www.rjhartsoftware.co.uk/apps/storage-analyser/3rd-party-libraries&lt;/a> о библиотеках, используемых %2$s</string>
+    <!-- endregion -->
+    <!-- region Translation -->
+    <string name="rjhs_str_translation_menu">Помогите нам улучшить перевод…</string>
+    <string name="rjhs_internal_str_translation_offer_help_title">Предложите нам помощь с переводом</string>
+    <string name="rjhs_internal_str_translation_offer_help_message">Дайте нам знать, если вы хотите улучшить перевод на свой язык или помочь перевести приложение на свой язык.&lt;br />&lt;br />Отправляя свой адрес электронной почты, вы соглашаетесь с тем, что мы надежно сохраняем ваш адрес электронной почты и связываемся с вами напрямую, используя этот адрес электронной почты. Это не означает, что вы будете подписаны на какие-либо обычные списки рассылки, и мы не передадим ваш адрес электронной почты какой-либо третьей стороне.</string>
+    <string name="rjhs_internal_str_translation_offer_help_input_email">Адрес электронной почты</string>
+    <string name="rjhs_internal_str_translation_offer_help_input_language">Введите язык</string>
+    <string name="rjhs_internal_str_translation_offer_help_ok">Отправить</string>
     <!-- endregion -->
 </resources>

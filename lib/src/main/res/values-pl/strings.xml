@@ -5,17 +5,32 @@
     <string name="rjhs_str_help">Pomoc</string>
     <string name="rjhs_str_help_english">Pomoc (w języku angielskim)</string>
     <string name="rjhs_str_settings">Ustawienia</string>
+    <string name="rjhs_str_more">Więcej</string>
     <string name="rjhs_str_language">Polski</string>
     <string name="rjhs_internal_str_msg_no_browser">Na telefonie nie jest zainstalowana odpowiednia aplikacja. Zainstaluj przeglądarkę internetową.</string>
     <!-- region Data -->
-    <string name="rjhs_internal_str_settings_title_ads">Reklamy i wersja Pro</string>
+    <string name="rjhs_internal_str_settings_title_ads">Reklamy, dane i zakupy</string>
     <string name="rjhs_str_upgrade">Kup wersję Pro</string>
     <string name="rjhs_internal_str_settings_purchase_summary_off_no_price">Dotknij, aby kupić lub odśwież, jeśli już kupiłeś.</string>
     <string name="rjhs_internal_str_settings_purchase_summary_off">Dotknij, aby kupić (%s) lub odśwież, jeśli już kupiłeś.</string>
     <string name="rjhs_internal_str_settings_purchase_summary_on">Już zakupiono</string>
-    <string name="rjhs_internal_str_settings_personalised_summary_off">Wyświetlanie reklam niespersonalizowanych. Dotknij, aby zmienić</string>
-    <string name="rjhs_internal_str_settings_personalised_summary_on">Wyświetlanie reklam spersonalizowanych. Dotknij, aby zmienić</string>
+    <string name="rjhs_internal_str_settings_analytics_title">Analityka</string>
+    <string name="rjhs_internal_str_settings_anaytics_summary_off">Rejestruj tylko minimalne analizy. Są anonimowe.</string>
+    <string name="rjhs_internal_str_settings_analytics_summary_on">Zezwalaj na rejestrowanie dodatkowych danych analitycznych. Są anonimowe (patrz Polityka plików cookie).</string>
+    <string name="rjhs_internal_str_settings_personalised_title">Reklamy</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_off">Wyświetlanie reklam niespersonalizowanych. Nie zmniejszy to liczby wyświetlanych reklam w porównaniu z reklamami spersonalizowanymi.</string>
+    <string name="rjhs_internal_str_settings_personalised_summary_on">Wyświetlanie spersonalizowanych reklam. Wymaga to przesłania identyfikatora urządzenia do naszego zewnętrznego dostawcy reklam.</string>
     <string name="rjhs_internal_str_settings_support_title">Pomóż wesprzeć rozwój</string>
+    <string name="rjhs_internal_str_settings_support_cookie">Kliknij tutaj, aby zobaczyć naszą politykę dotyczącą plików cookie</string>
+    <string name="rjhs_internal_str_settings_support_privacy">Kliknij tutaj, aby zobaczyć naszą Politykę prywatności</string>
+    <string name="rjhs_internal_str_settings_browser_title">Otwieranie linków</string>
+    <string name="rjhs_internal_str_settings_browser_off">Jeśli to możliwe, otwieraj linki w aplikacji</string>
+    <string name="rjhs_internal_str_settings_browser_on">Zawsze otwieraj linki zewnętrznie w domyślnej przeglądarce</string>
+    <string name="rjhs_internal_str_settings_reset_title">Wyczyść wszystkie dane tej aplikacji</string>
+    <string name="rjhs_internal_str_settings_reset_popup_title">Wyczyścić wszystkie dane tej aplikacji?</string>
+    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>Tego nie da się cofnąć.&lt;/b>&lt;br />&lt;br />Spowoduje to wyczyszczenie wszystkich preferencji dla tej aplikacji oraz wszelkich innych danych powiązanych z tą aplikacją (jeśli dotyczy). Wyloguje również tę aplikację z dowolnych kont (jeśli dotyczy). Nie wpłynie to na żadne inne aplikacje ani konta na urządzeniu. Spowoduje również zamknięcie aplikacji, jeśli nadal chcesz z niej korzystać, musisz ją otworzyć i ponownie skonfigurować.</string>
+    <string name="rjhs_internal_str_settings_reset_popup_ok">Resetowanie</string>
+    <string name="rjhs_internal_str_settings_reset_popup_confirm">Rozumiem, że spowoduje to wyczyszczenie danych tej aplikacji i nie będzie można tego cofnąć.</string>
     <!-- endregion -->
     <string name="rjhs_internal_str_settings_theme_title">Motyw</string>
     <string name="rjhs_internal_str_settings_theme_entry_light">Jasny</string>
@@ -23,7 +38,25 @@
     <string name="rjhs_internal_str_settings_theme_entry_battery">Oszczędzanie baterii</string>
     <string name="rjhs_internal_str_settings_theme_entry_system">Domyślny systemowy</string>
     <!-- region Consent Screen -->
+    <string name="rjhs_internal_str_consent_main_message">&lt;big>Twoja prywatność danych jest ważna.&lt;/big>&lt;br />&lt;br />Aby wspierać rozwój i ulepszać nasze aplikacje, używamy reklam i plików cookie.&lt;br />&lt;br />Możesz zapoznać się z naszą &lt;a href="%1$s">Polityką plików cookie&lt;/a> i &lt;a href="%2$s">Polityką prywatności&lt;/a>, aby uzyskać więcej informacji o tym, jakie informacje są gromadzone i jak są wykorzystywane.&lt;br />&lt;br />Wybierz „OK”, aby zezwolić na pliki cookie i spersonalizowane reklamy lub „Zarządzaj zmianami”, aby dostosować ustawienia.</string>
+    <string name="rjhs_internal_str_consent_main_button_manage">Zarządzaj ustawieniami</string>
+    <string name="rjhs_internal_str_consent_manage_message">W celu ulepszenia naszych usług używamy plików cookie i podobnych technologii.&lt;br />&lt;br />Aby zapewnić podstawową funkcjonalność, musimy przechowywać i przesyłać minimalną ilość danych.&lt;br />&lt;br />Możesz jednak kontrolować, czy zbierane są dodatkowe dane analityczne, i możesz wybrać, czy chcesz wyświetlać spersonalizowane reklamy, czy reklamy, które będą dla Ciebie mniej trafne. Alternatywnie możesz dokonać aktualizacji, aby usunąć wszystkie reklamy.&lt;br />&lt;br />Możesz zapoznać się z naszą &lt;a href="%1$s">Polityką plików cookie&lt;/a> i &lt;a href="%2$s">Polityką prywatności&lt;/a>, aby uzyskać więcej informacji.</string>
+    <string name="rjhs_internal_str_consent_manage_save">Zapisz ustawienia</string>
+    <string name="rjhs_internal_str_consent_manage_purchase_price">Uaktualnij, aby usunąć wszystkie reklamy (%s)</string>
+    <string name="rjhs_internal_str_consent_manage_purchase_no_price">Uaktualnij, aby usunąć wszystkie reklamy</string>
+    <string name="rjhs_internal_str_consent_manage_purchase_pending">Czekam na potwierdzenie zakupu</string>
+    <string name="rjhs_internal_str_consent_manage_purchased">Kupiłeś już uaktualnienie, więc żadne reklamy nie będą wyświetlane.</string>
     <!-- endregion -->
     <!-- region About -->
+    <string name="rjhs_str_about">O</string>
+    <string name="rjhs_internal_str_msg_about">Wersja %1$s (%3$d).&lt;br />&lt;br />Prawa autorskie \u00A9 2014–2021 R J Hart Software Limited.&lt;br />&lt;br />Biblioteki używane przez \'%2$s\' są dostępne pod adresem: &lt;a>https://www.rjhartsoftware.co.uk/apps/storage-analyser/3rd-party-libraries&lt;/a></string>
+    <!-- endregion -->
+    <!-- region Translation -->
+    <string name="rjhs_str_translation_menu">Pomóż ulepszyć tłumaczenie…</string>
+    <string name="rjhs_internal_str_translation_offer_help_title">Zaoferuj pomoc w tłumaczeniu</string>
+    <string name="rjhs_internal_str_translation_offer_help_message">Daj nam znać, jeśli chcesz poprawić tłumaczenie w swoim języku lub pomóc przetłumaczyć aplikację na swój język.&lt;br />&lt;br />Przesyłając swój adres e-mail, zgadzasz się na bezpieczne zapisanie Twojego adresu e-mail i skontaktowanie się z Tobą bezpośrednio przy użyciu tego adresu e-mail. Nie spowoduje to zarejestrowania Cię na żadnej zwykłej liście mailingowej i nie przekażemy Twojego adresu e-mail żadnej Osobie Trzeciej.</string>
+    <string name="rjhs_internal_str_translation_offer_help_input_email">Adres e-mail</string>
+    <string name="rjhs_internal_str_translation_offer_help_input_language">Wprowadź język</string>
+    <string name="rjhs_internal_str_translation_offer_help_ok">Wyślij</string>
     <!-- endregion -->
 </resources>
