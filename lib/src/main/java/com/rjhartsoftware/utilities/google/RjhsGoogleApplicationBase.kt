@@ -32,6 +32,7 @@ import com.rjhartsoftware.utilities.utils.D
 import com.rjhartsoftware.utilities.utils.D.error
 import com.rjhartsoftware.utilities.utils.D.log
 import com.rjhartsoftware.utilities.utils.D.warn
+import java.lang.UnsupportedOperationException
 import java.security.KeyFactory
 import java.security.PublicKey
 import java.security.Signature
@@ -371,8 +372,12 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
         if (isOld) {
             return this
         }
-        MobileAds.initialize(this) {
-            log(ADS, "Ad initialisation complete")
+        try {
+            MobileAds.initialize(this) {
+                log(ADS, "Ad initialisation complete")
+            }
+        } catch (e : UnsupportedOperationException) {
+            error(ADS, "Ads are not supported")
         }
         return this
     }
