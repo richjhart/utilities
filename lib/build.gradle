@@ -41,7 +41,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '4.0.1'
+                version = '4.0.2'
             }
         }
     }
@@ -64,13 +64,13 @@ dependencies {
     api 'androidx.preference:preference-ktx:1.2.0'
     api 'com.google.android.material:material:1.6.1'
     implementation 'com.android.billingclient:billing:5.0.0'
-    api 'com.google.android.gms:play-services-ads:21.2.0'
+    api 'com.google.android.gms:play-services-ads:21.3.0'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.0'
-    implementation 'com.google.firebase:firebase-config-ktx:21.1.2'
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.1.1'
-    api 'com.google.firebase:firebase-crashlytics:18.2.13'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.0'
+    implementation 'com.google.firebase:firebase-config-ktx:21.2.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
+    api 'com.google.firebase:firebase-crashlytics:18.3.0'
 
     api 'com.google.code.gson:gson:2.9.1'
     api 'org.greenrobot:eventbus:3.3.1'
