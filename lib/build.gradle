@@ -41,7 +41,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '4.0.4'
+                version = '4.0.5'
             }
         }
     }
@@ -64,7 +64,7 @@ dependencies {
     api 'androidx.preference:preference-ktx:1.2.0'
     api 'com.google.android.material:material:1.7.0'
     implementation 'com.android.billingclient:billing:5.1.0'
-    api 'com.google.android.gms:play-services-ads:21.3.0'
+    api 'com.google.android.gms:play-services-ads:21.4.0'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
