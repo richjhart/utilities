@@ -204,7 +204,7 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
     private fun checkPermission() {
         findPreference(R.string.rjhs_fixed_settings_key_allow_notifications)?.let {
             googleActivity?.let { activity ->
-                if (activity.getNotificationState() == NotificationState.Allowed) {
+                if (activity.getNotificationState() == NotificationState.Allowed || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                     it.isVisible = false
                 } else {
                     it.isVisible = true
