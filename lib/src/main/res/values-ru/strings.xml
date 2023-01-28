@@ -28,7 +28,7 @@
     <string name="rjhs_internal_str_settings_browser_on">Всегда открывать внешние ссылки в браузере по умолчанию</string>
     <string name="rjhs_internal_str_settings_reset_title">Удалить все данные для этого приложения</string>
     <string name="rjhs_internal_str_settings_reset_popup_title">Удалить все данные для этого приложения?</string>
-    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>Это не может быть отменено.&lt;b>&lt;br />&lt;br />Это приведет к удалению всех настроек для этого приложения и любых других данных, связанных с этим приложением (если применимо). Это также выведет это приложение из любых учетных записей (если применимо). Это не повлияет на другие приложения или учетные записи на устройстве. Это также закроет приложение. Если вы все еще хотите его использовать, вам нужно будет открыть его и снова настроить.</string>
+    <string name="rjhs_internal_str_settings_reset_popup_message">&lt;b>Это не может быть отменено.&lt;/b>&lt;br />&lt;br />Это приведет к удалению всех настроек для этого приложения и любых других данных, связанных с этим приложением (если применимо). Это также выведет это приложение из любых учетных записей (если применимо). Это не повлияет на другие приложения или учетные записи на устройстве. Это также закроет приложение. Если вы все еще хотите его использовать, вам нужно будет открыть его и снова настроить.</string>
     <string name="rjhs_internal_str_settings_reset_popup_ok">Перезагрузить</string>
     <string name="rjhs_internal_str_settings_reset_popup_confirm">Я понимаю, что это приведет к удалению данных для этого приложения и не может быть отменено.</string>
     <!-- endregion -->
@@ -49,7 +49,7 @@
     <!-- endregion -->
     <!-- region About -->
     <string name="rjhs_str_about">О</string>
-    <string name="rjhs_internal_str_msg_about">Версия %1$s (%3$d).&lt;br />&lt;br />Авторские права \u00A9 %5$d–%6$d гг. RJ Hart Software Limited. &lt;br />&lt;br />См. &lt;a>https://www.rjhartsoftware.co.uk/apps/storage-analyser/3rd-party-libraries&lt;/a> о библиотеках, используемых %2$s</string>
+    <string name="rjhs_internal_str_msg_about">Версия %1$s (%3$d).&lt;br />&lt;br />Авторские права \u00A9 %5$d–%6$d гг. RJ Hart Software Limited. &lt;br />&lt;br />См. &lt;a>%4$s&lt;/a> о библиотеках, используемых %2$s</string>
     <!-- endregion -->
     <!-- region Translation -->
     <string name="rjhs_str_translation_menu">Помогите нам улучшить перевод…</string>
@@ -58,5 +58,8 @@
     <string name="rjhs_internal_str_translation_offer_help_input_email">Адрес электронной почты</string>
     <string name="rjhs_internal_str_translation_offer_help_input_language">Введите язык</string>
     <string name="rjhs_internal_str_translation_offer_help_ok">Отправить</string>
+    <!-- region Notifications -->
+    <string name="rjhs_internal_str_allow_notification_title">Разрешить уведомления</string>
+    <string name="rjhs_internal_str_allow_notification_message">Обратите внимание, что мы показываем уведомления только для того, чтобы показать, что приложение делает в данный момент. Мы никогда не показываем рекламу или другие нежелательные уведомления.</string>
     <!-- endregion -->
 </resources>

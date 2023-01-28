@@ -1,10 +1,12 @@
 package com.rjhartsoftware.utilities.google
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application.getProcessName
 import android.content.*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -13,10 +15,9 @@ import android.os.Looper
 import android.util.Base64
 import android.view.View
 import android.widget.Button
-import androidx.annotation.CallSuper
-import androidx.annotation.IntDef
-import androidx.annotation.XmlRes
+import androidx.annotation.*
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.multidex.MultiDexApplication
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
@@ -65,18 +66,18 @@ private const val PURCHASE_FLAG_CARE_ABOUT_WAITING = 1 shl 1
 private const val PURCHASE_FLAG_CARE_ABOUT_PENDING = 1 shl 2
 
 @IntDef(value = [PURCHASE_ENABLED, PURCHASE_DISABLED, PURCHASE_NOT_YET_KNOWN, PURCHASE_PENDING])
-@kotlin.annotation.Retention
+@Retention
 annotation class PurchaseStatusFull
 
 @IntDef(value = [PURCHASE_ENABLED, PURCHASE_DISABLED])
-@kotlin.annotation.Retention
+@Retention
 annotation class PurchaseStatus
 
 @IntDef(
     flag = true,
     value = [PURCHASE_FLAG_BENEFIT_OF_DOUBT, PURCHASE_FLAG_CARE_ABOUT_WAITING, PURCHASE_FLAG_CARE_ABOUT_PENDING]
 )
-@kotlin.annotation.Retention
+@Retention
 private annotation class PurchaseRequestFlags
 
 private class State {
@@ -124,6 +125,13 @@ internal enum class InternalPurchaseStatus {
     NoneRegistered
 }
 
+enum class NotificationState {
+    Allowed,
+    CanAsk,
+    AlreadyAsked,
+    Blocked
+}
+
 interface RjhsGooglePurchaseStatusChangeListener {
     fun purchaseStatusChanged()
 }
@@ -144,16 +152,22 @@ open class RjhsGoogleApplicationBase : MultiDexApplication() {
     fun getIntPref(key: String): Int = getIntPref(key, 0)
     fun getIntPref(key: String, default: Int): Int =
         PreferenceManager.getDefaultSharedPreferences(this).getInt(key, default)
+    fun getIntPref(@StringRes key: Int): Int = getIntPref(getString(key), 0)
+    fun getIntPref(@StringRes key: Int, default: Int): Int = getIntPref(getString(key), default)
 
     fun setIntPref(key: String, value: Int) =
         PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(key, value).apply()
+    fun setIntPref(@StringRes key: Int, value: Int) = setIntPref(getString(key), value)
 
     fun getBoolPref(key: String): Boolean = getBoolPref(key, false)
     fun getBoolPref(key: String, default: Boolean): Boolean =
         PreferenceManager.getDefaultSharedPreferences(this).getBoolean(key, default)
+    fun getBoolPref(@StringRes key: Int): Boolean = getBoolPref(getString(key), false)
+    fun getBoolPref(@StringRes key: Int, default: Boolean): Boolean = getBoolPref(getString(key), default)
 
     fun setBoolPref(key: String, value: Boolean) =
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(key, value).apply()
+    fun setBoolPref(@StringRes key: Int, value: Boolean) = setBoolPref(getString(key), value)
 
     private val networkReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {

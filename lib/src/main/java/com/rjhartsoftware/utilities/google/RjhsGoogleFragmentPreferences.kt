@@ -1,15 +1,23 @@
 package com.rjhartsoftware.utilities.google
 
+import android.Manifest
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.preference.*
+import com.rjhartsoftware.utilities.BuildConfig
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.openUrl
 import com.rjhartsoftware.utilities.popup.PopupResult
@@ -27,6 +35,11 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
     RjhsGooglePurchaseStatusChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     val SETTINGS = D.DebugTag("settings")
+
+    val googleActivity: RjhsGoogleActivityBase?
+        get() {
+            return activity as RjhsGoogleActivityBase
+        }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -175,10 +188,46 @@ open class RjhsGoogleFragmentPreferences : PreferenceFragmentCompat(),
                 }
             }
 
+            checkPermission()
+
             app.registerPurchaseChangeListener(this, app.handler)
             PreferenceManager.getDefaultSharedPreferences(app)
                 .registerOnSharedPreferenceChangeListener(this)
         }
+    }
+
+    private val requestNotificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { _: Boolean ->
+            checkPermission()
+        }
+
+    private fun checkPermission() {
+        findPreference(R.string.rjhs_fixed_settings_key_allow_notifications)?.let {
+            googleActivity?.let { activity ->
+                if (activity.getNotificationState() == NotificationState.Allowed) {
+                    it.isVisible = false
+                } else {
+                    it.isVisible = true
+                    it.setTitle(R.string.rjhs_internal_str_allow_notification_title)
+                    it.setSummary(R.string.rjhs_internal_str_allow_notification_message)
+                    it.layoutResource = R.layout.rjhs_layout_preference
+                    it.setOnPreferenceClickListener {
+                        if (activity.getNotificationState() == NotificationState.Blocked) {
+                            activity.openNotificationSettings()
+                        } else {
+                            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                        true
+                    }
+                }
+            }
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermission()
     }
 
     @Subscribe

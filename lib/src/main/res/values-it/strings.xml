@@ -58,5 +58,8 @@
     <string name="rjhs_internal_str_translation_offer_help_input_email">Indirizzo email</string>
     <string name="rjhs_internal_str_translation_offer_help_input_language">Inserisci la lingua</string>
     <string name="rjhs_internal_str_translation_offer_help_ok">Invia</string>
+    <!-- region Notifications -->
+    <string name="rjhs_internal_str_allow_notification_title">Consenti notifiche</string>
+    <string name="rjhs_internal_str_allow_notification_message">Tieni presente che mostriamo solo le notifiche per mostrare ciò che l\'app sta facendo attualmente. Non mostriamo mai annunci o altre notifiche indesiderate</string>
     <!-- endregion -->
 </resources>

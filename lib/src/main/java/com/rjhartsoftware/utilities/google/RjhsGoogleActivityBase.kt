@@ -1,9 +1,15 @@
 package com.rjhartsoftware.utilities.google
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.annotation.CallSuper
+import androidx.core.content.ContextCompat
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -223,5 +229,38 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
             .commit()
     }
 
+    fun getNotificationState() : NotificationState {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            app.setIntPref(R.string.rjhs_fixed_settings_key_asked_about_notifications, 0)
+            return NotificationState.Allowed
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return NotificationState.Blocked
+        }
+        if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            app.setIntPref(R.string.rjhs_fixed_settings_key_asked_about_notifications, 1)
+            return NotificationState.AlreadyAsked
+        }
+        if (app.getIntPref(R.string.rjhs_fixed_settings_key_asked_about_notifications) == 0) {
+            return NotificationState.CanAsk
+        }
+        app.setIntPref(R.string.rjhs_fixed_settings_key_asked_about_notifications, 2)
+        return NotificationState.Blocked
+    }
+
+    fun openNotificationSettings() {
+        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+        startActivity(
+            intent
+        )
+        //startActivity(
+        //    Intent(
+        //        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        //        Uri.parse("package:" + app.packageName)
+        //    )
+        //)
+    }
 }
 

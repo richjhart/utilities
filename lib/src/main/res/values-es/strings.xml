@@ -58,5 +58,8 @@
     <string name="rjhs_internal_str_translation_offer_help_input_email">Dirección de correo electrónico</string>
     <string name="rjhs_internal_str_translation_offer_help_input_language">Ingresar idioma</string>
     <string name="rjhs_internal_str_translation_offer_help_ok">Enviar</string>
+    <!-- region Notifications -->
+    <string name="rjhs_internal_str_allow_notification_title">Permitir notificaciones</string>
+    <string name="rjhs_internal_str_allow_notification_message">Tenga en cuenta que solo mostramos notificaciones para mostrar lo que la aplicación está haciendo actualmente. Nunca mostramos anuncios u otras notificaciones no solicitadas.</string>
     <!-- endregion -->
 </resources>
