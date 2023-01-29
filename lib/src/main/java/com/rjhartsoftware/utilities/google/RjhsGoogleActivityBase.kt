@@ -3,7 +3,6 @@ package com.rjhartsoftware.utilities.google
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -20,9 +19,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.rjhartsoftware.utilities.R
 import com.rjhartsoftware.utilities.cs
 import com.rjhartsoftware.utilities.fragments.RjhsActivityTransactions
-import com.rjhartsoftware.utilities.fragments.RjhsFragmentTransactions.Companion.beginTransaction
 import com.rjhartsoftware.utilities.popup.RjhsFragmentMessage
-import com.rjhartsoftware.utilities.popup.RjhsFragmentTranslation
 import com.rjhartsoftware.utilities.utils.D.log
 
 private const val ABOUT_REQUEST_ID = "_about"
@@ -60,7 +57,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
             return
         }
         if (GoogleApiAvailability.getInstance()
-                .isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS
+                        .isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS
         ) {
             adView?.let {
                 log(ADS, "ad_mob_app_id: %s", getString(R.string.rjhs_override_ad_mob_app_id))
@@ -95,10 +92,10 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
                         }
                     }
                     if (
-                        requestingAds == AdRequestState.None ||
-                                requestingAds == AdRequestState.Anonymous && !app.anonymousAds ||
-                                requestingAds == AdRequestState.Personalised && app.anonymousAds
-                            ) {
+                            requestingAds == AdRequestState.None ||
+                            requestingAds == AdRequestState.Anonymous && !app.anonymousAds ||
+                            requestingAds == AdRequestState.Personalised && app.anonymousAds
+                    ) {
                         val builder = AdRequest.Builder()
                         requestingAds = AdRequestState.Personalised
                         if (app.anonymousAds) {
@@ -197,9 +194,9 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
             log(EU_CONSENT, "Consent has not been granted")
             val openThis = Intent(this, this::class.java)
             startActivity(
-                Intent(this, RjhsGoogleActivityData::class.java).putExtra(
-                    EXTRA_ORIGINAL_INTENT, openThis
-                )
+                    Intent(this, RjhsGoogleActivityData::class.java).putExtra(
+                            EXTRA_ORIGINAL_INTENT, openThis
+                    )
             )
             finish()
         }
@@ -207,29 +204,23 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
 
     fun showAbout(versionName: String, versionCode: Int) {
         RjhsFragmentMessage.Builder(ABOUT_REQUEST_ID)
-            .title(R.string.rjhs_str_about)
-            .message(
-                cs(
-                    R.string.rjhs_internal_str_msg_about,
-                    versionName,
-                    getString(R.string.rjhs_override_str_app_name),
-                    versionCode,
-                    getString(R.string.rjhs_override_third_party_libraries),
-                    resources.getInteger(R.integer.rjhs_override_copyright_start),
-                    resources.getInteger(R.integer.rjhs_override_copyright_latest)
+                .title(R.string.rjhs_str_about)
+                .message(
+                        cs(
+                                R.string.rjhs_internal_str_msg_about,
+                                versionName,
+                                getString(R.string.rjhs_override_str_app_name),
+                                versionCode,
+                                getString(R.string.rjhs_override_third_party_libraries),
+                                resources.getInteger(R.integer.rjhs_override_copyright_start),
+                                resources.getInteger(R.integer.rjhs_override_copyright_latest)
+                        )
                 )
-            )
-            .inactivePositiveButton(R.string.rjhs_str_ok)
-            .show(this)
+                .inactivePositiveButton(R.string.rjhs_str_ok)
+                .show(this)
     }
 
-    fun showTranslation() {
-        beginTransaction(this)
-            .add(RjhsFragmentTranslation(), RjhsFragmentTranslation.TAG)
-            .commit()
-    }
-
-    fun getNotificationState() : NotificationState {
+    fun getNotificationState(): NotificationState {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             app.setIntPref(R.string.rjhs_fixed_settings_key_asked_about_notifications, 0)
             return NotificationState.Allowed
@@ -253,7 +244,7 @@ open class RjhsGoogleActivityBase : RjhsActivityTransactions() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
         startActivity(
-            intent
+                intent
         )
         //startActivity(
         //    Intent(

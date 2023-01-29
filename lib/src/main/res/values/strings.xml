@@ -51,13 +51,6 @@
     <string name="rjhs_str_about">About</string>
     <string name="rjhs_internal_str_msg_about">Version %1$s (%3$d)&lt;br />&lt;br />Copyright \u00A9 %5$d–%6$d R J Hart Software Limited.&lt;br />&lt;br />See &lt;a>%4$s&lt;/a> for libraries used by %2$s</string>
     <!-- endregion -->
-    <!-- region Translation -->
-    <string name="rjhs_str_translation_menu">Help Improve Translation…</string>
-    <string name="rjhs_internal_str_translation_offer_help_title">Offer help with translation</string>
-    <string name="rjhs_internal_str_translation_offer_help_message">Let us know if you would like to improve the translation in your language, or help translate the app into your language.&lt;br />&lt;br />By submitting your email address, you agree to us saving your email address securely and contacting you directly using that email address. This will not sign you up to any regular mailing lists, and we will not pass your email address on to any Third Party.</string>
-    <string name="rjhs_internal_str_translation_offer_help_input_email">Email address</string>
-    <string name="rjhs_internal_str_translation_offer_help_input_language">Enter Language</string>
-    <string name="rjhs_internal_str_translation_offer_help_ok">Send</string>
     <!-- region Notifications -->
     <string name="rjhs_internal_str_allow_notification_title">Allow Notifications</string>
     <string name="rjhs_internal_str_allow_notification_message">Note that we only ever show notifications to show what the app is currently doing. We never show ads or other unsolicited notifications</string>

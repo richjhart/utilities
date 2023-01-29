@@ -51,13 +51,6 @@
     <string name="rjhs_str_about">O</string>
     <string name="rjhs_internal_str_msg_about">Wersja %1$s (%3$d).&lt;br />&lt;br />Prawa autorskie \u00A9 %5$d–%6$d R J Hart Software Limited.&lt;br />&lt;br />Biblioteki używane przez \'%2$s\' są dostępne pod adresem: &lt;a>%4$s&lt;/a></string>
     <!-- endregion -->
-    <!-- region Translation -->
-    <string name="rjhs_str_translation_menu">Pomóż ulepszyć tłumaczenie…</string>
-    <string name="rjhs_internal_str_translation_offer_help_title">Zaoferuj pomoc w tłumaczeniu</string>
-    <string name="rjhs_internal_str_translation_offer_help_message">Daj nam znać, jeśli chcesz poprawić tłumaczenie w swoim języku lub pomóc przetłumaczyć aplikację na swój język.&lt;br />&lt;br />Przesyłając swój adres e-mail, zgadzasz się na bezpieczne zapisanie Twojego adresu e-mail i skontaktowanie się z Tobą bezpośrednio przy użyciu tego adresu e-mail. Nie spowoduje to zarejestrowania Cię na żadnej zwykłej liście mailingowej i nie przekażemy Twojego adresu e-mail żadnej Osobie Trzeciej.</string>
-    <string name="rjhs_internal_str_translation_offer_help_input_email">Adres e-mail</string>
-    <string name="rjhs_internal_str_translation_offer_help_input_language">Wprowadź język</string>
-    <string name="rjhs_internal_str_translation_offer_help_ok">Wyślij</string>
     <!-- region Notifications -->
     <string name="rjhs_internal_str_allow_notification_title">Zezwalaj na powiadomienia</string>
     <string name="rjhs_internal_str_allow_notification_message">Pamiętaj, że zawsze wyświetlamy powiadomienia tylko po to, aby pokazać, co aktualnie robi aplikacja. Nigdy nie wyświetlamy reklam ani innych niechcianych powiadomień</string>

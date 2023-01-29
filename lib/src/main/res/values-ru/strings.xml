@@ -51,13 +51,6 @@
     <string name="rjhs_str_about">О</string>
     <string name="rjhs_internal_str_msg_about">Версия %1$s (%3$d).&lt;br />&lt;br />Авторские права \u00A9 %5$d–%6$d гг. RJ Hart Software Limited. &lt;br />&lt;br />См. &lt;a>%4$s&lt;/a> о библиотеках, используемых %2$s</string>
     <!-- endregion -->
-    <!-- region Translation -->
-    <string name="rjhs_str_translation_menu">Помогите нам улучшить перевод…</string>
-    <string name="rjhs_internal_str_translation_offer_help_title">Предложите нам помощь с переводом</string>
-    <string name="rjhs_internal_str_translation_offer_help_message">Дайте нам знать, если вы хотите улучшить перевод на свой язык или помочь перевести приложение на свой язык.&lt;br />&lt;br />Отправляя свой адрес электронной почты, вы соглашаетесь с тем, что мы надежно сохраняем ваш адрес электронной почты и связываемся с вами напрямую, используя этот адрес электронной почты. Это не означает, что вы будете подписаны на какие-либо обычные списки рассылки, и мы не передадим ваш адрес электронной почты какой-либо третьей стороне.</string>
-    <string name="rjhs_internal_str_translation_offer_help_input_email">Адрес электронной почты</string>
-    <string name="rjhs_internal_str_translation_offer_help_input_language">Введите язык</string>
-    <string name="rjhs_internal_str_translation_offer_help_ok">Отправить</string>
     <!-- region Notifications -->
     <string name="rjhs_internal_str_allow_notification_title">Разрешить уведомления</string>
     <string name="rjhs_internal_str_allow_notification_message">Обратите внимание, что мы показываем уведомления только для того, чтобы показать, что приложение делает в данный момент. Мы никогда не показываем рекламу или другие нежелательные уведомления.</string>
