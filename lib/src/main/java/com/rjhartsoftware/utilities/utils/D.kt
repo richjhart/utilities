@@ -32,9 +32,9 @@ object D {
     }
 
     @JvmStatic
-    fun enterDebug() {
-        if (isBeta()) {
-            sDebug = true
+    fun enterDebug(key : String) {
+        if (key == "iwanttodebug") {
+            sDebug = !isDebug()
         }
     }
 

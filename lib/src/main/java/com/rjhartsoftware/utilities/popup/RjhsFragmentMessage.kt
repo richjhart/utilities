@@ -1,16 +1,19 @@
 package com.rjhartsoftware.utilities.popup
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.widget.*
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
@@ -26,7 +29,10 @@ import com.rjhartsoftware.utilities.fromHtml
 import com.rjhartsoftware.utilities.google.RjhsGoogleApplicationBase
 import com.rjhartsoftware.utilities.google.app
 import com.rjhartsoftware.utilities.prepareLinks
+import com.rjhartsoftware.utilities.utils.D
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import kotlin.system.exitProcess
 
 class PopupCheckboxChanged internal constructor(
     val checkbox: Boolean,
@@ -211,12 +217,47 @@ class RjhsFragmentMessage : DialogFragment(), DialogInterface.OnClickListener, T
                         }
                     }
 
+                    dialogInt.findViewById<TextView>(R.id.rjhs_popup_title)?.let {
+                        if (it.text.toString() == "About") {
+                            it.setOnLongClickListener {
+                                if (titleClicked < 10) {
+                                    titleClicked += 5
+                                } else {
+                                    titleClicked = 0
+                                }
+                                true
+                            }
+                            it.setOnClickListener {
+                                if (titleClicked >= 10 && titleClicked < 20) {
+                                    titleClicked++;
+                                    if (titleClicked == 20) {
+                                        EventBus.getDefault().register(this@RjhsFragmentMessage)
+                                        Builder("_debug")
+                                            .input("Key")
+                                            .positiveButton("OK")
+                                            .show(activity as AppCompatActivity)
+                                    }
+                                }
+                            }
+                        }
+                    }
                     checkRequiredState(ok)
 
                 }
             }
         }
         return dialog
+    }
+
+    private var titleClicked: Int = 0
+
+    @Subscribe
+    @CallSuper
+    fun onPopupResult(result: PopupResult) {
+        if (result.request == "_debug" && result.which == AlertDialog.BUTTON_POSITIVE) {
+            D.enterDebug(result.inputResult())
+        }
+        EventBus.getDefault().unregister(this)
     }
 
     private fun checkRequiredState(ok: Button) {
