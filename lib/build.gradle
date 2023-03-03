@@ -41,13 +41,22 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.richjhart'
                 artifactId = 'utilities'
-                version = '4.1.5'
+                version = '4.1.6'
             }
         }
     }
 }
 
 dependencies {
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:30.3.2')
